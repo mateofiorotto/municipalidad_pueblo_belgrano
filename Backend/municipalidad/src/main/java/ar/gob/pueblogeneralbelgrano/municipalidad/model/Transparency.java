@@ -1,0 +1,74 @@
+package ar.gob.pueblogeneralbelgrano.municipalidad.model;
+
+import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.Where;
+
+import java.util.Date;
+import java.util.Objects;
+
+@Entity
+@Table(name = "transparencias")
+@SQLDelete(sql = "UPDATE roles SET deleted = true WHERE id=?")
+@SQLRestriction("deleted=false")
+public class Transparency {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Date fecha;
+    private String pdf; //referencia a un archivo pdf
+    private boolean deleted = Boolean.FALSE;
+
+    public Transparency(){}
+
+    public Transparency(Long id, Date fecha, String pdf) {
+        this.id = id;
+        this.fecha = fecha;
+        this.pdf = pdf;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(String pdf) {
+        this.pdf = pdf;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Transparency that = (Transparency) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+}
