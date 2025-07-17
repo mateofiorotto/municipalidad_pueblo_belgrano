@@ -7,7 +7,7 @@ import org.hibernate.annotations.Where;
 import java.util.Objects;
 
 @Entity
-@Table(name = "permissions")
+@Table(name = "permisos")
 public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +38,6 @@ public class Permission {
         this.permission = permission;
     }
 
-    //not necessary really
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

@@ -11,9 +11,9 @@ public interface IRoleMapper {
 
     IRoleMapper mapper = Mappers.getMapper(IRoleMapper.class);
 
-    RoleResponseDTO roleToRoleGetDTO(Role role);
-    Role roleGetDTOToRole(RoleResponseDTO roleGetDTO);
+    RoleResponseDTO roleToRoleResponseDTO(Role role);
+    Role roleResponseDTOToRole(RoleResponseDTO roleResponseDTO);
 
-    RoleRequestDTO roleToRoleSaveDTO(Role role);
-    Role roleSaveDTOToRole(RoleRequestDTO roleSaveDTO);
+    RoleRequestDTO roleToRoleRequestDTO(Role role);
+    Role roleRequestDTOToRole(RoleRequestDTO roleRequestDTO);
 }

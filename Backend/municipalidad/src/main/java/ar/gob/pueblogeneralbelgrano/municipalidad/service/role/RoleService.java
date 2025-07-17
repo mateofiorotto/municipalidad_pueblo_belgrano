@@ -32,19 +32,19 @@ public class RoleService implements IRoleService {
     public List<RoleResponseDTO> getRoles() {
         List<Role> roles = roleRepository.findAll();
 
-        return roles.stream().map(role -> IRoleMapper.mapper.roleToRoleGetDTO(role)).collect(Collectors.toList());
+        return roles.stream().map(role -> IRoleMapper.mapper.roleToRoleResponseDTO(role)).collect(Collectors.toList());
     }
 
     @Override
     public RoleResponseDTO getRoleById(Long id) {
         Role role = roleRepository.findById(id).orElseThrow(() -> new NotFoundException("Role not found with ID: " + id));
 
-        return IRoleMapper.mapper.roleToRoleGetDTO(role);
+        return IRoleMapper.mapper.roleToRoleResponseDTO(role);
     }
 
     @Override
     public RoleRequestDTO saveRole(RoleRequestDTO role) {
-        Role roleToSave = IRoleMapper.mapper.roleSaveDTOToRole(role);
+        Role roleToSave = IRoleMapper.mapper.roleRequestDTOToRole(role);
 
         Set<Permission> permissionList = new HashSet<>();
         for (PermissionIdDTO per : role.permissions()) {

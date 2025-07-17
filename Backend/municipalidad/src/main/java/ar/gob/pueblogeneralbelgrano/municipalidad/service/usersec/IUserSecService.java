@@ -1,4 +1,4 @@
-package ar.gob.pueblogeneralbelgrano.municipalidad.service.user;
+package ar.gob.pueblogeneralbelgrano.municipalidad.service.usersec;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecResponseDTO;
@@ -6,7 +6,7 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecUpdateDTO;
 
 import java.util.List;
 
-public interface IUserService {
+public interface IUserSecService {
     /**
      * Returns a list of all users
      *

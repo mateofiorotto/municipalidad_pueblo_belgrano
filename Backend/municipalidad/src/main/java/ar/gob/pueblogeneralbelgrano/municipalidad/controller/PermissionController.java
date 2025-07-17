@@ -28,6 +28,11 @@ public class PermissionController {
         this.permissionService = permissionService;
     }
 
+    /**
+     * Endpoint que devuelve la lista de permisos. Solo accedible por admins.
+     *
+     * @return Lista de permisos
+     */
     @Operation(summary = "Obtener lista de permisos",
             description = "Devuelve la lista de permisos del sistema. Solo accesible por admins.",
             security = @SecurityRequirement(name = "bearerAuth")
@@ -37,9 +42,9 @@ public class PermissionController {
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
     })
-    @GetMapping("/")
+    @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getPermissions() {
+    public ResponseEntity<ResponseDTO<List<PermissionResponseDTO>>> getPermissions() {
         List<PermissionResponseDTO> permissions = permissionService.getPermissions();
 
         ResponseDTO<List<PermissionResponseDTO>> getResponsePermissions = new ResponseDTO<>(permissions, 200, "Permisos retornados correctamente");
@@ -47,6 +52,12 @@ public class PermissionController {
         return ResponseEntity.ok(getResponsePermissions);
     }
 
+    /**
+     * Endpoint que devuelve un permiso especifico por su ID. Solo accedible por admins.
+     *
+     * @param id
+     * @return un permiso
+     */
     @Operation(summary = "Obtener un permiso",
             description = "Obtener un permiso en particular. Accesible solamente para admins",
             security = @SecurityRequirement(name = "bearerAuth")
@@ -59,15 +70,20 @@ public class PermissionController {
     })
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getPermissionById(@PathVariable Long id){
+    public ResponseEntity<ResponseDTO<PermissionResponseDTO>> getPermissionById(@PathVariable Long id){
 
         PermissionResponseDTO permission = permissionService.getPermissionById(id);
 
-        ResponseDTO<PermissionResponseDTO> getResponsePermission = new ResponseDTO<>(permission, 200, "Permission returned succesfully");
+        ResponseDTO<PermissionResponseDTO> getResponsePermission = new ResponseDTO<>(permission, 200, "Permiso retornado correctamente");
 
         return ResponseEntity.ok(getResponsePermission);
     }
 
+    /**
+     * Endpoint que guarda un permiso en la base de datos. Solo accedible por admins.
+     * @param permission
+     * @return permiso que se guardo
+     */
     @Operation(summary = "Crear un permiso",
             description = "Retornar el permiso creado. Solo admins pueden crear nuevos permisos.",
             security = @SecurityRequirement(name = "bearerAuth")
@@ -78,9 +94,9 @@ public class PermissionController {
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
-    @PostMapping("/")
+    @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> savePermission(@Valid @RequestBody PermissionRequestDTO permission){
+    public ResponseEntity<ResponseDTO<PermissionRequestDTO>> savePermission(@Valid @RequestBody PermissionRequestDTO permission){
         permissionService.savePermission(permission);
 
         ResponseDTO<PermissionRequestDTO> savePermissionResponse = new ResponseDTO<>(permission, 200, "Permiso guardado con exito");
@@ -88,6 +104,13 @@ public class PermissionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savePermissionResponse);
     }
 
+    /**
+     * Endpoint que edita un permiso en la base de datos. Solo accedible por admins.
+     *
+     * @param permission
+     * @param id
+     * @return el permiso editado
+     */
     @Operation(summary = "Editar un permiso",
             description = "Retornar el permiso editado. Solo usuarios administradores pueden editar permisos.",
             security = @SecurityRequirement(name = "bearerAuth")
@@ -101,7 +124,7 @@ public class PermissionController {
     })
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updatePermission(@Valid @RequestBody PermissionRequestDTO permission, @PathVariable Long id){
+    public ResponseEntity<ResponseDTO<PermissionRequestDTO>> updatePermission(@Valid @RequestBody PermissionRequestDTO permission, @PathVariable Long id){
         permissionService.updatePermission(permission, id);
 
         ResponseDTO<PermissionRequestDTO> updatePermissionResponse = new ResponseDTO<>(permission, 200, "Permiso editado correctamente");
@@ -109,6 +132,12 @@ public class PermissionController {
         return ResponseEntity.status(HttpStatus.OK).body(updatePermissionResponse);
     }
 
+    /**
+     * Endpoint que elimina un permiso de la base de datos
+     *
+     * @param id
+     * @return mensaje de confirmacion de eliminacion
+     */
     @Operation(summary = "Borrar un permiso",
             description = "Devuelve un mensaje de confirmacion. Solo administradores pueden borrar permisos.",
             security = @SecurityRequirement(name = "bearerAuth")
@@ -121,7 +150,7 @@ public class PermissionController {
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deletePermission(@PathVariable Long id){
+    public ResponseEntity<String> deletePermission(@PathVariable Long id){
         permissionService.deletePermission(id);
 
         return ResponseEntity.status(HttpStatus.OK).body("Permiso eliminado");

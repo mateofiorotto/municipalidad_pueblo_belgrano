@@ -24,109 +24,133 @@ import java.util.List;
 @Validated
 public class RoleController {
     private final IRoleService roleService;
-    private final IPermissionService permissionService;
 
-    public RoleController(IRoleService roleService, IPermissionService permissionService) {
+    public RoleController(IRoleService roleService) {
         this.roleService = roleService;
-        this.permissionService = permissionService;
     }
 
-    @Operation(summary = "Get roles",
-            description = "Return the list of roles. Only users with ADMIN, TEACHER or STUDENT roles.",
+    /**
+     * Endpoint que Devuelve la lista de roles
+     *
+     * @return lista de roles
+     */
+    @Operation(summary = "Obtener roles",
+            description = "Retorna los roles. Solo accedible por ADMINS.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Roles returned succesfully"),
-            @ApiResponse(responseCode = "403", description = "Access Denied"),
-            @ApiResponse(responseCode = "500", description = "Invalid Token. (Unauthorized/Not Authenticated)"),
+            @ApiResponse(responseCode = "200", description = "Roles retornados con exito"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
+            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
     })
-    @GetMapping("/")
+    @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getRoles() {
+    public ResponseEntity<ResponseDTO<List<RoleResponseDTO>>> getRoles() {
         List<RoleResponseDTO> roles = roleService.getRoles();
 
-        ResponseDTO<List<RoleResponseDTO>> getResponseRoles = new ResponseDTO<>(roles, 200, "Roles returned successfully");
+        ResponseDTO<List<RoleResponseDTO>> getResponseRoles = new ResponseDTO<>(roles, 200, "Roles retornados con exito");
 
         return ResponseEntity.ok(getResponseRoles);
     }
 
-    @Operation(summary = "Get role",
-            description = "Return one role. Only users with ADMIN, TEACHER or STUDENT roles.",
+    /**
+     * Endpoint que obtiene un rol especifico por ID. Solo accedible por admins.
+     * @param id
+     * @return
+     */
+    @Operation(summary = "Obtener un rol",
+            description = "Retorna un rol. Solo accedible por admins",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Role returned succesfully"),
-            @ApiResponse(responseCode = "403", description = "Access Denied"),
-            @ApiResponse(responseCode = "404", description = "Role not found"),
-            @ApiResponse(responseCode = "500", description = "Invalid Token. (Unauthorized/Not Authenticated)")
+            @ApiResponse(responseCode = "200", description = "Rol retornado con exito"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
+            @ApiResponse(responseCode = "404", description = "Rol no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
     })
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getRoleById(@PathVariable Long id){
+    public ResponseEntity<ResponseDTO<RoleResponseDTO>> getRoleById(@PathVariable Long id){
 
         RoleResponseDTO role = roleService.getRoleById(id);
 
-        ResponseDTO<RoleResponseDTO> getResponseRole = new ResponseDTO<>(role, 200, "Role returned succesfully");
+        ResponseDTO<RoleResponseDTO> getResponseRole = new ResponseDTO<>(role, 200, "Rol retornado con exito");
 
         return ResponseEntity.ok(getResponseRole);
     }
 
-    @Operation(summary = "Create a role",
-            description = "Return the created role. Only the users with ADMIN role can create new roles.",
+    /**
+     * Endpoint que crea un nuevo rol en la base de datos. Solo accedible por admins
+     * @param role
+     * @return rol creado
+     */
+    @Operation(summary = "Crear un rol",
+            description = "Retorna el rol creado. Solo accedible por admins",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Role created succesfully"),
-            @ApiResponse(responseCode = "400", description = "Bad Request, fields validation error"),
-            @ApiResponse(responseCode = "403", description = "Access Denied"),
-            @ApiResponse(responseCode = "500", description = "Invalid Token. (Unauthorized/Not Authenticated)")
+            @ApiResponse(responseCode = "201", description = "Rol creado con exito"),
+            @ApiResponse(responseCode = "400", description = "Bad Request, error en validación de campos"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
+            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
     })
-    @PostMapping("/")
+    @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> saveRole(@Valid @RequestBody RoleRequestDTO role){
+    public ResponseEntity<ResponseDTO<RoleRequestDTO>> saveRole(@Valid @RequestBody RoleRequestDTO role){
         roleService.saveRole(role);
 
-        ResponseDTO<RoleRequestDTO> saveRoleResponse = new ResponseDTO<>(role, 200, "Role saved succesfully");
+        ResponseDTO<RoleRequestDTO> saveRoleResponse = new ResponseDTO<>(role, 200, "Rol guardado con exito");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(saveRoleResponse);
     }
 
-    @Operation(summary = "Edit a role",
-            description = "Return the edited role. Only the users with ADMIN role can edit roles.",
+    /**
+     * Endpoint que edita un rol existente en la base de datos. Solo accedible por admins
+     * @param role
+     * @param id
+     * @return rol editado
+     */
+    @Operation(summary = "Editar un rol",
+            description = "Devuelve el rol editado. Solo accedible por admins",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Role edited succesfully"),
-            @ApiResponse(responseCode = "400", description = "Bad Request, fields validation error"),
-            @ApiResponse(responseCode = "403", description = "Access Denied"),
-            @ApiResponse(responseCode = "404", description = "Role not found"),
-            @ApiResponse(responseCode = "500", description = "Invalid Token. (Unauthorized/Not Authenticated)")
+            @ApiResponse(responseCode = "200", description = "Role editado con exito"),
+            @ApiResponse(responseCode = "400", description = "Bad Request, error en validacion de campos"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
+            @ApiResponse(responseCode = "404", description = "Rol no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
     })
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateRole(@Valid @RequestBody RoleRequestDTO role, @PathVariable Long id){
+    public ResponseEntity<ResponseDTO<RoleRequestDTO>> updateRole(@Valid @RequestBody RoleRequestDTO role, @PathVariable Long id){
         roleService.updateRole(role, id);
 
-        ResponseDTO<RoleRequestDTO> updateRoleResponse = new ResponseDTO<>(role, 200, "Role updated succesfully");
+        ResponseDTO<RoleRequestDTO> updateRoleResponse = new ResponseDTO<>(role, 200, "Rol actualizado correctamente");
 
         return ResponseEntity.status(HttpStatus.OK).body(updateRoleResponse);
     }
 
-    @Operation(summary = "Delete a role",
-            description = "Return a confirmation message. Only the users with ADMIN role can delete roles.",
+    /**
+     * Mensaje de confirmacion de eliminacion de rol. Solo accedible por admins
+     * @param id
+     * @return
+     */
+    @Operation(summary = "Borrar un rol",
+            description = "Devuelve un mensaje de confirmacion. Solo accedible por admins.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Role deleted succesfully"),
-            @ApiResponse(responseCode = "403", description = "Access Denied"),
-            @ApiResponse(responseCode = "404", description = "Role not found"),
-            @ApiResponse(responseCode = "500", description = "Invalid Token. (Unauthorized/Not Authenticated)")
+            @ApiResponse(responseCode = "200", description = "Rol eliminado con exito"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
+            @ApiResponse(responseCode = "404", description = "Rol no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteRole(@PathVariable Long id){
+    public ResponseEntity<String> deleteRole(@PathVariable Long id){
         roleService.deleteRole(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Role deleted");
+        return ResponseEntity.status(HttpStatus.OK).body("Rol eliminado");
     }
 }

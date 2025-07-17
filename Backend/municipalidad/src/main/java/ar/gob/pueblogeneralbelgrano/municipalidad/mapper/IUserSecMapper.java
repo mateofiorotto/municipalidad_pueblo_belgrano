@@ -8,15 +8,15 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface IUserMapper {
+public interface IUserSecMapper {
 
-    IUserMapper mapper = Mappers.getMapper(IUserMapper.class);
+    IUserSecMapper mapper = Mappers.getMapper(IUserSecMapper.class);
 
-    UserSecResponseDTO userSecToUserSecGetDTO(UserSec userSec);
-    UserSec userSecGetDTOToUserSec(UserSecResponseDTO userSecGetDTO);
+    UserSecResponseDTO userSecToUserSecResponseDTO(UserSec userSec);
+    UserSec userSecResponseDTOToUserSec(UserSecResponseDTO userSecResponseDTO);
 
-    UserSecRequestDTO userSecToUserSecSaveDTO(UserSec userSec);
-    UserSec userSecSaveDTOToUserSec(UserSecRequestDTO userSecSaveDTO);
+    UserSecRequestDTO userSecToUserSecRequestDTO(UserSec userSec);
+    UserSec userSecRequestDTOToUserSec(UserSecRequestDTO userSecRequestDTO);
 
     UserSecUpdateDTO userSecToUserSecUpdateDTO(UserSec userSec);
 }

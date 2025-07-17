@@ -6,6 +6,7 @@ import org.hibernate.annotations.SQLRestriction;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "eventos")
@@ -20,17 +21,20 @@ public class Event {
     private String imagen;
     private String descripcion;
     private String descripcion_adicional; //opcional
+    @OneToMany(mappedBy = "evento")
+    private Set<News> news;
     private boolean deleted = Boolean.FALSE;
 
     public Event(){}
 
-    public Event(Long id, String titular, Date fecha, String imagen, String descripcion, String descripcion_adicional) {
+    public Event(Long id, String titular, Date fecha, String imagen, String descripcion, String descripcion_adicional, Set<News> news) {
         this.id = id;
         this.titular = titular;
         this.fecha = fecha;
         this.imagen = imagen;
         this.descripcion = descripcion;
         this.descripcion_adicional = descripcion_adicional;
+        this.news = news;
     }
 
     public Long getId() {
@@ -79,6 +83,14 @@ public class Event {
 
     public void setDescripcion_adicional(String descripcion_adicional) {
         this.descripcion_adicional = descripcion_adicional;
+    }
+
+    public Set<News> getNews() {
+        return news;
+    }
+
+    public void setNews(Set<News> news) {
+        this.news = news;
     }
 
     public boolean isDeleted() {

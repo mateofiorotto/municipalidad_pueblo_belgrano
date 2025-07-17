@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "usuarios_security")
+@Table(name = "usuarios")
 @SQLDelete(sql = "UPDATE users SET deleted = true WHERE id=?")
 @SQLRestriction("deleted=false")
 public class UserSec {
@@ -28,8 +28,6 @@ public class UserSec {
     @JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
-    @OneToOne(mappedBy = "userSec")
-    private User user;
     private boolean deleted = Boolean.FALSE;
 
     public UserSec(){}
@@ -115,14 +113,6 @@ public class UserSec {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @Override

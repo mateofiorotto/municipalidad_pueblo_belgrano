@@ -8,25 +8,24 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "categorias")
+@Table(name = "areas")
 @SQLDelete(sql = "UPDATE roles SET deleted = true WHERE id=?")
 @SQLRestriction("deleted=false")
-public class Category {
+public class Area {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
     private String nombre;
-    @OneToMany(mappedBy = "categoria")
-    private Set<News> noticias;
+    @OneToMany(mappedBy = "area")
+    private Set<Complaint> reclamos;
     private boolean deleted = Boolean.FALSE;
 
-    public Category(){}
+    public Area(){}
 
-    public Category(Long id, String nombre, Set<News> noticias) {
+    public Area(Long id, String nombre, Set<Complaint> reclamos) {
         this.id = id;
         this.nombre = nombre;
-        this.noticias = noticias;
+        this.reclamos = reclamos;
     }
 
     public Long getId() {
@@ -45,12 +44,12 @@ public class Category {
         this.nombre = nombre;
     }
 
-    public Set<News> getNoticias() {
-        return noticias;
+    public Set<Complaint> getReclamos() {
+        return reclamos;
     }
 
-    public void setNoticias(Set<News> noticias) {
-        this.noticias = noticias;
+    public void setReclamos(Set<Complaint> reclamos) {
+        this.reclamos = reclamos;
     }
 
     public boolean isDeleted() {
@@ -64,8 +63,8 @@ public class Category {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return Objects.equals(id, category.id);
+        Area area = (Area) o;
+        return Objects.equals(id, area.id);
     }
 
     @Override

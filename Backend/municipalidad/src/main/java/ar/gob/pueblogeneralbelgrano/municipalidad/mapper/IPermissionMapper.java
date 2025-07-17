@@ -11,9 +11,9 @@ public interface IPermissionMapper {
 
     IPermissionMapper mapper = Mappers.getMapper(IPermissionMapper.class);
 
-    PermissionResponseDTO permissionToPermissionGetDTO(Permission permission);
-    Permission permissionGetDTOToPermission(PermissionResponseDTO permissionGetDTO);
+    PermissionResponseDTO permissionToPermissionResponseDTO(Permission permission);
+    Permission permissionResponseDTOToPermission(PermissionResponseDTO permissionResponseDTO);
 
-    PermissionRequestDTO permissionToPermissionSaveDTO(Permission permission);
-    Permission permissionSaveDTOToPermission(PermissionRequestDTO permissionSaveDTO);
+    PermissionRequestDTO permissionToPermissionRequestDTO(Permission permission);
+    Permission permissionRequestDTOToPermission(PermissionRequestDTO permissionRequestDTO);
 }

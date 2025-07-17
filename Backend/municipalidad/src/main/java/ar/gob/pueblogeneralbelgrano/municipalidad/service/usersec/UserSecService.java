@@ -1,4 +1,4 @@
-package ar.gob.pueblogeneralbelgrano.municipalidad.service.user;
+package ar.gob.pueblogeneralbelgrano.municipalidad.service.usersec;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.role.RoleIdDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecRequestDTO;
@@ -6,11 +6,11 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecResponseDTO
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecUpdateDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.BadRequestException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.NotFoundException;
-import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IUserMapper;
+import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IUserSecMapper;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Role;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.UserSec;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IRoleRepository;
-import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IUserRepository;
+import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IUserSecRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +20,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService implements IUserService {
+public class UserSecService implements IUserSecService {
 
-    private final IUserRepository userRepository;
+    private final IUserSecRepository userRepository;
     private final IRoleRepository roleRepository;
 
-    public UserService(IUserRepository userRepository, IRoleRepository roleRepository) {
+    public UserSecService(IUserSecRepository userRepository, IRoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
@@ -34,20 +34,20 @@ public class UserService implements IUserService {
     public List<UserSecResponseDTO> getUsers() {
         List<UserSec> users = userRepository.findAll();
 
-        return users.stream().map(user -> IUserMapper.mapper.userSecToUserSecGetDTO(user)).collect(Collectors.toList());
+        return users.stream().map(user -> IUserSecMapper.mapper.userSecToUserSecResponseDTO(user)).collect(Collectors.toList());
     }
 
     @Override
     public UserSecResponseDTO getUserById(Long id) {
         UserSec user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found with ID: " + id));
 
-        return IUserMapper.mapper.userSecToUserSecGetDTO(user);
+        return IUserSecMapper.mapper.userSecToUserSecResponseDTO(user);
     }
 
     @Override
     public UserSecRequestDTO saveUser(UserSecRequestDTO user) {
 
-        UserSec userToSave = IUserMapper.mapper.userSecSaveDTOToUserSec(user);
+        UserSec userToSave = IUserSecMapper.mapper.userSecRequestDTOToUserSec(user);
 
         userToSave.setPassword(this.encriptPassword(user.getPassword()));
 
@@ -61,7 +61,7 @@ public class UserService implements IUserService {
         userToSave.setRoles(roleList);
         UserSec savedUser = userRepository.save(userToSave);
 
-        return IUserMapper.mapper.userSecToUserSecSaveDTO(savedUser);
+        return IUserSecMapper.mapper.userSecToUserSecRequestDTO(savedUser);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class UserService implements IUserService {
 
         UserSec updatedUser = userRepository.save(userToUpdate);
 
-        return IUserMapper.mapper.userSecToUserSecUpdateDTO(updatedUser);
+        return IUserSecMapper.mapper.userSecToUserSecUpdateDTO(updatedUser);
     }
 
     @Override

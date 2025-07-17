@@ -25,19 +25,19 @@ public class PermissionService implements IPermissionService {
 
         List<Permission> permissions = permissionRepository.findAll();
 
-        return permissions.stream().map(permission -> IPermissionMapper.mapper.permissionToPermissionGetDTO(permission)).collect(Collectors.toList());
+        return permissions.stream().map(permission -> IPermissionMapper.mapper.permissionToPermissionResponseDTO(permission)).collect(Collectors.toList());
     }
 
     @Override
     public PermissionResponseDTO getPermissionById(Long id) {
         Permission permission = permissionRepository.findById(id).orElseThrow(() -> new NotFoundException("Permission not found with ID: " + id));
 
-        return IPermissionMapper.mapper.permissionToPermissionGetDTO(permission);
+        return IPermissionMapper.mapper.permissionToPermissionResponseDTO(permission);
     }
 
     @Override
     public PermissionRequestDTO savePermission(PermissionRequestDTO permission) {
-        Permission permissionToSave = IPermissionMapper.mapper.permissionSaveDTOToPermission(permission);
+        Permission permissionToSave = IPermissionMapper.mapper.permissionRequestDTOToPermission(permission);
 
         permissionRepository.save(permissionToSave);
 

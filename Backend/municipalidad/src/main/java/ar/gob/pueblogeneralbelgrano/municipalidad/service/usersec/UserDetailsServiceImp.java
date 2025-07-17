@@ -1,9 +1,9 @@
-package ar.gob.pueblogeneralbelgrano.municipalidad.service.user;
+package ar.gob.pueblogeneralbelgrano.municipalidad.service.usersec;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.auth.AuthLoginRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.auth.AuthResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.UserSec;
-import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IUserRepository;
+import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IUserSecRepository;
 import ar.gob.pueblogeneralbelgrano.municipalidad.utils.JwtUtils;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,11 +23,11 @@ import java.util.List;
 @Service
 public class UserDetailsServiceImp implements UserDetailsService {
 
-    private final IUserRepository userRepository;
+    private final IUserSecRepository userRepository;
     private final JwtUtils jwtUtils;
     private final PasswordEncoder passwordEncoder;
 
-    public UserDetailsServiceImp(IUserRepository userRepository, JwtUtils jwtUtils, PasswordEncoder passwordEncoder) {
+    public UserDetailsServiceImp(IUserSecRepository userRepository, JwtUtils jwtUtils, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.jwtUtils = jwtUtils;
         this.passwordEncoder = passwordEncoder;
@@ -78,7 +78,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String accessToken = jwtUtils.createToken(authentication);
-        AuthResponseDTO authResponseDTO = new AuthResponseDTO(username, "Login Succesfully", accessToken, true);
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO(username, "Login Exitoso", accessToken, true);
 
         return authResponseDTO;
     }
