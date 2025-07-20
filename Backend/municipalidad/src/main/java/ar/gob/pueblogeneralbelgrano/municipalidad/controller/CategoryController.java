@@ -84,7 +84,7 @@ public class CategoryController {
      * @return la categoria creada
      */
     @Operation(summary = "Crear una categoria",
-            description = "Retornar la categoria creada. Solo admins pueden crear nuevas categorias.",
+            description = "Retornar la categoria creada. Solo admins/empleados municipales pueden crear nuevas categorias.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -111,7 +111,7 @@ public class CategoryController {
      * @return la edicion modificada
      */
     @Operation(summary = "Editar una categoria",
-            description = "Retornar la categoria editado. Solo usuarios administradores pueden editar categorias.",
+            description = "Retornar la categoria editado. Solo usuarios admins/empleados municipales pueden editar categorias.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -132,13 +132,13 @@ public class CategoryController {
     }
 
     /**
-     * Endpoint que elimina una edicion de la DB
+     * Endpoint que elimina una edicion de la DB. Solo accedible por admins / empleados municipales
      *
      * @param id
      * @return mensaje de eliminacion confirmada
      */
     @Operation(summary = "Borrar una categoria",
-            description = "Devuelve un mensaje de confirmacion. Solo administradores pueden borrar categorias.",
+            description = "Devuelve un mensaje de confirmacion. Solo admins/empleados municipales pueden borrar categorias.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
