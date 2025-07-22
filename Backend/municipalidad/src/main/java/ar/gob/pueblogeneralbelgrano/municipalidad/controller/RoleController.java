@@ -56,7 +56,7 @@ public class RoleController {
     /**
      * Endpoint que obtiene un rol especifico por ID. Solo accedible por admins.
      * @param id
-     * @return
+     * @return rol por id
      */
     @Operation(summary = "Obtener un rol",
             description = "Retorna un rol. Solo accedible por admins",
@@ -134,7 +134,7 @@ public class RoleController {
     /**
      * Mensaje de confirmacion de eliminacion de rol. Solo accedible por admins
      * @param id
-     * @return
+     * @return mensaje de confirmacion
      */
     @Operation(summary = "Borrar un rol",
             description = "Devuelve un mensaje de confirmacion. Solo accedible por admins.",

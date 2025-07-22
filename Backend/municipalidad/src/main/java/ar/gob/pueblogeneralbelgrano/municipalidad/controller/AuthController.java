@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 @Validated
 public class AuthController {
-    private UserDetailsServiceImp userDetailsServiceImp;
+    private final UserDetailsServiceImp userDetailsServiceImp;
 
     public AuthController(UserDetailsServiceImp userDetailsServiceImp) {
         this.userDetailsServiceImp = userDetailsServiceImp;

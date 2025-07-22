@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -25,6 +26,8 @@ public class Complaint {
     @ManyToOne
     @JoinColumn(name="area_id", nullable = false)
     private Area area; //Solo backend
+    private Date fecha_reclamo; //solo back
+    private Date fecha_cerrado; //solo back
     private boolean cerrado = Boolean.FALSE;
     private boolean deleted = Boolean.FALSE;
 
@@ -43,6 +46,8 @@ public class Complaint {
 //        this.comentario = comentario;
 //        this.area = area;
 //        this.cerrado = cerrado;
+       // this.fecha_cerrado = fecha_cerrado;
+        //this.fecha_reclamo = fecha_reclamo;
     }
 
     public Long getId() {

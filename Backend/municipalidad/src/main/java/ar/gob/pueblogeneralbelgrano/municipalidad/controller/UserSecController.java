@@ -139,7 +139,7 @@ public class UserSecController {
      * Endpoint que Elimina un usuario desde la base de datos Solo accedible por admins.
      *
      * @param id
-     * @return
+     * @return mensaje de confirmacion
      */
     @Operation(summary = "Eliminar un usuario",
             description = "Devuelve un mensaje de confirmacion. Solo accedible por admins",

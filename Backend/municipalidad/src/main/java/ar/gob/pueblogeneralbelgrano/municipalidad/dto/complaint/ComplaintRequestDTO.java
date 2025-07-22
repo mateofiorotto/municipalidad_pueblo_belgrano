@@ -39,5 +39,10 @@ public record ComplaintRequestDTO(
         String comentario,
         String area,
 
-        boolean cerrado) {
+        boolean cerrado
+
+        //NO SE PUEDEN MODIFICAR X EL USUARIO:
+        //Date fecha_cerrado
+        //Date fecha_reclamo
+) {
 }

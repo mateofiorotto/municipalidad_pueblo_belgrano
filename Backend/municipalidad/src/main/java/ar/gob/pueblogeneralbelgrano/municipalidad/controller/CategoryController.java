@@ -34,11 +34,11 @@ public class CategoryController {
      * @return DTO De la lista de categorias
      */
     @Operation(summary = "Obtener lista de categorias",
-            description = "Devuelve la lista de categorias del sistema",
+            description = "Devuelve la lista de categorias del sistema. Todos pueden acceder",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Categorias retornadas correctamente"),
+            @ApiResponse(responseCode = "200", description = "Categorias retornadas correctamente."),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping
@@ -62,7 +62,7 @@ public class CategoryController {
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Categoria retornada correctamente"),
+            @ApiResponse(responseCode = "200", description = "Categoria retornada correctamente. Todos pueden acceder"),
             @ApiResponse(responseCode = "404", description = "Categoria no encontrada"),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
@@ -135,7 +135,7 @@ public class CategoryController {
      * Endpoint que elimina una edicion de la DB. Solo accedible por admins / empleados municipales
      *
      * @param id
-     * @return mensaje de eliminacion confirmada
+     * @return mensaje de confirmacion
      */
     @Operation(summary = "Borrar una categoria",
             description = "Devuelve un mensaje de confirmacion. Solo admins/empleados municipales pueden borrar categorias.",
