@@ -17,18 +17,22 @@ public class UserSec {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true) //Unique field in db
+    @Column(unique = true, nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private boolean enabled;
+    @Column(nullable = false)
     private boolean accountNotExpired;
+    @Column(nullable = false)
     private boolean accountNotLocked;
+    @Column(nullable = false)
     private boolean credentialNotExpired;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL) //load all roles inmediately with the user, cascade all operations
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
-    private boolean deleted = Boolean.FALSE;
 
     public UserSec(){}
 
@@ -105,14 +109,6 @@ public class UserSec {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
     }
 
     @Override

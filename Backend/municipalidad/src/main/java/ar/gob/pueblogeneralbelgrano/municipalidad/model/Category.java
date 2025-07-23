@@ -9,13 +9,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "categorias")
-@SQLDelete(sql = "UPDATE roles SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE categorias SET deleted = true WHERE id=?")
 @SQLRestriction("deleted=false")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String nombre;
     @OneToMany(mappedBy = "categoria")
     private Set<News> noticias;

@@ -1,5 +1,6 @@
 package ar.gob.pueblogeneralbelgrano.municipalidad.model;
 
+import ar.gob.pueblogeneralbelgrano.municipalidad.model.Area;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -9,31 +10,37 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "reclamos")
-@SQLDelete(sql = "UPDATE roles SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE reclamos SET deleted = true WHERE id=?")
 @SQLRestriction("deleted=false")
 public class Complaint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String motivo;
+    @Column(nullable = false)
     private String nombre_apellido;
+    @Column(nullable = false)
     private String celular;
+    @Column(nullable = false)
     private String direccion;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String descripcion;
     private String imagen; //opcional
-    private String comentario; //Solo backend en la web
-    @ManyToOne
-    @JoinColumn(name="area_id", nullable = false)
-    private Area area; //Solo backend
     private Date fecha_reclamo; //solo back
     private Date fecha_cerrado; //solo back
-    private boolean cerrado = Boolean.FALSE;
+    private Boolean cerrado = Boolean.FALSE;
     private boolean deleted = Boolean.FALSE;
+    private String comentario; //Solo backend en la web
+    @ManyToOne
+    @JoinColumn(name="area_id", nullable = true)
+    private Area area; //Solo backend
 
     public Complaint(){}
 
-    public Complaint(Long id, String motivo, String nombre_apellido, String celular, String direccion, String email, String descripcion, String imagen) {
+    public Complaint(Long id, String motivo, String nombre_apellido, String celular, String direccion, String email, String descripcion, String imagen, String comentario, Area area, Date fecha_reclamo, Date fecha_cerrado, Boolean cerrado) {
         this.id = id;
         this.motivo = motivo;
         this.nombre_apellido = nombre_apellido;
@@ -42,12 +49,11 @@ public class Complaint {
         this.email = email;
         this.descripcion = descripcion;
         this.imagen = imagen;
-        //solo se manejan en el back
-//        this.comentario = comentario;
-//        this.area = area;
-//        this.cerrado = cerrado;
-       // this.fecha_cerrado = fecha_cerrado;
-        //this.fecha_reclamo = fecha_reclamo;
+        this.comentario = comentario;
+        this.area = area;
+        this.fecha_reclamo = fecha_reclamo;
+        this.fecha_cerrado = fecha_cerrado;
+        this.cerrado = cerrado;
     }
 
     public Long getId() {
@@ -130,11 +136,27 @@ public class Complaint {
         this.area = area;
     }
 
-    public boolean isCerrado() {
+    public Date getFecha_reclamo() {
+        return fecha_reclamo;
+    }
+
+    public void setFecha_reclamo(Date fecha_reclamo) {
+        this.fecha_reclamo = fecha_reclamo;
+    }
+
+    public Date getFecha_cerrado() {
+        return fecha_cerrado;
+    }
+
+    public void setFecha_cerrado(Date fecha_cerrado) {
+        this.fecha_cerrado = fecha_cerrado;
+    }
+
+    public Boolean getCerrado() {
         return cerrado;
     }
 
-    public void setCerrado(boolean cerrado) {
+    public void setCerrado(Boolean cerrado) {
         this.cerrado = cerrado;
     }
 

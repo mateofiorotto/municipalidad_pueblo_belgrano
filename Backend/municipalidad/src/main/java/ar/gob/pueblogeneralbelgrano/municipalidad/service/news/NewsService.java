@@ -48,6 +48,16 @@ public class NewsService implements INewsService {
     public NewsRequestDTO saveNews(NewsRequestDTO news) {
         News newsToSave = INewsMapper.mapper.newsRequestDTOToNews(news);
 
+        categoryRepository
+                .findById(news.categoria().id())
+                .orElseThrow(() -> new NotFoundException("Categoria no encontrada, ID: " + news.categoria().id()));
+
+        if(news.evento() != null) {
+            eventRepository
+                    .findById(news.evento().id())
+                    .orElseThrow(() -> new NotFoundException("Evento no encontrado, ID: " + news.categoria().id()));
+        }
+
         //metodo img..
 
         newsRepository.save(newsToSave);
@@ -81,7 +91,7 @@ public class NewsService implements INewsService {
 
     @Override
     public void deleteNews(Long id) {
-        News newToDelete = newsRepository.findById(id).orElseThrow(() -> new NotFoundException("Evento no encontrado, ID: " + id));
+        News newToDelete = newsRepository.findById(id).orElseThrow(() -> new NotFoundException("Noticia no encontrada, ID: " + id));
 
         //logica img..
 

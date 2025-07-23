@@ -10,15 +10,19 @@ import java.util.Set;
 
 @Entity
 @Table(name = "eventos")
-@SQLDelete(sql = "UPDATE roles SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE eventos SET deleted = true WHERE id=?")
 @SQLRestriction("deleted=false")
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String titular;
+    @Column(nullable = false)
     private Date fecha;
+    @Column(nullable = false)
     private String imagen;
+    @Column(nullable = false)
     private String descripcion;
     private String descripcion_adicional; //opcional
     @OneToMany(mappedBy = "evento")

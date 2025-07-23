@@ -7,39 +7,40 @@ import java.util.List;
 
 public interface IPermissionService {
     /**
-     * Returns a list of all permissions
+     * Devolver lista de permisos
      *
-     * @return list of permissions
+     * @return lista de permisos
      * */
     public List<PermissionResponseDTO> getPermissions();
 
     /**
-     * Returns a specific permission
+     * Devolver permiso especifico por id
      *
      * @param id
-     * @return a permission
+     * @return un permiso
      * */
     public PermissionResponseDTO getPermissionById(Long id);
 
     /**
-     * Create a permission
+     * Crear un permiso
      *
      * @param permission
-     * @return the created permission info
+     * @return permiso creado
      * */
     public PermissionRequestDTO savePermission(PermissionRequestDTO permission);
 
     /**
-     * Update a permission by id
+     * Actualizar permiso por ID
      *
      * @param permission
      * @param id
-     * @return the updated permission
+     * @return permiso actualizado
      * */
     public PermissionRequestDTO updatePermission(PermissionRequestDTO permission, Long id);
 
     /**
-     * Delete a permission
+     * Borrar un permiso
+     *
      * @param id
      * */
     public void deletePermission(Long id);

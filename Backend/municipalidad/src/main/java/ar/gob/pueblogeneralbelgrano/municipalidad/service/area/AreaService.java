@@ -2,6 +2,7 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.service.area;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.area.AreaRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.area.AreaResponseDTO;
+import ar.gob.pueblogeneralbelgrano.municipalidad.exception.ConflictException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.NotFoundException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IAreaMapper;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Area;
@@ -65,6 +66,10 @@ public class AreaService implements IAreaService {
         Area areaToDelete = areaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Area no encontrada, ID: " + id));
 
-        areaRepository.delete(areaToDelete);
+        if (areaRepository.relatedAreas(id) >= 1) {
+            throw new ConflictException("No se puede eliminar el area porque se encuentra relacionada con un reclamo");
+        } else {
+            areaRepository.delete(areaToDelete);
+        }
     }
 }

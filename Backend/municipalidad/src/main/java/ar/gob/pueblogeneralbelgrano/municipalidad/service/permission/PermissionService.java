@@ -30,7 +30,7 @@ public class PermissionService implements IPermissionService {
 
     @Override
     public PermissionResponseDTO getPermissionById(Long id) {
-        Permission permission = permissionRepository.findById(id).orElseThrow(() -> new NotFoundException("Permission not found with ID: " + id));
+        Permission permission = permissionRepository.findById(id).orElseThrow(() -> new NotFoundException("Permiso no encontrado, ID: " + id));
 
         return IPermissionMapper.mapper.permissionToPermissionResponseDTO(permission);
     }
@@ -46,7 +46,7 @@ public class PermissionService implements IPermissionService {
 
     @Override
     public PermissionRequestDTO updatePermission(PermissionRequestDTO permission, Long id) {
-        Permission permissionToUpdate = permissionRepository.findById(id).orElseThrow(() -> new NotFoundException("Permission not found with ID: " + id));
+        Permission permissionToUpdate = permissionRepository.findById(id).orElseThrow(() -> new NotFoundException("Permiso no encontrado, ID: " + id));
 
         permissionToUpdate.setPermission(permission.permission());
 
@@ -57,7 +57,7 @@ public class PermissionService implements IPermissionService {
 
     @Override
     public void deletePermission(Long id) {
-        Permission permissionToDelete = permissionRepository.findById(id).orElseThrow(() -> new NotFoundException("Permission not found with ID: " + id));
+        Permission permissionToDelete = permissionRepository.findById(id).orElseThrow(() -> new NotFoundException("Permiso no encontrado, ID: " + id));
 
         permissionRepository.delete(permissionToDelete);
     }

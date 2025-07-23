@@ -3,6 +3,7 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.role.RoleIdDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
@@ -14,9 +15,13 @@ public class UserSecRequestDTO {
     private String username;
     @NotBlank(message = "La contraseña es requerida")
     private String password;
+    @NotNull(message = "El campo 'enabled' no puede ser nulo")
     private boolean enabled = true;
+    @NotNull(message = "El campo 'accountNotExpired' no puede ser nulo")
     private boolean accountNotExpired = true;
+    @NotNull(message = "El campo 'accountNotLocked' no puede ser nulo")
     private boolean accountNotLocked = true;
+    @NotNull(message = "El campo 'credentialNotExpired' no puede ser nulo")
     private boolean credentialNotExpired = true;
     @NotEmpty(message = "Al menos un rol debe estar asignado")
     private Set<RoleIdDTO> roles = new HashSet<>();

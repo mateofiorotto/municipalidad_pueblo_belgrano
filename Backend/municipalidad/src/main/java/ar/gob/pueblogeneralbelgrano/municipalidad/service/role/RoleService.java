@@ -37,7 +37,7 @@ public class RoleService implements IRoleService {
 
     @Override
     public RoleResponseDTO getRoleById(Long id) {
-        Role role = roleRepository.findById(id).orElseThrow(() -> new NotFoundException("Role not found with ID: " + id));
+        Role role = roleRepository.findById(id).orElseThrow(() -> new NotFoundException("Rol no encontrado, ID: " + id));
 
         return IRoleMapper.mapper.roleToRoleResponseDTO(role);
     }
@@ -49,12 +49,13 @@ public class RoleService implements IRoleService {
         Set<Permission> permissionList = new HashSet<>();
         for (PermissionIdDTO per : role.permissions()) {
             Permission existingPermission = permissionRepository.findById(per.id())
-                    .orElseThrow(() -> new BadRequestException("Permission not found"));
+                    .orElseThrow(() -> new NotFoundException("Permiso no encontrado, ID: " + per.id()));
 
             permissionList.add(existingPermission);
         }
 
         roleToSave.setPermissions(permissionList);
+
         roleRepository.save(roleToSave);
 
         return role;
@@ -62,19 +63,20 @@ public class RoleService implements IRoleService {
 
     @Override
     public RoleRequestDTO updateRole(RoleRequestDTO role, Long id) {
-        Role roleToUpdate = roleRepository.findById(id).orElseThrow(() -> new NotFoundException("Role not found with ID: " + id));
+        Role roleToUpdate = roleRepository.findById(id).orElseThrow(() -> new NotFoundException("Rol no encontrado, ID: " + id));
 
         roleToUpdate.setRole(role.role());
 
         Set<Permission> permissionList = new HashSet<>();
         for (PermissionIdDTO per : role.permissions()) {
             Permission existingPermission = permissionRepository.findById(per.id())
-                    .orElseThrow(() -> new BadRequestException("Permission not found"));
+                    .orElseThrow(() -> new NotFoundException("Permiso no encontrado, ID: " + per.id()));
 
             permissionList.add(existingPermission);
         }
 
         roleToUpdate.getPermissions().clear();
+
         roleToUpdate.getPermissions().addAll(permissionList);
 
         roleRepository.save(roleToUpdate);
@@ -84,7 +86,7 @@ public class RoleService implements IRoleService {
 
     @Override
     public void deleteRole(Long id) {
-        Role roleToDelete = roleRepository.findById(id).orElseThrow(() -> new NotFoundException("Role not found with ID: " + id));
+        Role roleToDelete = roleRepository.findById(id).orElseThrow(() -> new NotFoundException("Rol no encontrado, ID: " + id));
 
         roleToDelete.getPermissions().clear();
 

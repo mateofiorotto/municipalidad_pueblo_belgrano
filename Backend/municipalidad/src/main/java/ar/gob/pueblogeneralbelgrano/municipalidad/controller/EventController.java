@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/events")
 @PreAuthorize("denyAll()")
 @Validated
-@RequestMapping("/events")
 public class EventController {
 
     private final IEventService eventService;
@@ -134,23 +134,24 @@ public class EventController {
     }
 
     /**
-     * Endpoint que elimina un evento de la base de datos. Accedible solo por admins y empleados municipales
+     * Endpoint que elimina un evento de la base de datos. Accedible solo por admins
      *
      * @param id
      * @return mensaje de confirmacion
      */
     @Operation(summary = "Borrar un evento",
-            description = "Devuelve un mensaje de confirmacion. Solo admins/empleados municipales pueden borrar eventos.",
+            description = "Devuelve un mensaje de confirmacion. Solo admins pueden borrar eventos.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Evento borrado correctamente"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Evento no encontrado"),
+            @ApiResponse(responseCode = "409", description = "Error al eliminar por relacion con otra entidad"),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteEvent(@PathVariable Long id){
         eventService.deleteEvent(id);
 

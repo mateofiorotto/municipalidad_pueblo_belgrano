@@ -8,48 +8,49 @@ import java.util.List;
 
 public interface IUserSecService {
     /**
-     * Returns a list of all users
+     * Devolver lista de usuarios
      *
-     * @return list of users
+     * @return lista de usuarios
      * */
     public List<UserSecResponseDTO> getUsers();
 
     /**
-     * Returns a specific user
+     * Devolver un usuario especifico por id
      *
      * @param id
-     * @return a user
+     * @return un usuario
      * */
     public UserSecResponseDTO getUserById(Long id);
 
     /**
-     * Create a user
+     * Crear usuario
      *
      * @param user
-     * @return the created user info
+     * @return usuario creado
      * */
     public UserSecRequestDTO saveUser(UserSecRequestDTO user);
 
     /**
-     * Update a user by id
+     * Actualizar un usuario por id
      *
      * @param user
      * @param id
-     * @return the updated user
+     * @return usuario actualizado
      * */
     public UserSecUpdateDTO updateUser(UserSecUpdateDTO user, Long id);
 
     /**
-     * Delete a user
+     * Borrar usuario
+     *
      * @param id
      * */
     public void deleteUser(Long id);
 
     /**
-     * Encript the user password
+     * Encriptar contraseña del usuario
      *
      * @param password
-     * @return encripted password
+     * @return Contraseña encriptada
      * */
     public String encriptPassword(String password);
 }

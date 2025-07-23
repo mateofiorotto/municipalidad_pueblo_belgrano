@@ -33,13 +33,12 @@ public record ComplaintRequestDTO(
         String descripcion,
 
         //opcional
-        String imagen,
+        String imagen
 
         //Se controlan desde el dashboard admin
-        String comentario,
-        String area,
-
-        boolean cerrado
+//        String comentario,
+//        String area,
+//        boolean cerrado
 
         //NO SE PUEDEN MODIFICAR X EL USUARIO:
         //Date fecha_cerrado

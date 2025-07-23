@@ -9,26 +9,30 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "noticias")
-@SQLDelete(sql = "UPDATE roles SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE noticias SET deleted = true WHERE id=?")
 @SQLRestriction("deleted=false")
 public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String titular;
+    @Column(nullable = false)
     private Date fecha;
+    @Column(nullable = false)
     private String imagen;
+    @Column(nullable = false)
     private String descripcion;
     private String descripcion_adicional; //opcional
     //relacion con categoria
     //manytoone
     @ManyToOne
-    @JoinColumn(name="category_id", nullable = false)
+    @JoinColumn(name="categoria_id", nullable = false)
     private Category categoria;
     //relacion con evento (opcional)
     //manytoone
     @ManyToOne
-    @JoinColumn(name="event_id", nullable = false)
+    @JoinColumn(name="evento_id", nullable = true)
     private Event evento;
     private boolean deleted = Boolean.FALSE;
 

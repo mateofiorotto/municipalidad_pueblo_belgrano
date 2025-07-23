@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/news")
 @PreAuthorize("denyAll()")
 @Validated
-@RequestMapping("/")
 public class NewsController {
 
     private final INewsService newsService;
@@ -35,7 +35,7 @@ public class NewsController {
      * @return lista de noticias
      */
     @Operation(summary = "Obtener lista de noticias",
-            description = "Devuelve la lista de noticias del sistema. Solo empleados municipales / administradores pueden acceder",
+            description = "Devuelve la lista de noticias del sistema. Accedible por todos",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -59,7 +59,7 @@ public class NewsController {
      * @return una noticia
      */
     @Operation(summary = "Obtener una noticia",
-            description = "Obtener una noticia en particular. Solo empleados municipales / administradores pueden acceder",
+            description = "Obtener una noticia en particular. Accedible por todos",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {

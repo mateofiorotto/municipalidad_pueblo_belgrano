@@ -10,13 +10,15 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "transparencias")
-@SQLDelete(sql = "UPDATE roles SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE transparencias SET deleted = true WHERE id=?")
 @SQLRestriction("deleted=false")
 public class Transparency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private Date fecha;
+    @Column(nullable = false)
     private String pdf; //referencia a un archivo pdf
     private boolean deleted = Boolean.FALSE;
 

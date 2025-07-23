@@ -1,5 +1,7 @@
 package ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint;
 
+import ar.gob.pueblogeneralbelgrano.municipalidad.dto.area.AreaResponseDTO;
+
 import java.util.Date;
 
 public record ComplaintResponseDTO(
@@ -11,8 +13,8 @@ public record ComplaintResponseDTO(
         String descripcion,
         String imagen,
         String comentario,
-        String area,
-        boolean cerrado,
+        AreaResponseDTO area,
+        Boolean cerrado,
         Date fecha_cerrado,
         Date fecha_reclamo) {
 }

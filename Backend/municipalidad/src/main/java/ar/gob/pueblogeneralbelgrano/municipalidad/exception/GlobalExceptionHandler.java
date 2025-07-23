@@ -104,4 +104,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiException, HttpStatus.UNAUTHORIZED);
     }
 
+    //409 conflict
+    @ExceptionHandler(value = {ConflictException.class})
+    public ResponseEntity<Object> handleConflictException(ConflictException e) {
+
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                e,
+                HttpStatus.CONFLICT,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(apiException, HttpStatus.CONFLICT);
+    }
+
 }

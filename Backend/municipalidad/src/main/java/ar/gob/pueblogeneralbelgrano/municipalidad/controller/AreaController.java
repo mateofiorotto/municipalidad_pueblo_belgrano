@@ -145,6 +145,7 @@ public class AreaController {
             @ApiResponse(responseCode = "200", description = "Area borrada correctamente"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Area no encontrada"),
+            @ApiResponse(responseCode = "409", description = "Error al eliminar area ya que esta relacionada con otra entidad"),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")

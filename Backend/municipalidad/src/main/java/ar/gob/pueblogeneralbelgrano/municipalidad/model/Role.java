@@ -11,18 +11,15 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-@SQLDelete(sql = "UPDATE roles SET deleted = true WHERE id=?")
-@SQLRestriction("deleted=false")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String role;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "roles_permisos", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private Set<Permission> permissions = new HashSet<>();
-    private boolean deleted = Boolean.FALSE;
 
     public Role() {}
 
@@ -54,14 +51,6 @@ public class Role {
 
     public void setPermissions(Set<Permission> permissions) {
         this.permissions = permissions;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
     }
 
     @Override

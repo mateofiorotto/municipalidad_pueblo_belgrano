@@ -2,6 +2,7 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.service.category;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.category.CategoryRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.category.CategoryResponseDTO;
+import ar.gob.pueblogeneralbelgrano.municipalidad.exception.ConflictException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.NotFoundException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.ICategoryMapper;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Category;
@@ -65,6 +66,10 @@ public class CategoryService implements ICategoryService {
         Category categoryToDelete = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Categoria no encontrada, ID: " + id));
 
-        categoryRepository.delete(categoryToDelete);
+        if (categoryRepository.relatedCategories(id) >= 1) {
+            throw new ConflictException("No se puede eliminar la categoria ya que se encuentra relacionada con una noticia");
+        } else {
+            categoryRepository.delete(categoryToDelete);
+        }
     }
 }

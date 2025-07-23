@@ -39,7 +39,7 @@ public class UserSecService implements IUserSecService {
 
     @Override
     public UserSecResponseDTO getUserById(Long id) {
-        UserSec user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found with ID: " + id));
+        UserSec user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Usuario no encontrado, ID: " + id));
 
         return IUserSecMapper.mapper.userSecToUserSecResponseDTO(user);
     }
@@ -53,7 +53,7 @@ public class UserSecService implements IUserSecService {
 
         Set<Role> roleList = new HashSet<>();
         for (RoleIdDTO r : user.getRoles()) {
-            Role existingRole = roleRepository.findById(r.id()).orElseThrow(() -> new BadRequestException("Role not found"));
+            Role existingRole = roleRepository.findById(r.id()).orElseThrow(() -> new NotFoundException("Rol no encontrado, ID: " + r.id()));
 
             roleList.add(existingRole);
         }
@@ -67,7 +67,7 @@ public class UserSecService implements IUserSecService {
     @Override
     public UserSecUpdateDTO updateUser(UserSecUpdateDTO user, Long id) {
         UserSec userToUpdate = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User not found with ID: " + id));
+                .orElseThrow(() -> new NotFoundException("Usuario no encontrado, ID: " + id));
 
         userToUpdate.setPassword(this.encriptPassword(user.getPassword()));
         userToUpdate.setEnabled(user.isEnabled());
@@ -78,7 +78,7 @@ public class UserSecService implements IUserSecService {
         Set<Role> roleList = new HashSet<>();
         for (RoleIdDTO r : user.getRoles()) {
             Role existingRole = roleRepository.findById(r.id())
-                    .orElseThrow(() -> new BadRequestException("Role not found"));
+                    .orElseThrow(() -> new NotFoundException("Rol no encontrado, ID: " + r.id()));
 
             roleList.add(existingRole);
         }
@@ -92,7 +92,7 @@ public class UserSecService implements IUserSecService {
 
     @Override
     public void deleteUser(Long id) {
-        UserSec userToDelete = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found with ID: " + id));
+        UserSec userToDelete = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Usuario no encontrado, ID: " + id));
 
         userToDelete.getRoles().clear();
 

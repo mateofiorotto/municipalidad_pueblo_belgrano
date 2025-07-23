@@ -145,10 +145,11 @@ public class CategoryController {
             @ApiResponse(responseCode = "200", description = "Categoria borrada correctamente"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Categoria no encontrada"),
+            @ApiResponse(responseCode = "409", description = "Error al eliminar por relacion con otra entidad"),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
     public ResponseEntity<String> deleteCategory(@PathVariable Long id){
         categoryService.deleteCategory(id);
 

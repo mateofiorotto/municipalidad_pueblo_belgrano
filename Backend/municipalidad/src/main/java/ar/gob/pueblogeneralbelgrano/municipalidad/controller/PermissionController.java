@@ -133,7 +133,7 @@ public class PermissionController {
     }
 
     /**
-     * Endpoint que elimina un permiso de la base de datos
+     * Endpoint que elimina un permiso de la base de datos. Solo administradores
      *
      * @param id
      * @return mensaje de confirmacion de eliminacion

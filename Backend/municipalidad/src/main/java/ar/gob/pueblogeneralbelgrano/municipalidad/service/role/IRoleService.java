@@ -7,39 +7,40 @@ import java.util.List;
 
 public interface IRoleService {
     /**
-     * Returns a list of all roles
+     * Devuelve una lista de roles
      *
-     * @return list of roles
+     * @return lista de roles
      * */
     public List<RoleResponseDTO> getRoles();
 
     /**
-     * Returns a specific role
+     * Devuelve un rol especifico por id
      *
      * @param id
-     * @return a role
+     * @return un rol
      * */
     public RoleResponseDTO getRoleById(Long id);
 
     /**
-     * Create a role
+     * Crear un rol
      *
      * @param role
-     * @return the created role info
+     * @return rol creado
      * */
     public RoleRequestDTO saveRole(RoleRequestDTO role);
 
     /**
-     * Update a role by id
+     * Actualizar rol por ID
      *
      * @param role
      * @param id
-     * @return the updated role
+     * @return rol actualizado
      * */
     public RoleRequestDTO updateRole(RoleRequestDTO role, Long id);
 
     /**
-     * Delete a role
+     * Borrar rol
+     *
      * @param id
      * */
     public void deleteRole(Long id);

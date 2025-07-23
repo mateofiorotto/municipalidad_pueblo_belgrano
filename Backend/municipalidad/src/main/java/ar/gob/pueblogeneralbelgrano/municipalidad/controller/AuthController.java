@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +38,7 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "Sesión iniciada"),
             @ApiResponse(responseCode = "401", description = "Inicio de sesión fallido")
     })
+    @PreAuthorize("permitAll()")
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid AuthLoginRequestDTO userRequest){
         return new ResponseEntity<>(this.userDetailsServiceImp.login(userRequest), HttpStatus.OK);

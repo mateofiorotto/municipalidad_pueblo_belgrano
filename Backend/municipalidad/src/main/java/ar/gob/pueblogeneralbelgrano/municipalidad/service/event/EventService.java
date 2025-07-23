@@ -2,6 +2,7 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.service.event;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.event.EventRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.event.EventResponseDTO;
+import ar.gob.pueblogeneralbelgrano.municipalidad.exception.ConflictException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.NotFoundException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IEventMapper;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Event;
@@ -68,6 +69,11 @@ public class EventService implements IEventService {
     public void deleteEvent(Long id) {
         Event eventToDelete = eventRepository.findById(id).orElseThrow(() -> new NotFoundException("El evento no existe, ID: " + id));
 
+        if (eventRepository.relatedEvents(id) >= 1) {
+            throw new ConflictException("No se puede eliminar el evento ya que se encuentra relacionado con una noticia");
+        } else {
+            eventRepository.delete(eventToDelete);
+        }
         //metodo de eliminacion de img del sistema:
 
         eventRepository.delete(eventToDelete);
