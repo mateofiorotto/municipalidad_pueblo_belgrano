@@ -11,8 +11,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "usuarios")
-@SQLDelete(sql = "UPDATE users SET deleted = true WHERE id=?")
-@SQLRestriction("deleted=false")
 public class UserSec {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +20,7 @@ public class UserSec {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
-    private boolean enabled;
-    @Column(nullable = false)
-    private boolean accountNotExpired;
-    @Column(nullable = false)
-    private boolean accountNotLocked;
-    @Column(nullable = false)
-    private boolean credentialNotExpired;
+    private boolean enabled = true;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -36,14 +28,11 @@ public class UserSec {
 
     public UserSec(){}
 
-    public UserSec(Long id, String username, String password, boolean enabled, boolean accountNotExpired, boolean accountNotLocked, boolean credentialNotExpired, Set<Role> roles) {
+    public UserSec(Long id, String username, String password, boolean enabled, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.enabled = enabled;
-        this.accountNotExpired = accountNotExpired;
-        this.accountNotLocked = accountNotLocked;
-        this.credentialNotExpired = credentialNotExpired;
         this.roles = roles;
     }
 
@@ -77,30 +66,6 @@ public class UserSec {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public boolean isAccountNotExpired() {
-        return accountNotExpired;
-    }
-
-    public void setAccountNotExpired(boolean accountNotExpired) {
-        this.accountNotExpired = accountNotExpired;
-    }
-
-    public boolean isAccountNotLocked() {
-        return accountNotLocked;
-    }
-
-    public void setAccountNotLocked(boolean accountNotLocked) {
-        this.accountNotLocked = accountNotLocked;
-    }
-
-    public boolean isCredentialNotExpired() {
-        return credentialNotExpired;
-    }
-
-    public void setCredentialNotExpired(boolean credentialNotExpired) {
-        this.credentialNotExpired = credentialNotExpired;
     }
 
     public Set<Role> getRoles() {

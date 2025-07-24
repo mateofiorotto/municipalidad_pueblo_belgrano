@@ -80,12 +80,12 @@ public class EventController {
     }
 
     /**
-     * Endpoint que guarda un evento en la base de datos. Solo accedible por admins/empleados municipales
+     * Endpoint que guarda un evento en la base de datos. Solo accedible por admins, el intendente y comunicacion.
      * @param event
      * @return evento creado
      */
     @Operation(summary = "Crear un evento",
-            description = "Retornar el evento creado. Solo admins/empleados municipales pueden crear nuevos eventos.",
+            description = "Retornar el evento creado. Solo admins, el intendente y comunicacion pueden crear nuevos eventos.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -95,7 +95,7 @@ public class EventController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
     public ResponseEntity<ResponseDTO<EventRequestDTO>> saveEvent(@Valid @RequestBody EventRequestDTO event){
 
         eventService.saveEvent(event);
@@ -106,13 +106,13 @@ public class EventController {
     }
 
     /**
-     * Endpoint que actualiza un evento de la base de datos. Solo accedible por admins y empleados municipales.
+     * Endpoint que actualiza un evento de la base de datos. Solo accedible por admins, el intendente y comunicacion.
      * @param event
      * @param id
      * @return evento actualizado
      */
     @Operation(summary = "Editar un evento",
-            description = "Retornar el evento editado. Solo usuarios admins/empleados municipales pueden editar eventos.",
+            description = "Retornar el evento editado. Solo admins, el intendente y comunicacion pueden editar eventos.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -123,7 +123,7 @@ public class EventController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
     public ResponseEntity<ResponseDTO<EventRequestDTO>> updateEvent(@Valid @RequestBody EventRequestDTO event, @PathVariable Long id){
 
         eventService.updateEvent(event, id);
@@ -134,13 +134,13 @@ public class EventController {
     }
 
     /**
-     * Endpoint que elimina un evento de la base de datos. Accedible solo por admins
+     * Endpoint que elimina un evento de la base de datos. Solo admins, el intendente y comunicacion pueden borrar eventos
      *
      * @param id
      * @return mensaje de confirmacion
      */
     @Operation(summary = "Borrar un evento",
-            description = "Devuelve un mensaje de confirmacion. Solo admins pueden borrar eventos.",
+            description = "Devuelve un mensaje de confirmacion. Solo admins, el intendente y comunicacion pueden borrar eventos.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -151,7 +151,7 @@ public class EventController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
     public ResponseEntity<String> deleteEvent(@PathVariable Long id){
         eventService.deleteEvent(id);
 

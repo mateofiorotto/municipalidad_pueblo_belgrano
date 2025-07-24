@@ -78,12 +78,12 @@ public class TransparencyController {
     }
 
     /**
-     * Endpoint que guarda una transparencia en la base de datos. Solo accedible por admins/empleados municipales
+     * Endpoint que guarda una transparencia en la base de datos. Solo accedible por admins, el intendente o secretarios
      * @param transparency
      * @return transparencia creada
      */
     @Operation(summary = "Crear una transparencia",
-            description = "Retornar la transparencia creada. Solo admins/empleados municipales pueden crear nuevas transparencias.",
+            description = "Retornar la transparencia creada. Solo admins, el intendente o secretarios pueden crear nuevas transparencias.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -93,7 +93,7 @@ public class TransparencyController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'SECRETARIO')")
     public ResponseEntity<ResponseDTO<TransparencyRequestDTO>> saveTransparency(@Valid @RequestBody TransparencyRequestDTO transparency){
 
         transparencyService.saveTransparency(transparency);
@@ -104,13 +104,13 @@ public class TransparencyController {
     }
 
     /**
-     * Endpoint que actualiza una transparencia de la base de datos. Solo accedible por admins y empleados municipales.
+     * Endpoint que actualiza una transparencia de la base de datos. Solo accedible por admins, el intendente o secretarios
      * @param transparency
      * @param id
      * @return transparencia actualizada
      */
     @Operation(summary = "Editar una transparencia",
-            description = "Retornar la transparencia editada. Solo usuarios admins/empleados municipales pueden editar transparencias.",
+            description = "Retornar la transparencia editada. Solo admins, el intendente o secretarios pueden editar transparencias.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -121,7 +121,7 @@ public class TransparencyController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'SECRETARIO')")
     public ResponseEntity<ResponseDTO<TransparencyRequestDTO>> updateTransparency(@Valid @RequestBody TransparencyRequestDTO transparency, @PathVariable Long id){
 
         transparencyService.updateTransparency(transparency, id);
@@ -132,13 +132,13 @@ public class TransparencyController {
     }
 
     /**
-     * Endpoint que elimina una transparencia de la base de datos. Accedible solo por admins y empleados municipales
+     * Endpoint que elimina una transparencia de la base de datos. Accedible solo por admins, el intendente o secretarios
      *
      * @param id
      * @return mensaje de confirmacion
      */
     @Operation(summary = "Borrar una transparencia",
-            description = "Devuelve un mensaje de confirmacion. Solo admins/empleados municipales pueden borrar transparencias.",
+            description = "Devuelve un mensaje de confirmacion. Solo admins, el intendente o secretarios pueden borrar transparencias.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -148,7 +148,7 @@ public class TransparencyController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'SECRETARIO')")
     public ResponseEntity<String> deleteTransparency(@PathVariable Long id){
         transparencyService.deleteTransparency(id);
 

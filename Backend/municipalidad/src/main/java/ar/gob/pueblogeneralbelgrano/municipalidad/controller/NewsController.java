@@ -78,12 +78,12 @@ public class NewsController {
     }
 
     /**
-     * Endpoint que guarda una noticia en la base de datos. Solo accedible por admins/empleados municipales
+     * Endpoint que guarda una noticia en la base de datos. Solo accedible por admins, el intendente o comunicacion
      * @param news
      * @return noticia creada
      */
     @Operation(summary = "Crear una noticia",
-            description = "Retornar la noticia creada. Solo admins/empleados municipales pueden crear nuevas noticias.",
+            description = "Retornar la noticia creada. Solo admins, el intendente o comunicacion pueden crear nuevas noticias.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -93,7 +93,7 @@ public class NewsController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
     public ResponseEntity<ResponseDTO<NewsRequestDTO>> saveNews(@Valid @RequestBody NewsRequestDTO news){
 
         newsService.saveNews(news);
@@ -104,13 +104,13 @@ public class NewsController {
     }
 
     /**
-     * Endpoint que actualiza una noticia de la base de datos. Solo accedible por admins y empleados municipales.
+     * Endpoint que actualiza una noticia de la base de datos. Solo accedible por admins, el intendente o comunicacion
      * @param news
      * @param id
      * @return noticia actualizada
      */
     @Operation(summary = "Editar una noticia",
-            description = "Retornar la noticia editada. Solo usuarios admins/empleados municipales pueden editar noticias.",
+            description = "Retornar la noticia editada. Solo usuarios admins, el intendente o comunicacion pueden editar noticias.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -121,7 +121,7 @@ public class NewsController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
     public ResponseEntity<ResponseDTO<NewsRequestDTO>> updateNews(@Valid @RequestBody NewsRequestDTO news, @PathVariable Long id){
 
         newsService.updateNews(news, id);
@@ -132,13 +132,13 @@ public class NewsController {
     }
 
     /**
-     * Endpoint que elimina una noticia de la base de datos. Accedible solo por admins y empleados municipales
+     * Endpoint que elimina una noticia de la base de datos. Accedible solo por admins, el intendente o comunicacion
      *
      * @param id
      * @return mensaje de confirmacion
      */
     @Operation(summary = "Borrar una noticia",
-            description = "Devuelve un mensaje de confirmacion. Solo admins/empleados municipales pueden borrar noticias.",
+            description = "Devuelve un mensaje de confirmacion. Solo admins, el intendente o comunicacion pueden borrar noticias.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -148,7 +148,7 @@ public class NewsController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
     public ResponseEntity<String> deleteNews(@PathVariable Long id){
         newsService.deleteNews(id);
 

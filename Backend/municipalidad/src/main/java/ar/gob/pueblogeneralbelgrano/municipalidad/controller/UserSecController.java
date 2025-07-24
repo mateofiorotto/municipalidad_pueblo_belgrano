@@ -3,8 +3,6 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.controller;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.response.ResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecResponseDTO;
-import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecUpdateDTO;
-import ar.gob.pueblogeneralbelgrano.municipalidad.model.UserSec;
 import ar.gob.pueblogeneralbelgrano.municipalidad.service.usersec.IUserSecService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -127,10 +125,10 @@ public class UserSecController {
     })
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ResponseDTO<UserSecUpdateDTO>> updateUser(@Valid @RequestBody UserSecUpdateDTO user, @PathVariable Long id){
+    public ResponseEntity<ResponseDTO<UserSecRequestDTO>> updateUser(@Valid @RequestBody UserSecRequestDTO user, @PathVariable Long id){
         userService.updateUser(user, id);
 
-        ResponseDTO<UserSecUpdateDTO> updateUserResponse = new ResponseDTO<>(user, 200, "Usuario actualizado con exito");
+        ResponseDTO<UserSecRequestDTO> updateUserResponse = new ResponseDTO<>(user, 200, "Usuario actualizado con exito");
 
         return ResponseEntity.status(HttpStatus.OK).body(updateUserResponse);
     }

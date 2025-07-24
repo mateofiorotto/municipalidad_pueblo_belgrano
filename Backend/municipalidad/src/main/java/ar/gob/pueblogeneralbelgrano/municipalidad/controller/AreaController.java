@@ -29,12 +29,12 @@ public class AreaController {
     }
 
     /**
-     * Endpoint que obtiene todas las areas. Solo empleados municipales / administradores pueden acceder
+     * Endpoint que obtiene todas las areas. Solo administradores, el intendente o responsables de reclamos pueden ver
      *
      * @return DTO De la lista de areas
      */
     @Operation(summary = "Obtener lista de areas",
-            description = "Devuelve la lista de areas del sistema. Solo empleados municipales / administradores pueden acceder",
+            description = "Devuelve la lista de areas del sistema. Solo administradores, el intendente o responsables de reclamos pueden ver",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -42,7 +42,7 @@ public class AreaController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
     public ResponseEntity<ResponseDTO<List<AreaResponseDTO>>> getAreas() {
         List<AreaResponseDTO> areas = areaService.getAreas();
 
@@ -52,13 +52,13 @@ public class AreaController {
     }
 
     /**
-     * Endpoint que obtiene una area por su id. Solo empleados municipales / administradores pueden acceder
+     * Endpoint que obtiene una area por su id. Solo administradores, el intendente o responsables de reclamos pueden ver
      *
      * @param id
      * @return Una area
      */
     @Operation(summary = "Obtener un area",
-            description = "Obtener un area en particular. Solo empleados municipales / administradores pueden acceder",
+            description = "Obtener un area en particular. Solo administradores, el intendente o responsables de reclamos pueden ver",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -67,7 +67,7 @@ public class AreaController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
     public ResponseEntity<ResponseDTO<AreaResponseDTO>> getAreaById(@PathVariable Long id){
 
         AreaResponseDTO area = areaService.getAreaById(id);
@@ -78,13 +78,13 @@ public class AreaController {
     }
 
     /**
-     * Endpoint que guarda una area en la base de datos. Solo pueden crearlas Administradores y empleados municipales.
+     * Endpoint que guarda una area en la base de datos. Solo administradores y el intendente pueden acceder
      *
      * @param area
      * @return la area creada
      */
     @Operation(summary = "Crear un area",
-            description = "Retornar el area creada. Solo admins/empleados municipales pueden crear nuevas areas.",
+            description = "Retornar el area creada. Solo administradores y el intendente pueden crear nuevas areas",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -94,7 +94,7 @@ public class AreaController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE')")
     public ResponseEntity<ResponseDTO<AreaRequestDTO>> saveArea(@Valid @RequestBody AreaRequestDTO area){
         areaService.saveArea(area);
 
@@ -104,14 +104,14 @@ public class AreaController {
     }
 
     /**
-     * Endpoint que edita una area de la base de datos. Solo accedible por admins y empleados municipales
+     * Endpoint que edita una area de la base de datos. Solo administradores y el intendente pueden acceder
      *
      * @param area
      * @param id
      * @return la edicion modificada
      */
     @Operation(summary = "Editar un area",
-            description = "Retornar el area editada. Solo usuarios admins/empleados municipales pueden editar areas.",
+            description = "Retornar el area editada. Solo administradores y el intendente pueden editar areas",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -122,7 +122,7 @@ public class AreaController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE')")
     public ResponseEntity<ResponseDTO<AreaRequestDTO>> updateArea(@Valid @RequestBody AreaRequestDTO area, @PathVariable Long id){
         areaService.updateArea(area, id);
 
@@ -132,13 +132,13 @@ public class AreaController {
     }
 
     /**
-     * Endpoint que elimina una edicion de la DB. Solo accedible por admins / empleados municipales
+     * Endpoint que elimina una edicion de la DB. Solo administradores y el intendente pueden acceder
      *
      * @param id
      * @return mensaje de confirmacion
      */
     @Operation(summary = "Borrar un area",
-            description = "Devuelve un mensaje de confirmacion. Solo admins/empleados municipales pueden borrar areas.",
+            description = "Devuelve un mensaje de confirmacion. Solo administradores y el intendente pueden borrar areas.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -149,7 +149,7 @@ public class AreaController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE')")
     public ResponseEntity<String> deleteArea(@PathVariable Long id){
         areaService.deleteArea(id);
 

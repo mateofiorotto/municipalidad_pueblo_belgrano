@@ -31,12 +31,12 @@ public class ComplaintController {
     }
 
     /**
-     * Endpoint que obtiene la lista de reclamos. Solo para admins o empleados municipales
+     * Endpoint que obtiene la lista de reclamos. Solo administradores y el intendente pueden acceder
      *
      * @return lista de reclamos
      */
     @Operation(summary = "Obtener lista de reclamos",
-            description = "Devuelve la lista de reclamos del sistema. Solo empleados municipales / administradores pueden acceder",
+            description = "Devuelve la lista de reclamos del sistema. Solo administradores y el intendente pueden acceder",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -44,7 +44,7 @@ public class ComplaintController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
     public ResponseEntity<ResponseDTO<List<ComplaintResponseDTO>>> getComplaints(){
 
         List<ComplaintResponseDTO> complaints = complaintService.getComplaints();
@@ -55,13 +55,13 @@ public class ComplaintController {
     }
 
     /**
-     * Endpoint que devuelve un reclamo especifico por id. Solo empleados municipales o admins
+     * Endpoint que devuelve un reclamo especifico por id. Solo puede acceder el intendente, admins o responsables de reclamos
      *
      * @param id
      * @return un reclamo
      */
     @Operation(summary = "Obtener un reclamo",
-            description = "Obtener un reclamo en particular. Solo empleados municipales / administradores pueden acceder",
+            description = "Obtener un reclamo en particular. Solo pueden acceder admins, el intendente o responsables de reclamos",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -70,7 +70,7 @@ public class ComplaintController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
     public ResponseEntity<ResponseDTO<ComplaintResponseDTO>> getComplaintById(@PathVariable Long id){
 
         ComplaintResponseDTO complaint = complaintService.getComplaintById(id);
@@ -107,24 +107,24 @@ public class ComplaintController {
     }
 
     /**
-     * Endpoint que actualiza un reclamo de la base de datos. Solo accedible por admins y empleados municipales.
+     * Endpoint que actualiza un reclamo de la base de datos. Solo accedible por admins, el intendente y responsable de reclamos
      * @param complaint
      * @param id
      * @return reclamo actualizado
      */
     @Operation(summary = "Editar el area, el comentario y si se cierra o no el reclamo",
-            description = "Retornar el reclamo editado. Solo usuarios admins/empleados municipales pueden editar reclamos no menores a 7 dias de su cierre.",
+            description = "Retornar el reclamo editado. Solo usuarios admins, el intendente o responsable de reclamos pueden editar reclamos no menores a 7 dias de su cierre.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Reclamo editado correctamente"),
             @ApiResponse(responseCode = "400", description = "Error de validacion en campos"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
-            @ApiResponse(responseCode = "404", description = "Reclamo no encontrado"),
+            @ApiResponse(responseCode = "404", description = "Reclamo no encontrado o pasaron 7 dias desde el reclamo"),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
     public ResponseEntity<ResponseDTO<ComplaintUpdateDTO>> updateComplaint(@Valid @RequestBody ComplaintUpdateDTO complaint, @PathVariable Long id){
 
         complaintService.updateComplaint(complaint, id);
@@ -135,13 +135,13 @@ public class ComplaintController {
     }
 
     /**
-     * Endpoint que elimina un reclamo de la base de datos. Accedible solo por admins
+     * Endpoint que elimina un reclamo de la base de datos. Accedible solo por el intendente o administradores
      *
      * @param id
      * @return mensaje de confirmacion
      */
     @Operation(summary = "Borrar un reclamo",
-            description = "Devuelve un mensaje de confirmacion. Solo admins pueden borrar reclamos.",
+            description = "Devuelve un mensaje de confirmacion. Solo admins o el intendente pueden borrar reclamos.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -151,7 +151,7 @@ public class ComplaintController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE')")
     public ResponseEntity<String> deleteComplaint(@PathVariable Long id){
         complaintService.deleteComplaint(id);
 

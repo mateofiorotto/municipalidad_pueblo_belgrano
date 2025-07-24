@@ -78,13 +78,13 @@ public class CategoryController {
     }
 
     /**
-     * Endpoint que guarda una categoria en la base de datos. Solo pueden crearlas Administradores y empleados municipales.
+     * Endpoint que guarda una categoria en la base de datos. Solo pueden crearlas admins, el intendente y comunicacion
      *
      * @param category
      * @return la categoria creada
      */
     @Operation(summary = "Crear una categoria",
-            description = "Retornar la categoria creada. Solo admins/empleados municipales pueden crear nuevas categorias.",
+            description = "Retornar la categoria creada. Solo admins, el intendente y comunicacion pueden crear nuevas categorias.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -94,7 +94,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
     public ResponseEntity<ResponseDTO<CategoryRequestDTO>> saveCategory(@Valid @RequestBody CategoryRequestDTO category){
         categoryService.saveCategory(category);
 
@@ -104,14 +104,14 @@ public class CategoryController {
     }
 
     /**
-     * Endpoint que edita una categoria de la base de datos. Solo accedible por admins y empleados municipales
+     * Endpoint que edita una categoria de la base de datos. Solo accedible por admins, el intendente y comunicacion
      *
      * @param category
      * @param id
      * @return la edicion modificada
      */
     @Operation(summary = "Editar una categoria",
-            description = "Retornar la categoria editado. Solo usuarios admins/empleados municipales pueden editar categorias.",
+            description = "Retornar la categoria editado. Solo usuarios admins, el intendente o comunicacion puede editar categorias.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -122,7 +122,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
     public ResponseEntity<ResponseDTO<CategoryRequestDTO>> updateCategory(@Valid @RequestBody CategoryRequestDTO category, @PathVariable Long id){
         categoryService.updateCategory(category, id);
 
@@ -132,13 +132,13 @@ public class CategoryController {
     }
 
     /**
-     * Endpoint que elimina una edicion de la DB. Solo accedible por admins / empleados municipales
+     * Endpoint que elimina una edicion de la DB. Solo accedible por admins, el intendente o comunicacion
      *
      * @param id
      * @return mensaje de confirmacion
      */
     @Operation(summary = "Borrar una categoria",
-            description = "Devuelve un mensaje de confirmacion. Solo admins/empleados municipales pueden borrar categorias.",
+            description = "Devuelve un mensaje de confirmacion. Solo admins, el intendente o comunicacion pueden borrar categorias.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -149,7 +149,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN', 'EMPLEADO_MUNICIPAL')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
     public ResponseEntity<String> deleteCategory(@PathVariable Long id){
         categoryService.deleteCategory(id);
 

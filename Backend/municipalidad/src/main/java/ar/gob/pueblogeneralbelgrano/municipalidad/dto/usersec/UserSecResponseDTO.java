@@ -7,8 +7,5 @@ import java.util.Set;
 public record UserSecResponseDTO (
     String username,
     boolean enabled,
-    boolean accountNotExpired,
-    boolean accountNotLocked,
-    boolean credentialNotExpired,
     Set<RoleResponseDTO> roles){
 }

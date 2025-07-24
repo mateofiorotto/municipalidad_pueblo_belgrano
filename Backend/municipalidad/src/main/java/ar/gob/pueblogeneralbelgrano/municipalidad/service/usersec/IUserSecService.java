@@ -2,7 +2,6 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.service.usersec;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecResponseDTO;
-import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecUpdateDTO;
 
 import java.util.List;
 
@@ -37,7 +36,7 @@ public interface IUserSecService {
      * @param id
      * @return usuario actualizado
      * */
-    public UserSecUpdateDTO updateUser(UserSecUpdateDTO user, Long id);
+    public UserSecRequestDTO updateUser(UserSecRequestDTO user, Long id);
 
     /**
      * Borrar usuario

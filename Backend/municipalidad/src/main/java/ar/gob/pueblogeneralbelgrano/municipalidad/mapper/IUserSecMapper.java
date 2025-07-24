@@ -2,7 +2,6 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.mapper;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecRequestDTO;
-import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecUpdateDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.UserSec;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -17,6 +16,4 @@ public interface IUserSecMapper {
 
     UserSecRequestDTO userSecToUserSecRequestDTO(UserSec userSec);
     UserSec userSecRequestDTOToUserSec(UserSecRequestDTO userSecRequestDTO);
-
-    UserSecUpdateDTO userSecToUserSecUpdateDTO(UserSec userSec);
 }

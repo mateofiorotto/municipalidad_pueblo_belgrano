@@ -3,7 +3,6 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.service.usersec;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.role.RoleIdDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecResponseDTO;
-import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecUpdateDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.BadRequestException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.NotFoundException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IUserSecMapper;
@@ -49,10 +48,14 @@ public class UserSecService implements IUserSecService {
 
         UserSec userToSave = IUserSecMapper.mapper.userSecRequestDTOToUserSec(user);
 
-        userToSave.setPassword(this.encriptPassword(user.getPassword()));
+        if (user.password().length() < 8) {
+            throw new BadRequestException("La contraseña debe al menos tener 8 caracteres");
+        } else {
+            userToSave.setPassword(this.encriptPassword(user.password()));
+        }
 
         Set<Role> roleList = new HashSet<>();
-        for (RoleIdDTO r : user.getRoles()) {
+        for (RoleIdDTO r : user.roles()) {
             Role existingRole = roleRepository.findById(r.id()).orElseThrow(() -> new NotFoundException("Rol no encontrado, ID: " + r.id()));
 
             roleList.add(existingRole);
@@ -65,18 +68,20 @@ public class UserSecService implements IUserSecService {
     }
 
     @Override
-    public UserSecUpdateDTO updateUser(UserSecUpdateDTO user, Long id) {
+    public UserSecRequestDTO updateUser(UserSecRequestDTO user, Long id) {
         UserSec userToUpdate = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Usuario no encontrado, ID: " + id));
 
-        userToUpdate.setPassword(this.encriptPassword(user.getPassword()));
-        userToUpdate.setEnabled(user.isEnabled());
-        userToUpdate.setAccountNotExpired(user.isAccountNotExpired());
-        userToUpdate.setAccountNotLocked(user.isAccountNotLocked());
-        userToUpdate.setCredentialNotExpired(user.isCredentialNotExpired());
+        if (user.password().length() < 8) {
+            throw new BadRequestException("La contraseña debe al menos tener 8 caracteres");
+        } else {
+            userToUpdate.setPassword(this.encriptPassword(user.password()));
+        }
+
+        userToUpdate.setEnabled(user.enabled());
 
         Set<Role> roleList = new HashSet<>();
-        for (RoleIdDTO r : user.getRoles()) {
+        for (RoleIdDTO r : user.roles()) {
             Role existingRole = roleRepository.findById(r.id())
                     .orElseThrow(() -> new NotFoundException("Rol no encontrado, ID: " + r.id()));
 
@@ -87,7 +92,7 @@ public class UserSecService implements IUserSecService {
 
         UserSec updatedUser = userRepository.save(userToUpdate);
 
-        return IUserSecMapper.mapper.userSecToUserSecUpdateDTO(updatedUser);
+        return IUserSecMapper.mapper.userSecToUserSecRequestDTO(updatedUser);
     }
 
     @Override
