@@ -3,13 +3,21 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.service.complaint;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintUpdateDTO;
+import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.BadRequestException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.NotFoundException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IAreaMapper;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IComplaintMapper;
+import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IComplaintMapper;
+import ar.gob.pueblogeneralbelgrano.municipalidad.model.Complaint;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Complaint;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IAreaRepository;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IComplaintRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -30,14 +38,23 @@ public class ComplaintService implements IComplaintService {
     }
 
     @Override
-    public List<ComplaintResponseDTO> getComplaints() {
+    public PagedModel<ComplaintResponseDTO> getPaginatedComplaints(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
 
-        List<Complaint> complaintsList = complaintRepository.findAllRecentOpenComplaints();
+        Page<Complaint> paginatedComplaints = complaintRepository.findAllByOrderByIdDesc(pageable);
 
-        return complaintsList
+        List<ComplaintResponseDTO> complaintDTOList = paginatedComplaints
                 .stream()
-                .map(complaints -> IComplaintMapper.mapper.complaintToComplaintResponseDTO(complaints))
-                .collect(Collectors.toUnmodifiableList());
+                .map(IComplaintMapper.mapper::complaintToComplaintResponseDTO)
+                .collect(Collectors.toList());
+
+        Page<ComplaintResponseDTO> paginatedComplaintList = new PageImpl<>(
+                complaintDTOList,
+                pageable,
+                paginatedComplaints.getTotalElements()
+        );
+
+        return new PagedModel<>(paginatedComplaintList);
     }
 
     @Override

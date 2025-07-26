@@ -1,14 +1,21 @@
 package ar.gob.pueblogeneralbelgrano.municipalidad.service.news;
 
+import ar.gob.pueblogeneralbelgrano.municipalidad.dto.category.CategoryResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.news.NewsRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.news.NewsResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.NotFoundException;
+import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.ICategoryMapper;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.INewsMapper;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Category;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.News;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.ICategoryRepository;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IEventRepository;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.INewsRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,13 +35,24 @@ public class NewsService implements INewsService {
     }
 
     @Override
-    public List<NewsResponseDTO> getNews() {
-        List<News> newsList = newsRepository.findAll();
+    public PagedModel<NewsResponseDTO> getPaginatedNews(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
 
-        return newsList
+        Page<News> paginatedNews = newsRepository.findAllByOrderByIdDesc(pageable);
+
+        List<NewsResponseDTO> newsDTOList = paginatedNews
                 .stream()
-                .map(news -> INewsMapper.mapper.newsToNewsResponseDTO(news))
+                .map(INewsMapper.mapper::newsToNewsResponseDTO)
                 .collect(Collectors.toList());
+
+        //crear un nuevo objeto page y le pasamos la lista de categorias transformadas y la info de paginas
+        Page<NewsResponseDTO> paginatedNewsList = new PageImpl<>(
+                newsDTOList,
+                pageable,
+                paginatedNews.getTotalElements()
+        );
+
+        return new PagedModel<>(paginatedNewsList);
     }
 
     @Override

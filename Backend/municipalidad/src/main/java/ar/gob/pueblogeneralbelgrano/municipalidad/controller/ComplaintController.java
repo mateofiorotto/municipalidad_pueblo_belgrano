@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,25 +32,29 @@ public class ComplaintController {
     }
 
     /**
-     * Endpoint que obtiene la lista de reclamos. Solo administradores y el intendente pueden acceder
+     * Endpoint que obtiene las reclamos de manera paginada. Accedible por admins, intendente o responsable de reclamos
      *
-     * @return lista de reclamos
+     * @param page
+     * @return reclamos paginadas de a 6 registros
      */
-    @Operation(summary = "Obtener lista de reclamos",
-            description = "Devuelve la lista de reclamos del sistema. Solo administradores y el intendente pueden acceder",
+    @Operation(summary = "Obtener lista de reclamos de forma paginada",
+            description = "Devuelve la lista de reclamos del sistema de a 6 registros. Accedible por admins, intendente o responsable de reclamos",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Reclamos retornados correctamente"),
+            @ApiResponse(responseCode = "200", description = "Reclamos retornados correctamente."),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
-    public ResponseEntity<ResponseDTO<List<ComplaintResponseDTO>>> getComplaints(){
+    public ResponseEntity<ResponseDTO<PagedModel<ComplaintResponseDTO>>> getPaginatedComplaints(
+            @RequestParam(value = "page", defaultValue = "0") int page) {
 
-        List<ComplaintResponseDTO> complaints = complaintService.getComplaints();
+        final int size = 6;
 
-        ResponseDTO<List<ComplaintResponseDTO>> getResponseComplaints = new ResponseDTO<>(complaints,200,"Reclamos retornados con exito");
+        PagedModel<ComplaintResponseDTO> complaints = complaintService.getPaginatedComplaints(page, size);
+
+        ResponseDTO<PagedModel<ComplaintResponseDTO>> getResponseComplaints = new ResponseDTO<>(complaints, 200, "Reclamos retornados correctamente");
 
         return ResponseEntity.ok(getResponseComplaints);
     }
@@ -135,13 +140,13 @@ public class ComplaintController {
     }
 
     /**
-     * Endpoint que elimina un reclamo de la base de datos. Accedible solo por el intendente o administradores
+     * Endpoint que elimina un reclamo de la base de datos. Accedible solo por el intendente, responsable de reclamos o administradores
      *
      * @param id
      * @return mensaje de confirmacion
      */
     @Operation(summary = "Borrar un reclamo",
-            description = "Devuelve un mensaje de confirmacion. Solo admins o el intendente pueden borrar reclamos.",
+            description = "Devuelve un mensaje de confirmacion. Solo admins, responsable de reclamos o el intendente pueden borrar reclamos.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -151,7 +156,7 @@ public class ComplaintController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
     public ResponseEntity<String> deleteComplaint(@PathVariable Long id){
         complaintService.deleteComplaint(id);
 

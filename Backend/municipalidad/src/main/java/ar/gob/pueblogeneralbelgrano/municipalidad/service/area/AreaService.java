@@ -7,7 +7,11 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.exception.NotFoundException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IAreaMapper;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Area;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IAreaRepository;
-import ar.gob.pueblogeneralbelgrano.municipalidad.service.area.IAreaService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +24,26 @@ public class AreaService implements IAreaService {
 
     public AreaService(IAreaRepository areaRepository) {
         this.areaRepository = areaRepository;
+    }
+
+    @Override
+    public PagedModel<AreaResponseDTO> getPaginatedAreas(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Area> paginatedAreas = areaRepository.findAllByOrderByIdDesc(pageable);
+
+        List<AreaResponseDTO> areaDTOList = paginatedAreas
+                .stream()
+                .map(IAreaMapper.mapper::areaToAreaResponseDTO)
+                .collect(Collectors.toList());
+
+        Page<AreaResponseDTO> paginatedAreasList = new PageImpl<>(
+                areaDTOList,
+                pageable,
+                paginatedAreas.getTotalElements()
+        );
+
+        return new PagedModel<>(paginatedAreasList);
     }
 
     @Override

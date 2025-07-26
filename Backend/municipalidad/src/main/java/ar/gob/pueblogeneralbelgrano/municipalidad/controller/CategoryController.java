@@ -3,12 +3,15 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.controller;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.category.CategoryRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.category.CategoryResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.response.ResponseDTO;
+import ar.gob.pueblogeneralbelgrano.municipalidad.model.Category;
 import ar.gob.pueblogeneralbelgrano.municipalidad.service.category.ICategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,12 +32,42 @@ public class CategoryController {
     }
 
     /**
-     * Endpoint que obtiene todas las categorias. Cualquiera puede acceder
+     * Endpoint que obtiene las categorias de manera paginada. Solo accedible admins, el intendente y comunicacion (solo se muestra en el dashboard)
+     *
+     * @param page
+     * @return categorias paginadas de a 6 registros
+     */
+    @Operation(summary = "Obtener lista de categorias de forma paginada",
+            description = "Devuelve la lista de categorias del sistema de a 6 registros. Solo accedible admins, el intendente y comunicacion (solo se muestra en el dashboard)",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Categorias retornadas correctamente."),
+            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
+    })
+    @GetMapping("paginado")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
+    public ResponseEntity<ResponseDTO<PagedModel<CategoryResponseDTO>>> getPaginatedCategories(
+            @RequestParam(value = "page", defaultValue = "0") int page) {
+
+        final int size = 6; //Siempre 6 registros por pagina
+
+        PagedModel<CategoryResponseDTO> categories = categoryService.getPaginatedCategories(page, size);
+
+        ResponseDTO<PagedModel<CategoryResponseDTO>> getResponseCategories = new ResponseDTO<>(categories, 200, "Categorias retornadas correctamente");
+
+        return ResponseEntity.ok(getResponseCategories);
+    }
+
+
+    /**
+     * Endpoint que obtiene todas las categorias. Solo accedible admins, el intendente y comunicacion (solo se muestra en el dashboard)
+     * Será utilizado para cargar lista de categorias al momento de crear noticias y asignar categorias
      *
      * @return DTO De la lista de categorias
      */
     @Operation(summary = "Obtener lista de categorias",
-            description = "Devuelve la lista de categorias del sistema. Todos pueden acceder",
+            description = "Devuelve la lista de categorias del sistema. Solo accedible admins, el intendente y comunicacion (solo se muestra en el dashboard)",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -42,7 +75,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
     public ResponseEntity<ResponseDTO<List<CategoryResponseDTO>>> getCategories() {
         List<CategoryResponseDTO> categories = categoryService.getCategories();
 
@@ -58,11 +91,11 @@ public class CategoryController {
      * @return Una categoria
      */
     @Operation(summary = "Obtener una categoria",
-            description = "Obtener una categoria en particular",
+            description = "Obtener una categoria en particular. Cualquiera puede acceder (se muestra en cada noticia por individual)",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Categoria retornada correctamente. Todos pueden acceder"),
+            @ApiResponse(responseCode = "200", description = "Categoria retornada correctamente."),
             @ApiResponse(responseCode = "404", description = "Categoria no encontrada"),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })

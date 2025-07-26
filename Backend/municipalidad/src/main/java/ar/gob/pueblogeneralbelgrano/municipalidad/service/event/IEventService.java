@@ -2,10 +2,20 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.service.event;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.event.EventRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.event.EventResponseDTO;
+import org.springframework.data.web.PagedModel;
 
 import java.util.List;
 
 public interface IEventService {
+    /**
+     * Devolver eventos paginados
+     *
+     * @param page
+     * @param size
+     * @return eventos paginados
+     */
+    public PagedModel<EventResponseDTO> getPaginatedEvents(int page, int size);
+    
     /**
      * Retornar una lista de todos los eventos
      *

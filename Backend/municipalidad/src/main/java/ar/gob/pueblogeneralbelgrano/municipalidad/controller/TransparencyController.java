@@ -1,5 +1,6 @@
 package ar.gob.pueblogeneralbelgrano.municipalidad.controller;
 
+import ar.gob.pueblogeneralbelgrano.municipalidad.dto.transparency.TransparencyResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.transparency.TransparencyRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.transparency.TransparencyResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.response.ResponseDTO;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/transparency")
+@RequestMapping("/transparencies")
 @PreAuthorize("denyAll()")
 @Validated
 public class TransparencyController {
@@ -30,27 +32,31 @@ public class TransparencyController {
     }
 
     /**
-     * Endpoint que obtiene la lista de transparencias. Accedible por todos
+     * Endpoint que obtiene las transparencias de manera paginada. Accedible por todos
      *
-     * @return lista de transparencias
+     * @param page
+     * @return transparencias paginadas de a 6 registros
      */
-    @Operation(summary = "Obtener lista de transparencias",
-            description = "Devuelve la lista de transparencias del sistema. Accedible por todos",
+    @Operation(summary = "Obtener lista de transparencias de forma paginada",
+            description = "Devuelve la lista de transparencias del sistema de a 6 registros. Accedible por todos",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Transparencias retornadas correctamente"),
+            @ApiResponse(responseCode = "200", description = "Transparencias retornadas correctamente."),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping
     @PreAuthorize("permitAll()")
-    public ResponseEntity<ResponseDTO<List<TransparencyResponseDTO>>> getTransparencies(){
+    public ResponseEntity<ResponseDTO<PagedModel<TransparencyResponseDTO>>> getPaginatedTransparencies(
+            @RequestParam(value = "page", defaultValue = "0") int page) {
 
-        List<TransparencyResponseDTO> transparency = transparencyService.getTransparencies();
+        final int size = 12;
 
-        ResponseDTO<List<TransparencyResponseDTO>> getTransparencyResponse = new ResponseDTO<>(transparency, 200, "Transparencias retornadas con exito");
+        PagedModel<TransparencyResponseDTO> transparencies = transparencyService.getPaginatedTransparencies(page, size);
 
-        return ResponseEntity.ok(getTransparencyResponse);
+        ResponseDTO<PagedModel<TransparencyResponseDTO>> getResponseTransparencies = new ResponseDTO<>(transparencies, 200, "Transparencias retornadas correctamente");
+
+        return ResponseEntity.ok(getResponseTransparencies);
     }
 
     /**
@@ -93,7 +99,7 @@ public class TransparencyController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'SECRETARIO')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'SECRETARIA')")
     public ResponseEntity<ResponseDTO<TransparencyRequestDTO>> saveTransparency(@Valid @RequestBody TransparencyRequestDTO transparency){
 
         transparencyService.saveTransparency(transparency);
@@ -121,7 +127,7 @@ public class TransparencyController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'SECRETARIO')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'SECRETARIA')")
     public ResponseEntity<ResponseDTO<TransparencyRequestDTO>> updateTransparency(@Valid @RequestBody TransparencyRequestDTO transparency, @PathVariable Long id){
 
         transparencyService.updateTransparency(transparency, id);
@@ -148,7 +154,7 @@ public class TransparencyController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'SECRETARIO')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'SECRETARIA')")
     public ResponseEntity<String> deleteTransparency(@PathVariable Long id){
         transparencyService.deleteTransparency(id);
 

@@ -13,6 +13,7 @@ public record NewsRequestDTO(
         @Size(min = 5, max = 100, message = "El titular debe tener entre 5 y 100 caracteres")
         String titular,
 
+        //la fecha la dejamos manual por si despues se quiere cambiar, se podria hacer un dto para update pero no es necesario
         @NotNull(message = "La fecha es obligatoria")
         Date fecha,
 

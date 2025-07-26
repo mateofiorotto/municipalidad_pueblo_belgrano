@@ -10,6 +10,11 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.model.Role;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.UserSec;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IRoleRepository;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IUserSecRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +35,23 @@ public class UserSecService implements IUserSecService {
     }
 
     @Override
-    public List<UserSecResponseDTO> getUsers() {
-        List<UserSec> users = userRepository.findAll();
+    public PagedModel<UserSecResponseDTO> getPaginatedUsers(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
 
-        return users.stream().map(user -> IUserSecMapper.mapper.userSecToUserSecResponseDTO(user)).collect(Collectors.toList());
+        Page<UserSec> paginatedUserSec = userRepository.findAllByOrderByIdDesc(pageable);
+
+        List<UserSecResponseDTO> userSecDTOList = paginatedUserSec
+                .stream()
+                .map(IUserSecMapper.mapper::userSecToUserSecResponseDTO)
+                .collect(Collectors.toList());
+
+        Page<UserSecResponseDTO> paginatedUserSecList = new PageImpl<>(
+                userSecDTOList,
+                pageable,
+                paginatedUserSec.getTotalElements()
+        );
+
+        return new PagedModel<>(paginatedUserSecList);
     }
 
     @Override

@@ -1,12 +1,20 @@
 package ar.gob.pueblogeneralbelgrano.municipalidad.service.event;
 
+import ar.gob.pueblogeneralbelgrano.municipalidad.dto.event.EventResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.event.EventRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.event.EventResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.ConflictException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.NotFoundException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IEventMapper;
+import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IEventMapper;
+import ar.gob.pueblogeneralbelgrano.municipalidad.model.Event;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Event;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IEventRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +29,26 @@ public class EventService implements IEventService {
         this.eventRepository = eventRepository;
     }
 
+    @Override
+    public PagedModel<EventResponseDTO> getPaginatedEvents(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Event> paginatedEvents = eventRepository.findAllByOrderByFechaAsc(pageable);
+
+        List<EventResponseDTO> eventDTOList = paginatedEvents
+                .stream()
+                .map(IEventMapper.mapper::eventToEventResponseDTO)
+                .collect(Collectors.toList());
+
+        Page<EventResponseDTO> paginatedEventsList = new PageImpl<>(
+                eventDTOList,
+                pageable,
+                paginatedEvents.getTotalElements()
+        );
+
+        return new PagedModel<>(paginatedEventsList);
+    }
+    
     @Override
     public List<EventResponseDTO> getEvents() {
         List<Event> listEvents = eventRepository.findAll();

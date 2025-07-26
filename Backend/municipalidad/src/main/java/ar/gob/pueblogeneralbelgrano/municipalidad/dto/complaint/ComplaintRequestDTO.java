@@ -16,8 +16,9 @@ public record ComplaintRequestDTO(
         @Size(min = 5, max = 100, message = "El nombre y apellido deben tener entre 5 y 100 caracteres")
         String nombre_apellido,
 
-        @NotBlank(message = "El celular no puede estar vacio")
-        @Pattern(regexp = "^\\+54\\d{10}$", message = "El número debe comenzar con +54 y tener 10 dígitos después")
+        @NotBlank(message = "El celular no puede estar vacío")
+        @Size(min = 6, max = 20, message = "El celular debe tener entre 6 y 20 caracteres")
+        @Pattern(regexp = "^[0-9]+$", message = "El celular solo debe contener números")
         String celular,
 
         @NotBlank(message = "La dirección no puede estar vacía")

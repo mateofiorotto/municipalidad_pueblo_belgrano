@@ -2,16 +2,20 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.service.news;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.news.NewsRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.news.NewsResponseDTO;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 public interface INewsService {
     /**
-     * Devolver lista de noticias
-     * @return lista de noticias
+     * Devolver noticias paginadas
+     *
+     * @param page
+     * @param size
+     * @return noticias paginadas
      */
-    public List<NewsResponseDTO> getNews();
+    public PagedModel<NewsResponseDTO> getPaginatedNews(int page, int size);
 
     /**
      * Devolver una noticia por su ID

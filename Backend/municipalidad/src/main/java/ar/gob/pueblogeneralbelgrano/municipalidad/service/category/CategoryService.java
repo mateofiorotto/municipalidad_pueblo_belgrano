@@ -8,6 +8,11 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.ICategoryMapper;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Category;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.ICategoryRepository;
 import ar.gob.pueblogeneralbelgrano.municipalidad.service.category.ICategoryService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +25,27 @@ public class CategoryService implements ICategoryService {
 
     public CategoryService(ICategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
+    }
+
+    @Override
+    public PagedModel<CategoryResponseDTO> getPaginatedCategories(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Category> paginatedCategories = categoryRepository.findAllByOrderByIdDesc(pageable);
+
+        List<CategoryResponseDTO> categoryDTOList = paginatedCategories
+                .stream()
+                .map(ICategoryMapper.mapper::categoryToCategoryResponseDTO)
+                .collect(Collectors.toList());
+
+        //crear un nuevo objeto page y le pasamos la lista de categorias transformadas y la info de paginas
+        Page<CategoryResponseDTO> paginatedCategoriesList = new PageImpl<>(
+                categoryDTOList,
+                pageable,
+                paginatedCategories.getTotalElements()
+        );
+
+        return new PagedModel<>(paginatedCategoriesList);
     }
 
     @Override

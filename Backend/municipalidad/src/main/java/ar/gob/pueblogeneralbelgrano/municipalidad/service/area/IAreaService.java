@@ -2,10 +2,20 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.service.area;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.area.AreaRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.area.AreaResponseDTO;
+import org.springframework.data.web.PagedModel;
 
 import java.util.List;
 
 public interface IAreaService {
+    /**
+     * Devolver areas paginadas
+     *
+     * @param page
+     * @param size
+     * @return areas paginadas
+     */
+    public PagedModel<AreaResponseDTO> getPaginatedAreas(int page, int size);
+
     /**
      * Devolver todas las areas
      *

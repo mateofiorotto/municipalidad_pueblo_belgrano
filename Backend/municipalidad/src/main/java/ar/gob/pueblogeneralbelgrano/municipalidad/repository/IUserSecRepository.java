@@ -1,6 +1,9 @@
 package ar.gob.pueblogeneralbelgrano.municipalidad.repository;
 
+import ar.gob.pueblogeneralbelgrano.municipalidad.model.Transparency;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.UserSec;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +12,6 @@ import java.util.Optional;
 @Repository
 public interface IUserSecRepository extends JpaRepository<UserSec, Long> {
     Optional<UserSec> findUserEntityByUsername(String username);
+
+    Page<UserSec> findAllByOrderByIdDesc(Pageable pageable);
 }

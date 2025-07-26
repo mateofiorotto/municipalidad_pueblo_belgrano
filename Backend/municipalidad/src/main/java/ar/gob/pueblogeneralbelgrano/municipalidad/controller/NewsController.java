@@ -1,5 +1,6 @@
 package ar.gob.pueblogeneralbelgrano.municipalidad.controller;
 
+import ar.gob.pueblogeneralbelgrano.municipalidad.dto.category.CategoryResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.news.NewsRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.news.NewsResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.response.ResponseDTO;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,27 +32,31 @@ public class NewsController {
     }
 
     /**
-     * Endpoint que obtiene la lista de noticias. Accedible por todos
+     * Endpoint que obtiene las noticias de manera paginada. Accedible por todos
      *
-     * @return lista de noticias
+     * @param page
+     * @return noticias paginadas de a 6 registros
      */
-    @Operation(summary = "Obtener lista de noticias",
-            description = "Devuelve la lista de noticias del sistema. Accedible por todos",
+    @Operation(summary = "Obtener lista de noticias de forma paginada",
+            description = "Devuelve la lista de noticias del sistema de a 6 registros. Accedible por todos",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Noticias retornadas correctamente"),
+            @ApiResponse(responseCode = "200", description = "Noticias retornadas correctamente."),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping
     @PreAuthorize("permitAll()")
-    public ResponseEntity<ResponseDTO<List<NewsResponseDTO>>> getNews(){
+    public ResponseEntity<ResponseDTO<PagedModel<NewsResponseDTO>>> getPaginatedNews(
+            @RequestParam(value = "page", defaultValue = "0") int page) {
 
-        List<NewsResponseDTO> news = newsService.getNews();
+        final int size = 6; //Siempre 6 registros por pagina
 
-        ResponseDTO<List<NewsResponseDTO>> getNewsResponse = new ResponseDTO<>(news, 200, "Noticias retornadas con exito");
+        PagedModel<NewsResponseDTO> news = newsService.getPaginatedNews(page, size);
 
-        return ResponseEntity.ok(getNewsResponse);
+        ResponseDTO<PagedModel<NewsResponseDTO>> getResponseNews = new ResponseDTO<>(news, 200, "Noticias retornadas correctamente");
+
+        return ResponseEntity.ok(getResponseNews);
     }
 
     /**

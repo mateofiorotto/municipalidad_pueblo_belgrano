@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +27,34 @@ public class AreaController {
 
     public AreaController(IAreaService areaService) {
         this.areaService = areaService;
+    }
+
+    /**
+     * Endpoint que obtiene las areas de manera paginada. Solo accedible admins, el intendente y responsable de reclamos (solo se muestra en el dashboard)
+     *
+     * @param page
+     * @return areas paginadas de a 6 registros
+     */
+    @Operation(summary = "Obtener lista de areas de forma paginada",
+            description = "Devuelve la lista de areas del sistema de a 6 registros. Solo accedible admins, el intendente y responsable de reclamos (solo se muestra en el dashboard)",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Areas retornadas correctamente."),
+            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
+    })
+    @GetMapping("paginado")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
+    public ResponseEntity<ResponseDTO<PagedModel<AreaResponseDTO>>> getPaginatedAreas(
+            @RequestParam(value = "page", defaultValue = "0") int page) {
+
+        final int size = 6; //Siempre 6 registros por pagina
+
+        PagedModel<AreaResponseDTO> areas = areaService.getPaginatedAreas(page, size);
+
+        ResponseDTO<PagedModel<AreaResponseDTO>> getResponseAreas = new ResponseDTO<>(areas, 200, "Areas retornadas correctamente");
+
+        return ResponseEntity.ok(getResponseAreas);
     }
 
     /**

@@ -1,17 +1,21 @@
 package ar.gob.pueblogeneralbelgrano.municipalidad.service.usersec;
 
+import ar.gob.pueblogeneralbelgrano.municipalidad.dto.transparency.TransparencyResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecResponseDTO;
+import org.springframework.data.web.PagedModel;
 
 import java.util.List;
 
 public interface IUserSecService {
     /**
-     * Devolver lista de usuarios
+     * Devolver usuarios paginados
      *
-     * @return lista de usuarios
-     * */
-    public List<UserSecResponseDTO> getUsers();
+     * @param page
+     * @param size
+     * @return usuarios paginados
+     */
+    public PagedModel<UserSecResponseDTO> getPaginatedUsers(int page, int size);
 
     /**
      * Devolver un usuario especifico por id

@@ -3,16 +3,20 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.service.complaint;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintUpdateDTO;
+import ar.gob.pueblogeneralbelgrano.municipalidad.dto.news.NewsResponseDTO;
+import org.springframework.data.web.PagedModel;
 
 import java.util.List;
 
 public interface IComplaintService {
     /**
-     * Retornar una lista de todos los complaintos
+     * Devolver reclamos paginados
      *
-     * @return lista de complaintos
-     * */
-    public List<ComplaintResponseDTO> getComplaints();
+     * @param page
+     * @param size
+     * @return reclamos paginados
+     */
+    public PagedModel<ComplaintResponseDTO> getPaginatedComplaints(int page, int size);
 
     /**
      * Retornar un complainto especifico
