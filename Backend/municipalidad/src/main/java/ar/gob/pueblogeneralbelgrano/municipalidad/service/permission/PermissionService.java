@@ -2,6 +2,7 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.service.permission;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.permission.PermissionRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.permission.PermissionResponseDTO;
+import ar.gob.pueblogeneralbelgrano.municipalidad.exception.ConflictException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.NotFoundException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IPermissionMapper;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Permission;
@@ -37,6 +38,11 @@ public class PermissionService implements IPermissionService {
 
     @Override
     public PermissionRequestDTO savePermission(PermissionRequestDTO permission) {
+
+        if (permissionRepository.existsByPermission(permission.permission())) {
+            throw new ConflictException("El permiso ya existe con el nombre: " + permission.permission());
+        }
+
         Permission permissionToSave = IPermissionMapper.mapper.permissionRequestDTOToPermission(permission);
 
         permissionRepository.save(permissionToSave);
@@ -47,6 +53,10 @@ public class PermissionService implements IPermissionService {
     @Override
     public PermissionRequestDTO updatePermission(PermissionRequestDTO permission, Long id) {
         Permission permissionToUpdate = permissionRepository.findById(id).orElseThrow(() -> new NotFoundException("Permiso no encontrado, ID: " + id));
+
+        if (permissionRepository.existsByPermissionAndIdNot(permission.permission(), id)) {
+            throw new ConflictException("El permiso ya existe con el nombre: " + permission.permission());
+        }
 
         permissionToUpdate.setPermission(permission.permission());
 

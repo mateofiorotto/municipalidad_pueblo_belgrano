@@ -10,8 +10,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ICategoryRepository extends JpaRepository<Category,Long> {
-    @Query(value = "SELECT COUNT(*) FROM noticias WHERE categoria_id=?1 AND deleted <> 1",nativeQuery = true)
-    int relatedCategories(Long id);
+    @Query(value = "SELECT COUNT(*) FROM noticias WHERE categoria_id=?1 AND deleted <> TRUE",nativeQuery = true)
+    Long relatedCategories(Long id);
 
-    Page<Category> findAllByOrderByIdDesc(Pageable pageable);
+    Page<Category> findAllByOrderByIdAsc(Pageable pageable);
+
+    boolean existsByNombre(String category);
+
+    boolean existsByNombreAndIdNot(String category, Long id);
 }

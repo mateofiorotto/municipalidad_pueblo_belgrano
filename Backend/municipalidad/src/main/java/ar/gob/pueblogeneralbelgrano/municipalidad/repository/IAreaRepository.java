@@ -9,8 +9,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IAreaRepository extends JpaRepository<Area,Long> {
-    @Query(value = "SELECT COUNT(*) FROM reclamos WHERE area_id=?1 AND deleted <> 1", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM reclamos WHERE area_id=?1 AND deleted <> TRUE", nativeQuery = true)
     Long relatedAreas(Long id);
 
-    Page<Area> findAllByOrderByIdDesc(Pageable pageable);
+    Page<Area> findAllByOrderByIdAsc(Pageable pageable);
+
+    boolean existsByNombre(String area);
+
+    boolean existsByNombreAndIdNot(String area, Long id);
 }

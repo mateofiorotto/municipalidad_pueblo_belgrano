@@ -1,11 +1,8 @@
 package ar.gob.pueblogeneralbelgrano.municipalidad.service.usersec;
 
-import ar.gob.pueblogeneralbelgrano.municipalidad.dto.transparency.TransparencyResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.usersec.UserSecResponseDTO;
 import org.springframework.data.web.PagedModel;
-
-import java.util.List;
 
 public interface IUserSecService {
     /**

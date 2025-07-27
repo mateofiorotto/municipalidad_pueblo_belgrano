@@ -1,8 +1,8 @@
 package ar.gob.pueblogeneralbelgrano.municipalidad.dto.transparency;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public record TransparencyResponseDTO(
-        Date fecha,
+        LocalDate fecha,
         String pdf) {
 }

@@ -140,13 +140,13 @@ public class ComplaintController {
     }
 
     /**
-     * Endpoint que elimina un reclamo de la base de datos. Accedible solo por el intendente, responsable de reclamos o administradores
+     * Endpoint que elimina un reclamo de la base de datos. Accedible solo por el intendente o administradores
      *
      * @param id
      * @return mensaje de confirmacion
      */
     @Operation(summary = "Borrar un reclamo",
-            description = "Devuelve un mensaje de confirmacion. Solo admins, responsable de reclamos o el intendente pueden borrar reclamos.",
+            description = "Devuelve un mensaje de confirmacion. Solo admins o el intendente pueden borrar reclamos.",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -156,7 +156,7 @@ public class ComplaintController {
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE')")
     public ResponseEntity<String> deleteComplaint(@PathVariable Long id){
         complaintService.deleteComplaint(id);
 

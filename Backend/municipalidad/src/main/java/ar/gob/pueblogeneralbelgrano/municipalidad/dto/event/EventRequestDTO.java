@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public record EventRequestDTO(
         @NotBlank(message = "El titular no puede estar vacío")
@@ -12,7 +12,7 @@ public record EventRequestDTO(
         String titular,
 
         @NotNull(message = "La fecha es obligatoria")
-        Date fecha,
+        LocalDate fecha,
 
         @NotBlank(message = "La imagen no puede estar vacía")
         @Size(max = 255, message = "La ruta o URL de la imagen no puede superar los 255 caracteres")

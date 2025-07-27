@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -18,7 +18,9 @@ public class News {
     @Column(nullable = false)
     private String titular;
     @Column(nullable = false)
-    private Date fecha;
+    private String subtitulo;
+    @Column(nullable = false)
+    private LocalDate fecha;
     @Column(nullable = false)
     private String imagen;
     @Column(nullable = false)
@@ -38,9 +40,10 @@ public class News {
 
     public News(){}
 
-    public News(Long id, String titular, Date fecha, String imagen, String descripcion, String descripcion_adicional, Category categoria, Event evento) {
+    public News(Long id, String titular, String subtitulo, LocalDate fecha, String imagen, String descripcion, String descripcion_adicional, Category categoria, Event evento) {
         this.id = id;
         this.titular = titular;
+        this.subtitulo = subtitulo;
         this.fecha = fecha;
         this.imagen = imagen;
         this.descripcion = descripcion;
@@ -65,11 +68,27 @@ public class News {
         this.titular = titular;
     }
 
-    public Date getFecha() {
+    public String getSubtitulo() {
+        return subtitulo;
+    }
+
+    public void setSubtitulo(String subtitulo) {
+        this.subtitulo = subtitulo;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

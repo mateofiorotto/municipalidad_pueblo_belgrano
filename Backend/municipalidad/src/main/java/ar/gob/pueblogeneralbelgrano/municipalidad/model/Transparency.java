@@ -5,6 +5,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.Where;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -17,14 +18,14 @@ public class Transparency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private Date fecha;
+    private LocalDate fecha;
     @Column(nullable = false)
     private String pdf; //referencia a un archivo pdf
     private boolean deleted = Boolean.FALSE;
 
     public Transparency(){}
 
-    public Transparency(Long id, Date fecha, String pdf) {
+    public Transparency(Long id, LocalDate fecha, String pdf) {
         this.id = id;
         this.fecha = fecha;
         this.pdf = pdf;
@@ -38,11 +39,11 @@ public class Transparency {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

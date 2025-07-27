@@ -31,7 +31,7 @@ public class CategoryService implements ICategoryService {
     public PagedModel<CategoryResponseDTO> getPaginatedCategories(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<Category> paginatedCategories = categoryRepository.findAllByOrderByIdDesc(pageable);
+        Page<Category> paginatedCategories = categoryRepository.findAllByOrderByIdAsc(pageable);
 
         List<CategoryResponseDTO> categoryDTOList = paginatedCategories
                 .stream()
@@ -68,6 +68,11 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public CategoryRequestDTO saveCategory(CategoryRequestDTO category) {
+
+        if (categoryRepository.existsByNombre(category.nombre())) {
+            throw new ConflictException("La categoria con el nombre " + category.nombre() + " ya existe");
+        }
+
         Category categoryToSave = ICategoryMapper.mapper.categoryRequestDTOToCategory(category);
 
         categoryRepository.save(categoryToSave);
@@ -79,6 +84,10 @@ public class CategoryService implements ICategoryService {
     public CategoryRequestDTO updateCategory(CategoryRequestDTO category, Long id) {
         Category categoryToUpdate = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Categoria no encontrada, ID: " + id));
+
+        if (categoryRepository.existsByNombreAndIdNot(category.nombre(), id)) {
+            throw new ConflictException("La categoria con el nombre " + category.nombre() + " ya existe");
+        }
 
         categoryToUpdate.setNombre(category.nombre());
 
@@ -94,8 +103,9 @@ public class CategoryService implements ICategoryService {
 
         if (categoryRepository.relatedCategories(id) >= 1) {
             throw new ConflictException("No se puede eliminar la categoria ya que se encuentra relacionada con una noticia");
-        } else {
-            categoryRepository.delete(categoryToDelete);
         }
+
+        categoryRepository.delete(categoryToDelete);
+
     }
 }

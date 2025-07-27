@@ -1,10 +1,6 @@
 package ar.gob.pueblogeneralbelgrano.municipalidad.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
-import org.hibernate.annotations.Where;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;

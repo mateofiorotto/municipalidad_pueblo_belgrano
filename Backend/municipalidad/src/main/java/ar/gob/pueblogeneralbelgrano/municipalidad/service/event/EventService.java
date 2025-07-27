@@ -84,11 +84,16 @@ public class EventService implements IEventService {
         eventToUpdate.setTitular(event.titular());
         eventToUpdate.setFecha(event.fecha());
         eventToUpdate.setDescripcion(event.descripcion());
-        eventToUpdate.setDescripcion_adicional(event.descripcion_adicional());
+
+        if(event.descripcion_adicional() != null) {
+            eventToUpdate.setDescripcion_adicional(event.descripcion_adicional());
+        }
 
         //metodo para img:
 
         eventToUpdate.setImagen(event.imagen());
+
+        eventRepository.save(eventToUpdate);
 
         return event;
     }
@@ -99,9 +104,8 @@ public class EventService implements IEventService {
 
         if (eventRepository.relatedEvents(id) >= 1) {
             throw new ConflictException("No se puede eliminar el evento ya que se encuentra relacionado con una noticia");
-        } else {
-            eventRepository.delete(eventToDelete);
         }
+
         //metodo de eliminacion de img del sistema:
 
         eventRepository.delete(eventToDelete);

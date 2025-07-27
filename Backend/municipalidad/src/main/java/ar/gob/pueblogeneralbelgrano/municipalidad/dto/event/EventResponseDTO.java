@@ -1,11 +1,11 @@
 package ar.gob.pueblogeneralbelgrano.municipalidad.dto.event;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public record EventResponseDTO(
         String titular,
-        Date fecha,
+        LocalDate fecha,
         String imagen,
         String descripcion,
         String descripcion_adicional

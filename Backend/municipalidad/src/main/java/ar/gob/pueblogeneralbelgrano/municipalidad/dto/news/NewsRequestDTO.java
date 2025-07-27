@@ -6,16 +6,20 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public record NewsRequestDTO(
         @NotBlank(message = "El titular no puede estar vacío")
         @Size(min = 5, max = 100, message = "El titular debe tener entre 5 y 100 caracteres")
         String titular,
 
+        @NotBlank(message = "El subtitulo no puede estar vacío")
+        @Size(min = 5, max = 255, message = "El subtitulo debe tener entre 5 y 255 caracteres")
+        String subtitulo,
+
         //la fecha la dejamos manual por si despues se quiere cambiar, se podria hacer un dto para update pero no es necesario
         @NotNull(message = "La fecha es obligatoria")
-        Date fecha,
+        LocalDate fecha,
 
         @NotBlank(message = "La referencia de imagen no puede estar vacía")
         @Size(max = 255, message = "La ruta de imagen no puede superar los 255 caracteres")

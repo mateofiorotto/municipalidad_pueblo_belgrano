@@ -30,7 +30,7 @@ public class AreaService implements IAreaService {
     public PagedModel<AreaResponseDTO> getPaginatedAreas(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<Area> paginatedAreas = areaRepository.findAllByOrderByIdDesc(pageable);
+        Page<Area> paginatedAreas = areaRepository.findAllByOrderByIdAsc(pageable);
 
         List<AreaResponseDTO> areaDTOList = paginatedAreas
                 .stream()
@@ -66,6 +66,11 @@ public class AreaService implements IAreaService {
 
     @Override
     public AreaRequestDTO saveArea(AreaRequestDTO area) {
+
+        if (areaRepository.existsByNombre(area.nombre())) {
+            throw new ConflictException("El area con el nombre " + area.nombre() + " ya existe");
+        }
+
         Area areaToSave = IAreaMapper.mapper.areaRequestDTOToArea(area);
 
         areaRepository.save(areaToSave);
@@ -77,6 +82,10 @@ public class AreaService implements IAreaService {
     public AreaRequestDTO updateArea(AreaRequestDTO area, Long id) {
         Area areaToUpdate = areaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Area no encontrada, ID: " + id));
+
+        if (areaRepository.existsByNombreAndIdNot(area.nombre(), id)) {
+            throw new ConflictException("El area con el nombre " + area.nombre() + " ya existe");
+        }
 
         areaToUpdate.setNombre(area.nombre());
 
@@ -92,8 +101,9 @@ public class AreaService implements IAreaService {
 
         if (areaRepository.relatedAreas(id) >= 1) {
             throw new ConflictException("No se puede eliminar el area porque se encuentra relacionada con un reclamo");
-        } else {
-            areaRepository.delete(areaToDelete);
         }
+
+        areaRepository.delete(areaToDelete);
+
     }
 }

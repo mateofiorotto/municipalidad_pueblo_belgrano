@@ -38,7 +38,7 @@ public class NewsService implements INewsService {
     public PagedModel<NewsResponseDTO> getPaginatedNews(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<News> paginatedNews = newsRepository.findAllByOrderByIdDesc(pageable);
+        Page<News> paginatedNews = newsRepository.findAllByOrderByFechaDesc(pageable);
 
         List<NewsResponseDTO> newsDTOList = paginatedNews
                 .stream()
@@ -57,7 +57,7 @@ public class NewsService implements INewsService {
 
     @Override
     public NewsResponseDTO getNewsById(Long id) {
-        News news = newsRepository.findById(id).orElseThrow(() -> new NotFoundException("Noticia no encontrada,  ID" + id));
+        News news = newsRepository.findById(id).orElseThrow(() -> new NotFoundException("Noticia no encontrada, ID: " + id));
 
         return INewsMapper.mapper.newsToNewsResponseDTO(news);
     }
@@ -73,7 +73,7 @@ public class NewsService implements INewsService {
         if(news.evento() != null) {
             eventRepository
                     .findById(news.evento().id())
-                    .orElseThrow(() -> new NotFoundException("Evento no encontrado, ID: " + news.categoria().id()));
+                    .orElseThrow(() -> new NotFoundException("Evento no encontrado, ID: " + news.evento().id()));
         }
 
         //metodo img..
@@ -88,21 +88,28 @@ public class NewsService implements INewsService {
         News newsFinded = newsRepository.findById(id).orElseThrow(() -> new NotFoundException("No se encontro la noticia, ID: " + id ));
 
         newsFinded.setTitular(news.titular());
+        newsFinded.setSubtitulo(news.subtitulo());
         newsFinded.setDescripcion(news.descripcion());
-        newsFinded.setDescripcion_adicional(news.descripcion_adicional());
+
+        if(news.descripcion_adicional() != null) {
+            newsFinded.setDescripcion_adicional(news.descripcion_adicional());
+        }
+
         newsFinded.setFecha(news.fecha());
         newsFinded.setImagen(news.imagen());
         //logica img..
 
         newsFinded.setCategoria(categoryRepository
                 .findById(news.categoria().id())
-                .orElseThrow(() -> new NotFoundException("Categoria no encontrada, ID: " + id)));
+                .orElseThrow(() -> new NotFoundException("Categoria no encontrada, ID: " + news.categoria().id())));
 
         if(news.evento() != null) {
             newsFinded.setEvento(eventRepository
                     .findById(news.evento().id())
-                    .orElseThrow(() -> new NotFoundException("Evento no encontrado, ID: " + id)));
+                    .orElseThrow(() -> new NotFoundException("Evento no encontrado, ID: " + news.evento().id())));
         }
+
+        newsRepository.save(newsFinded);
 
         return news;
     }

@@ -44,6 +44,11 @@ public class RoleService implements IRoleService {
 
     @Override
     public RoleRequestDTO saveRole(RoleRequestDTO role) {
+
+        if (roleRepository.existsByRole(role.role())) {
+            throw new BadRequestException("Ya existe un rol con el nombre: " + role.role());
+        }
+
         Role roleToSave = IRoleMapper.mapper.roleRequestDTOToRole(role);
 
         Set<Permission> permissionList = new HashSet<>();
@@ -64,6 +69,10 @@ public class RoleService implements IRoleService {
     @Override
     public RoleRequestDTO updateRole(RoleRequestDTO role, Long id) {
         Role roleToUpdate = roleRepository.findById(id).orElseThrow(() -> new NotFoundException("Rol no encontrado, ID: " + id));
+
+        if (roleRepository.existsByRoleAndIdNot(role.role(), id)) {
+            throw new BadRequestException("Ya existe un rol con el nombre: " + role.role());
+        }
 
         roleToUpdate.setRole(role.role());
 

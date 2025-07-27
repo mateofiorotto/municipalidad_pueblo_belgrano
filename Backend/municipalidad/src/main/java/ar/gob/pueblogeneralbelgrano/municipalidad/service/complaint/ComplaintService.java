@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -41,7 +42,7 @@ public class ComplaintService implements IComplaintService {
     public PagedModel<ComplaintResponseDTO> getPaginatedComplaints(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<Complaint> paginatedComplaints = complaintRepository.findAllByOrderByIdDesc(pageable);
+        Page<Complaint> paginatedComplaints = complaintRepository.findAllRecentOpenComplaints(pageable);
 
         List<ComplaintResponseDTO> complaintDTOList = paginatedComplaints
                 .stream()
@@ -71,7 +72,7 @@ public class ComplaintService implements IComplaintService {
         Complaint complaintToSave = IComplaintMapper.mapper.complaintRequestDTOToComplaint(complaint);
 
         complaintToSave.setCerrado(Boolean.FALSE);
-        complaintToSave.setFecha_reclamo(new Date());
+        complaintToSave.setFecha_reclamo(LocalDate.now());
         complaintToSave.setFecha_cerrado(null);
         complaintToSave.setComentario("");
         complaintToSave.setArea(null);
@@ -92,13 +93,11 @@ public class ComplaintService implements IComplaintService {
         if (Boolean.TRUE.equals(complaintFinded.getCerrado())
                 && complaintFinded.getFecha_cerrado() != null) {
 
-            LocalDateTime fechaCerradoLocalDate = complaintFinded.getFecha_cerrado().toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime();
+            LocalDate fechaCerrado = complaintFinded.getFecha_cerrado();
 
-            LocalDateTime limite = LocalDateTime.now().minusDays(7);
+            LocalDate limite = LocalDate.now().minusDays(7);
 
-            if (fechaCerradoLocalDate.isBefore(limite)) {
+            if (fechaCerrado.isBefore(limite)) {
                 throw new BadRequestException("No se puede modificar un reclamo cerrado hace más de 7 días.");
             }
         }
@@ -119,7 +118,7 @@ public class ComplaintService implements IComplaintService {
             complaintFinded.setCerrado(complaint.cerrado());
 
             if (Boolean.TRUE.equals(complaint.cerrado())) {
-                complaintFinded.setFecha_cerrado(new Date()); //reclamo cerrado, asignando fecha
+                complaintFinded.setFecha_cerrado(LocalDate.now()); //reclamo cerrado, asignando fecha
             } else {
                 complaintFinded.setFecha_cerrado(null); //reclamo que se vuelve a abrir, se desasigna la fecha
             }

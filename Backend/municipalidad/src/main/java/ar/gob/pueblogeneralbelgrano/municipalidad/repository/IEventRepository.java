@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IEventRepository extends JpaRepository<Event,Long> {
-    @Query(value = "SELECT COUNT(*) FROM noticias WHERE evento_id=?1 AND deleted <> 1",nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM noticias WHERE evento_id=?1 AND deleted <> TRUE",nativeQuery = true)
     Long relatedEvents(Long id);
 
     Page<Event> findAllByOrderByFechaAsc(Pageable pageable);

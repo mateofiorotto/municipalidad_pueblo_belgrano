@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -29,8 +29,8 @@ public class Complaint {
     @Column(nullable = false)
     private String descripcion;
     private String imagen; //opcional
-    private Date fecha_reclamo; //solo back
-    private Date fecha_cerrado; //solo back
+    private LocalDate fecha_reclamo; //solo back
+    private LocalDate fecha_cerrado; //solo back
     private Boolean cerrado = Boolean.FALSE;
     private boolean deleted = Boolean.FALSE;
     private String comentario; //Solo backend en la web
@@ -40,7 +40,7 @@ public class Complaint {
 
     public Complaint(){}
 
-    public Complaint(Long id, String motivo, String nombre_apellido, String celular, String direccion, String email, String descripcion, String imagen, String comentario, Area area, Date fecha_reclamo, Date fecha_cerrado, Boolean cerrado) {
+    public Complaint(Long id, String motivo, String nombre_apellido, String celular, String direccion, String email, String descripcion, String imagen, String comentario, Area area, LocalDate fecha_reclamo, LocalDate fecha_cerrado, Boolean cerrado) {
         this.id = id;
         this.motivo = motivo;
         this.nombre_apellido = nombre_apellido;
@@ -136,19 +136,19 @@ public class Complaint {
         this.area = area;
     }
 
-    public Date getFecha_reclamo() {
+    public LocalDate getFecha_reclamo() {
         return fecha_reclamo;
     }
 
-    public void setFecha_reclamo(Date fecha_reclamo) {
+    public void setFecha_reclamo(LocalDate fecha_reclamo) {
         this.fecha_reclamo = fecha_reclamo;
     }
 
-    public Date getFecha_cerrado() {
+    public LocalDate getFecha_cerrado() {
         return fecha_cerrado;
     }
 
-    public void setFecha_cerrado(Date fecha_cerrado) {
+    public void setFecha_cerrado(LocalDate fecha_cerrado) {
         this.fecha_cerrado = fecha_cerrado;
     }
 

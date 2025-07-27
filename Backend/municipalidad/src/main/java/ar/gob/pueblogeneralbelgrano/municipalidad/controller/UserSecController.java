@@ -16,8 +16,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/users")
 @PreAuthorize("denyAll()")
@@ -32,7 +30,7 @@ public class UserSecController {
     /**
      * Endpoint que obtiene las usuarios de manera paginada. Accedible por admins
      *
-     * @param page
+     * @param page numero de pagina
      * @return usuarios paginadas de a 6 registros
      */
     @Operation(summary = "Obtener lista de usuarios de forma paginada",
