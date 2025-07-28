@@ -80,22 +80,7 @@ Este proyecto se trata acerca de un sitio web institucional para la municipalida
 - Filtrados
 
 ### Estructuras de carpetas backend
-📁 src
- ┣ 📂 main
- ┃ ┣ 📂 java
- ┃ ┃ ┣ 📂 ar.gob.pueblogeneralbelgrano.municipalidad
- ┃ ┃ ┃ ┣ 📂 controller --> controladores de la app
- ┃ ┃ ┃ ┣ 📂 dto --> aplicacion de patron de diseño dto
- ┃ ┃ ┃ ┣ 📂 exception --> excepciones personalizadas
- ┃ ┃ ┃ ┣ 📂 mapper --> mappers para dtos con mapstruct
- ┃ ┃ ┃ ┣ 📂 model --> entidades (clases de la app)
- ┃ ┃ ┃ ┣ 📂 repository --> repositorios
- ┃ ┃ ┃ ┣ 📂 security.config --> configuracion de spring security
- ┃ ┃ ┃ ┃ ┣ 📂 filter --> validador de token jwt
- ┃ ┃ ┃ ┣ 📂 service --> logica de negocio
- ┃ ┃ ┃ ┣ 📂 utils --> creacion y autenticacion mediante jwt
- ┃ ┣ 📂 resources
- ┃ ┃ ┣ 📜 application.properties --> configuracion y variables de entorno
+<img src="/imgs-readme/carpetas-backend.jpg" alt="carpetas-backend">
 
 ### Frontend
 - Vistas
@@ -163,7 +148,8 @@ security.jwt.user.generator=${USER_GENERATOR}
 ```
 
 Ejemplo:
-[IMG](./imgs-readme/image.png)
+<img src="/imgs-readme/image.png" alt="ejemplo app.properties">
+
 PD: En la foto falta el user generator
 
 - ${DB_URL} = Direccion a tu base de datos
