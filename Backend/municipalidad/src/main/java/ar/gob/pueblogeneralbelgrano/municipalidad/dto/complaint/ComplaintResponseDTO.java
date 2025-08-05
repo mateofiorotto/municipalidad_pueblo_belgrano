@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 
 public record ComplaintResponseDTO(
+        Long id,
         String motivo,
         String nombre_apellido,
         String celular,

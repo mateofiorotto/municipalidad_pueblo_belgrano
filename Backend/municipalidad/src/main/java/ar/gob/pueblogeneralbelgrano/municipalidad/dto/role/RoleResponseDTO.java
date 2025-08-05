@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public record RoleResponseDTO(
+        Long id,
         String role,
         Set<PermissionResponseDTO> permissions) {
 }
