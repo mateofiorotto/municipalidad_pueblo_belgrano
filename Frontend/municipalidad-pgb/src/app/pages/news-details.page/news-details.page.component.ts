@@ -1,0 +1,16 @@
+import { Component } from '@angular/core';
+import { NewsDetailsComponent } from '../../components/news-details/news-details.component';
+import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
+
+
+@Component({
+  standalone: true,
+  selector: 'app-news-details.page',
+  imports: [NewsDetailsComponent, CommonModule, NgIf],
+  templateUrl: './news-details.page.component.html',
+  styleUrl: './news-details.page.component.css'
+})
+export class NewsDetailsPageComponent {
+
+}

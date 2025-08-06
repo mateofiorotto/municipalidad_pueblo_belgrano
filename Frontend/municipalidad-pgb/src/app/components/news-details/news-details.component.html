@@ -1,0 +1,9 @@
+<div *ngIf="news">
+  <h2>{{ news.titular }}</h2>
+  <p>{{ news.categoria.nombre }}</p>
+  <p *ngIf="news.evento">{{ news.evento.titular}}</p>
+  <p>{{ news.descripcion }}</p>
+  <img [src]="news.imagen" [alt]="news.titular" />
+  <p>{{ news.fecha }}</p>
+  <p *ngIf="news.descripcion_adicional">{{ news.descripcion_adicional }}</p>
+</div>

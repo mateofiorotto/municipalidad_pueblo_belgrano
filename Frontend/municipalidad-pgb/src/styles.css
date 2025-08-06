@@ -5,3 +5,14 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+h2 {
+  text-align: center !important;
+  font-weight: bold !important;
+  font-size: 1.75em !important;
+  text-transform: uppercase;
+}

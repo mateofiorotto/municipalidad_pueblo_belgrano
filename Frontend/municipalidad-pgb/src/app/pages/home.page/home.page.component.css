@@ -1,0 +1,23 @@
+.seccion-home {
+    margin: 1em 0 !important;
+}
+
+.card-reclamos, .card-noticias, .card-eventos {
+    text-align: center;
+    padding: 2.5em;
+    color: white;
+    font-weight: bold;
+
+}
+
+.card-reclamos {
+    background-color: #d62323;
+}
+
+.card-noticias {
+    background-color: #239bdc;
+}
+
+.card-eventos {
+    background-color: #fbb03b;
+}
