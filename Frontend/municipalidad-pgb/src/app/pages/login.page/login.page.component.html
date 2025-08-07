@@ -1,2 +1,14 @@
 <h2>Iniciar sesión</h2>
-<form></form>
+@if(error) {
+    <p>{{ error.message }}</p>
+}
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <label for="username">Usuario:</label>
+ <input id="username" type="text" formControlName="username">
+
+  <label for="password">Contraseña:</label>
+  <input id="password" type="password" formControlName="password">
+
+  <button type="submit">Ingresar</button>
+</form>

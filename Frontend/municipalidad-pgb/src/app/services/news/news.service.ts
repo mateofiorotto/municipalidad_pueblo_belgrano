@@ -11,9 +11,6 @@ export class NewsService {
   private _httpClient = inject(HttpClient);
   private baseUrl = 'http://localhost:8080/news';
 
-  constructor() {
-   }
-
    public getNewsList(): Observable<NewsListResponse> {
     return this._httpClient.get<NewsListResponse>(this.baseUrl);
   }
