@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth/auth.service';
+import { inject } from '@angular/core';
 
 @Component({
   standalone: true,
@@ -8,5 +10,11 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  
+  protected _authService = inject(AuthService);
 
+  public logout() {
+    this._authService.logout();
+  }
+  
 }

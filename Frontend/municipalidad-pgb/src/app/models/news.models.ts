@@ -1,7 +1,7 @@
 import { CategoryResponseDTO } from './category.model';
 import { EventResponseDTO } from './event.model';
 
-export interface News {
+export interface NewsResponseDTO {
   id: number;
   titular: string;
   subtitulo: string;
@@ -24,7 +24,7 @@ export interface NewsListResponse {
   status: number;
   message: string;
   result: {
-    content: News[];
+    content: NewsResponseDTO[];
     page: Page;
   };
 }
@@ -32,5 +32,5 @@ export interface NewsListResponse {
 export interface NewsByIdResponse {
   status: number;
   message: string;
-  result: News;
+  result: NewsResponseDTO;
 }

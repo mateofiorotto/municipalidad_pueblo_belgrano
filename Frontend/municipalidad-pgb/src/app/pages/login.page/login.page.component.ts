@@ -23,7 +23,7 @@ export class LoginPageComponent {
     password: new FormControl('', [Validators.required]),
   });
 
-  public onSubmit() {
+  public onSubmit(): void {
    const val = this.loginForm.value;
 
    if (val.username && val.password) {
@@ -31,7 +31,7 @@ export class LoginPageComponent {
       next: (response) => {
         const token = response.jwt; 
         localStorage.setItem('auth_token', token);
-        this.router.navigate(['/']);
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         this.error = err.error;
@@ -44,7 +44,7 @@ export class LoginPageComponent {
     
   }}
 
-  get username() {
+  get username(){
     return this.loginForm.get('username');
   }
 

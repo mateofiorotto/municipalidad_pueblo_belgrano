@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { News } from '../../models/news.models';
+import { NewsResponseDTO } from '../../models/news.models';
 import { RouterModule } from '@angular/router';
 
 
@@ -11,5 +11,5 @@ import { RouterModule } from '@angular/router';
   styleUrl: './news-card.component.css'
 })
 export class NewsCardComponent {
-  @Input() news!: News;
+  @Input() news!: NewsResponseDTO;
 }

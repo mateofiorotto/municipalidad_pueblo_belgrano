@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { inject } from '@angular/core';
 import { NewsService } from '../../services/news/news.service';
 import { NewsCardComponent } from '../news-card/news-card.component';
-import { News } from '../../models/news.models';
+import { NewsResponseDTO } from '../../models/news.models';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 export class NewsListComponent implements OnInit {
   private newsService = inject(NewsService);
   
-  public newsList: News[] = [];
+  public newsList: NewsResponseDTO[] = [];
 
   ngOnInit(): void {
     this.newsService.getNewsList().subscribe({

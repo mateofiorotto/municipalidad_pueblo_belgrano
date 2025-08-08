@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { News } from '../../models/news.models';
+import { NewsResponseDTO } from '../../models/news.models';
 import { NewsService } from '../../services/news/news.service';
 import { inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -19,7 +19,7 @@ export class NewsDetailsComponent {
   private router = inject(Router);
   private newsService = inject(NewsService);
 
-  news!: News;
+  news!: NewsResponseDTO;
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

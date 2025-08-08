@@ -9,13 +9,13 @@ import { Observable } from 'rxjs';
 })
 export class NewsService {
   private _httpClient = inject(HttpClient);
-  private baseUrl = 'http://localhost:8080/news';
+  private _baseUrl = 'http://localhost:8080/news';
 
    public getNewsList(): Observable<NewsListResponse> {
-    return this._httpClient.get<NewsListResponse>(this.baseUrl);
+    return this._httpClient.get<NewsListResponse>(this._baseUrl);
   }
 
   public getNewsById(id: number): Observable<NewsByIdResponse> {
-    return this._httpClient.get<NewsByIdResponse>(`${this.baseUrl}/${id}`);
+    return this._httpClient.get<NewsByIdResponse>(`${this._baseUrl}/${id}`);
   }
 }

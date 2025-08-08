@@ -97,12 +97,12 @@ public class UserDetailsServiceImp implements UserDetailsService {
         try {
             userDetails = this.loadUserByUsername(username);
         } catch (UsernameNotFoundException e) {
-            throw new BadCredentialsException("Invalid username or password");
+            throw new BadCredentialsException("Los datos ingresados son incorrectos");
         }
 
         //If !pw
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            throw new BadCredentialsException("Invalid username or password");
+            throw new BadCredentialsException("Los datos ingresados son incorrectos");
         }
         return new UsernamePasswordAuthenticationToken(username, userDetails.getPassword(), userDetails.getAuthorities());
     }

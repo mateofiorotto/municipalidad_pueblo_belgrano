@@ -18,10 +18,25 @@ export const routes: Routes = [
         path: 'login', 
         loadComponent: () => import('./pages/login.page/login.page.component').then((m) => m.LoginPageComponent) 
     },
+    {
+        path: 'reclamos',
+        loadComponent: () => import('./pages/complaints.page/complaints.page.component').then((m) => m.ComplaintsPageComponent)
+    },
+    {
+        path: 'eventos',
+        loadComponent: () => import('./pages/events.page/events.page.component').then((m) => m.EventsPageComponent)
+    },
     { 
         path: 'dashboard', 
-        loadComponent: () => import('./pages/dashboard.page/dashboard.page.component').then((m) => m.DashboardPageComponent),
-        canActivate: [authGuard] 
+        loadComponent: () => import('./pages/admin/dashboard.page/dashboard.page.component').then((m) => m.DashboardPageComponent),
+        canActivate: [authGuard],
+        data: { roles: [
+            'ROLE_ADMIN',
+            'ROLE_SECRETARIA',
+            'ROLE_COMUNICACION',
+            'ROLE_RESPONSABLE_RECLAMOS',
+            "ROLE_INTENDENTE"
+        ] }
     },
     { 
         path: '**', 
