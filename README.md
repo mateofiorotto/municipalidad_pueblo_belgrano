@@ -25,7 +25,7 @@
 - CSS3
 - Javascript
 - Bootstrap 5
-- Angular 16
+- Angular 19
 - TypeScript
 - Postman (Test API)
 - XAMPP (Development Environment, Apache, phpmyadmin)
