@@ -3,13 +3,12 @@ import { AuthService } from '../../services/auth/auth.service';
 import { inject } from '@angular/core';
 
 @Component({
-  standalone: true,
-  selector: 'app-header',
+  selector: 'app-header-admin',
   imports: [],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  templateUrl: './header-admin.component.html',
+  styleUrl: './header-admin.component.css',
 })
-export class HeaderComponent {
+export class HeaderAdminComponent {
   protected _authService = inject(AuthService);
 
   public logout() {

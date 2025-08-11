@@ -61,11 +61,14 @@ export class AuthService {
 
     try {
       const decodedToken = jwtDecode<Token>(tokenString);
+
       if (this.isTokenExpired(decodedToken)) {
         this.logout();
         return false;
       }
+
       const rolesArray = decodedToken.authorities.split(',');
+      
       return rolesArray.some(role => allowedRoles.includes(role));
     } catch {
       this.logout();

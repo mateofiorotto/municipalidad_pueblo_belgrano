@@ -16,3 +16,54 @@ h2 {
   font-size: 1.75em !important;
   text-transform: uppercase;
 }
+
+.input-error, .error-msg {
+  color: red;
+  margin-top: 1em;
+  font-size: 1.1em;
+  margin-bottom: 0;
+}
+
+.required-input {
+  color: rgb(229, 156, 20);
+  font-size: 1.2em;
+  vertical-align: middle;
+  margin-left: 0.35em;
+}
+
+textarea {
+    resize: none;
+}
+
+input, textarea {
+    border: 1px solid black !important;
+}
+
+label {
+    font-weight: bold;
+}
+
+.btn-send-form {
+    background-color: rgb(26, 100, 197);
+    color: white;
+    border-radius: 5px;
+    border-color: transparent;
+    font-size: 1.2em;
+    padding: 1em 2.5em;
+    margin: 1.5em auto;
+    display: block;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: 0.25s ease-in-out all;
+}
+
+.btn-send-form:hover {
+    background-color: rgb(26, 100, 197, 0.8);
+}
+
+/*disabled send*/
+.btn-send-form:disabled {
+    background-color: rgb(26, 100, 197, 0.5);
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -59,6 +59,26 @@ public class ComplaintService implements IComplaintService {
     }
 
     @Override
+    public PagedModel<ComplaintResponseDTO> getPaginatedComplaintsByArea(int page, int size, Long area_id) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Complaint> paginatedComplaintsByArea = complaintRepository.findComplaintsByArea(pageable, area_id);
+
+        List<ComplaintResponseDTO> complaintDTOList = paginatedComplaintsByArea
+                .stream()
+                .map(IComplaintMapper.mapper::complaintToComplaintResponseDTO)
+                .collect(Collectors.toList());
+
+        Page<ComplaintResponseDTO> paginatedComplaintList = new PageImpl<>(
+                complaintDTOList,
+                pageable,
+                paginatedComplaintsByArea.getTotalElements()
+        );
+
+        return new PagedModel<>(paginatedComplaintList);
+    }
+
+    @Override
     public ComplaintResponseDTO getComplaintById(Long id) {
 
         Complaint complaint = complaintRepository.findValidComplaintById(id).orElseThrow(() -> new NotFoundException("Reclamo no encontrado o cerrado hace más de 7 dias, ID: " + id));

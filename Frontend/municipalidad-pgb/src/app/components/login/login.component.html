@@ -1,0 +1,26 @@
+@if(error) {
+    <p class="error-msg text-center mt-4">{{ error.message }}</p>
+}
+
+<form class="p-4" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="pt-3 pb-2 ps-4 pe-4">
+        <label class="form-label" for="username">Usuario<span class="required-input">*</span></label>
+        <input class="form-control" id="username" type="text" formControlName="username">
+        @if(username?.touched && username?.errors?.['required']) {
+        <p class="input-error">El usuario es requerido</p>
+        }
+    </div>
+
+    <div class="pt-3 pb-2 ps-4 pe-4">
+        <label class="form-label" for="password">Contraseña<span class="required-input">*</span></label>
+        <input class="form-control" id="password" type="password" formControlName="password">
+        @if(password?.touched && password?.errors?.['required']) {
+        <p class="input-error">La contraseña es requerida</p>
+        }
+    </div>
+
+    <div class="mt-5">
+        
+        <button class="btn-send-form" type="submit">Ingresar</button>
+    </div>
+</form>

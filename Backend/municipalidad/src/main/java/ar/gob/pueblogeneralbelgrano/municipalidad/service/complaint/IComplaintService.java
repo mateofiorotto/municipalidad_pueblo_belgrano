@@ -19,6 +19,16 @@ public interface IComplaintService {
     public PagedModel<ComplaintResponseDTO> getPaginatedComplaints(int page, int size);
 
     /**
+     * Devolver reclamos por area paginados
+     *
+     * @param page
+     * @param size
+     * @param area_id
+     * @return reclamos por area paginados
+     */
+    public PagedModel<ComplaintResponseDTO> getPaginatedComplaintsByArea(int page, int size, Long area_id);
+
+    /**
      * Retornar un complainto especifico
      *
      * @param id

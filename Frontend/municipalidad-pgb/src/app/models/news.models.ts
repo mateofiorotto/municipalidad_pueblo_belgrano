@@ -1,5 +1,6 @@
 import { CategoryResponseDTO } from './category.model';
 import { EventResponseDTO } from './event.model';
+import { Page } from './page.model';
 
 export interface NewsResponseDTO {
   id: number;
@@ -11,13 +12,6 @@ export interface NewsResponseDTO {
   descripcion_adicional: string;
   categoria: CategoryResponseDTO;
   evento: EventResponseDTO;
-}
-
-export interface Page {
-  size: number;
-  number: number;
-  totalElements: number;
-  totalPages: number;
 }
 
 export interface NewsListResponse {

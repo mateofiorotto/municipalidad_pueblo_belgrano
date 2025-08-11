@@ -4,6 +4,7 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.security.config.filter.JwtToke
 import ar.gob.pueblogeneralbelgrano.municipalidad.utils.JwtUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -38,9 +39,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("*")); // permite todos los orígenes (cambiar a dominio en produccion)
+        configuration.setAllowedOriginPatterns(List.of("http://localhost:4200")); //cambiar en produccion
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With", "Origin"));
         configuration.setAllowCredentials(true); // necesario para jwt
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

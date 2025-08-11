@@ -1,5 +1,11 @@
+@if(router.url.includes('admin')) {
+<app-header-admin></app-header-admin>
+} @else {
 <app-header></app-header>
-  <main>
-    <router-outlet></router-outlet>
-  </main>
+}
+<main>
+  <router-outlet></router-outlet>
+</main>
+@if(!router.url.includes('admin')) {
 <app-footer></app-footer>
+}

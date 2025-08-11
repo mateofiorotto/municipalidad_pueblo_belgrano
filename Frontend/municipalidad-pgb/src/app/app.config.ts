@@ -1,14 +1,20 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
 import { routes } from './app.routes';
+import { authInterceptor } from './interceptors/auth/auth.interceptor';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { TranslateMaterial } from './core/translate-material/translate-material';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-     provideRouter(routes), 
-     provideHttpClient(
-      withFetch()
-     )]
+    provideRouter(routes),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    {provide: MatPaginatorIntl, useClass: TranslateMaterial},
+  ],
 };

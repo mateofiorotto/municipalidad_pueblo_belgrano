@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/auth.guard';
+import { authGuard } from './core/guard/auth.guard';
 
 export const routes: Routes = [
     { 
@@ -27,13 +27,23 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/events.page/events.page.component').then((m) => m.EventsPageComponent)
     },
     { 
-        path: 'dashboard', 
+        path: 'admin/dashboard', 
         loadComponent: () => import('./pages/admin/dashboard.page/dashboard.page.component').then((m) => m.DashboardPageComponent),
         canActivate: [authGuard],
         data: { roles: [
             'ROLE_ADMIN',
             'ROLE_SECRETARIA',
             'ROLE_COMUNICACION',
+            'ROLE_RESPONSABLE_RECLAMOS',
+            "ROLE_INTENDENTE"
+        ] }
+    },
+    {
+        'path': 'admin/reclamos',
+        loadComponent: () => import('./pages/admin/complaints/complaints.list.page/complaints.list.page.component').then((m) => m.ComplaintsListPageComponent),
+        canActivate: [authGuard],
+        data: { roles: [
+            'ROLE_ADMIN',
             'ROLE_RESPONSABLE_RECLAMOS',
             "ROLE_INTENDENTE"
         ] }

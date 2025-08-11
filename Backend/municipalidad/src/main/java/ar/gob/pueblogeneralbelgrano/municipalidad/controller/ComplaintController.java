@@ -60,6 +60,34 @@ public class ComplaintController {
     }
 
     /**
+     * Endpoint que obtiene las reclamos de un area manera paginada. Accedible por admins, intendente o responsable de reclamos
+     *
+     * @param page
+     * @return reclamos paginados por area de a 6 registros
+     */
+    @Operation(summary = "Obtener lista de reclamos segun un area de forma paginada",
+            description = "Devuelve la lista de reclamos del sistema segun un area de a 6 registros. Accedible por admins, intendente o responsable de reclamos",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Reclamos por arearetornados correctamente."),
+            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
+    })
+    @GetMapping("/area")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
+    public ResponseEntity<ResponseDTO<PagedModel<ComplaintResponseDTO>>> getPaginatedComplaintsByArea(
+            @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam Long area_id) {
+
+        final int size = 6;
+
+        PagedModel<ComplaintResponseDTO> complaints = complaintService.getPaginatedComplaintsByArea(page, size, area_id);
+
+        ResponseDTO<PagedModel<ComplaintResponseDTO>> getResponseComplaintsByArea = new ResponseDTO<>(complaints, 200, "Reclamos por area retornados correctamente");
+
+        return ResponseEntity.ok(getResponseComplaintsByArea);
+    }
+
+    /**
      * Endpoint que devuelve un reclamo especifico por id. Solo puede acceder el intendente, admins o responsables de reclamos
      *
      * @param id

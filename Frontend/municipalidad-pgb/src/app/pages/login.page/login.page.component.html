@@ -1,23 +1,6 @@
 <section class="login container">
-  <h2>Iniciar sesión</h2>
-  @if(error) {
-  <p>{{ error.message }}</p>
-  }
-
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <label for="username">Usuario:</label>
-    <input id="username" type="text" formControlName="username">
-    @if(username?.touched && username?.errors?.['required']) {
-      <p class="input-error">El usuario es requerido</p>
-    }
-
-
-    <label for="password">Contraseña:</label>
-    <input id="password" type="password" formControlName="password">
-    @if(password?.touched && password?.errors?.['required']) {
-      <p class="input-error">La contraseña es requerida</p>
-    }
-
-    <button type="submit">Ingresar</button>
-  </form>
+  <div class="mt-5 pt-3">
+  <h2 class="mt-5">Iniciar sesión</h2>
+  <app-login></app-login>
+  </div>
 </section>
