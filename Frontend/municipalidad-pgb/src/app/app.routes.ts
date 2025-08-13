@@ -48,8 +48,28 @@ export const routes: Routes = [
             "ROLE_INTENDENTE"
         ] }
     },
+    {
+        'path': 'admin/reclamos/:id/detalle',
+        loadComponent: () => import('./pages/admin/complaints/complaint-details.page/complaint-details.page.component').then((m) => m.ComplaintDetailsPageComponent),
+        canActivate: [authGuard],
+        data: { roles: [
+            'ROLE_ADMIN',
+            'ROLE_RESPONSABLE_RECLAMOS',
+            "ROLE_INTENDENTE"
+        ] }
+    },
+    {
+        'path': 'admin/reclamos/:id/editar',
+        loadComponent: () => import('./pages/admin/complaints/complaint-edit.page/complaint-edit.page.component').then((m) => m.ComplaintEditPageComponent),
+        canActivate: [authGuard],
+        data: { roles: [
+            'ROLE_ADMIN',
+            'ROLE_RESPONSABLE_RECLAMOS',
+            "ROLE_INTENDENTE"
+        ] }
+    },
     { 
         path: '**', 
-        loadComponent: () => import('./pages/notfound.page/notfound.page.component').then((m) => m.NotfoundPageComponent)
+        loadComponent: () => import('./pages/not-found.page/not-found.page.component').then((m) => m.NotFoundPageComponent)
     }
 ];

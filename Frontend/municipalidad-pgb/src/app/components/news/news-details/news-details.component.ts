@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NewsResponseDTO } from '../../models/news.models';
-import { NewsService } from '../../services/news/news.service';
+import { NewsResponseDTO } from '../../../models/news.models';
+import { NewsService } from '../../../services/news/news.service';
 import { inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgIf } from '@angular/common';
@@ -15,25 +15,25 @@ import { Router } from '@angular/router';
   styleUrl: './news-details.component.css',
 })
 export class NewsDetailsComponent {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private newsService = inject(NewsService);
+  private _route = inject(ActivatedRoute);
+  private _router = inject(Router);
+  private _newsService = inject(NewsService);
 
   news!: NewsResponseDTO;
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this._route.snapshot.paramMap.get('id');
 
     if (id) {
-      this.newsService.getNewsById(+id).subscribe({
+      this._newsService.getNewsById(+id).subscribe({
         next: (data) => {
           this.news = data.result;
         },
         error: (err) => {
           if (err.status === 404) {
-            this.router.navigate(['/not-found']);
+            this._router.navigate(['/no-encontrado']);
           } else {
-            console.error('Error al cargar noticias', err);
+            console.error('Error al cargar noticia', err);
           }
       },
       });

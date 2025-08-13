@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ComplaintRequestDTO } from '../../models/complaint.model';
+import { ComplaintByIdResponse, ComplaintRequestDTO, ComplaintUpdateDTO } from '../../models/complaint.model';
 import { ComplaintListResponse } from '../../models/complaint.model';
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
@@ -27,5 +27,13 @@ export class ComplaintService {
     .set('page', page.toString());
 
     return this._httpClient.get<ComplaintListResponse>(`${this._baseUrl}/area`, { params });
+  }
+
+  public getComplaintById(id: number): Observable<ComplaintByIdResponse>{
+    return this._httpClient.get<ComplaintByIdResponse>(`${this._baseUrl}/${id}`);
+  }
+
+  public updateComplaint(complaint: ComplaintUpdateDTO, id: number): Observable<ComplaintUpdateDTO> {
+    return this._httpClient.put<ComplaintUpdateDTO>(`${this._baseUrl}/${id}`, complaint);
   }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NewsListComponent } from '../../components/news-list/news-list.component';
+import { NewsListComponent } from '../../components/news/news-list/news-list.component';
 
 @Component({
   standalone: true,

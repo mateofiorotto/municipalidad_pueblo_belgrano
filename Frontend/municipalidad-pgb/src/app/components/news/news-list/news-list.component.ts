@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { inject } from '@angular/core';
-import { NewsService } from '../../services/news/news.service';
+import { NewsService } from '../../../services/news/news.service';
 import { NewsCardComponent } from '../news-card/news-card.component';
-import { NewsResponseDTO } from '../../models/news.models';
+import { NewsResponseDTO } from '../../../models/news.models';
 import { CommonModule } from '@angular/common';
 
 @Component({

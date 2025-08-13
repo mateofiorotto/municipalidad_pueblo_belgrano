@@ -41,3 +41,9 @@ export interface ComplaintListResponse {
         page: Page;
       };
 }
+
+export interface ComplaintByIdResponse {
+  status: number;
+  message: string;
+  result: ComplaintResponseDTO;
+}

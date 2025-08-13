@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NewsDetailsComponent } from '../../components/news-details/news-details.component';
+import { NewsDetailsComponent } from '../../components/news/news-details/news-details.component';
 import { CommonModule } from '@angular/common';
 import { NgIf } from '@angular/common';
 

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NewsResponseDTO } from '../../models/news.models';
+import { NewsResponseDTO } from '../../../models/news.models';
 import { RouterModule } from '@angular/router';
 
 

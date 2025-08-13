@@ -7,7 +7,7 @@
 }
 
 body {
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: "Montserrat", sans-serif !important;
 }
 
 h2 {
@@ -17,7 +17,8 @@ h2 {
   text-transform: uppercase;
 }
 
-.input-error, .error-msg {
+.input-error,
+.error-msg {
   color: red;
   margin-top: 1em;
   font-size: 1.1em;
@@ -32,38 +33,66 @@ h2 {
 }
 
 textarea {
-    resize: none;
+  resize: none;
 }
 
-input, textarea {
-    border: 1px solid black !important;
+input,
+textarea,
+select {
+  border: 1px solid black !important;
 }
 
 label {
-    font-weight: bold;
+  font-weight: bold;
 }
 
-.btn-send-form {
-    background-color: rgb(26, 100, 197);
-    color: white;
-    border-radius: 5px;
-    border-color: transparent;
-    font-size: 1.2em;
-    padding: 1em 2.5em;
-    margin: 1.5em auto;
-    display: block;
-    text-transform: uppercase;
-    font-weight: bold;
-    transition: 0.25s ease-in-out all;
+.btn-send-form, .btn-actualizar-form {
+  background-color: rgb(26, 100, 197);
+  color: white;
+  border-radius: 5px;
+  border-color: transparent;
+  font-size: 1.2em;
+  padding: 1em 2.5em;
+  margin: 1.5em auto;
+  display: block;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: 0.25s ease-in-out all;
 }
 
-.btn-send-form:hover {
-    background-color: rgb(26, 100, 197, 0.8);
+.btn-send-form:hover, .btn-actualizar-form:hover {
+  background-color: rgb(26, 100, 197, 0.8);
 }
 
 /*disabled send*/
-.btn-send-form:disabled {
-    background-color: rgb(26, 100, 197, 0.5);
+.btn-send-form:disabled, .btn-actualizar-form:disabled {
+  background-color: rgb(26, 100, 197, 0.5);
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 1.15em;
+}
+
+.actions-td .material-icons {
+}
+
+.actions-td a {
+  background-color: transparent;
+  color: black !important;
+  transition: 0.25s ease-in-out all;
+  background-color: none !important;
+}
+
+.actions-td {
+  border: none;
+}
+
+.actions-td a:hover {
+  color: rgb(26, 100, 197) !important;
+}
+
+table {
+  background-color: rgba(65, 135, 227, 0.5);
+}
