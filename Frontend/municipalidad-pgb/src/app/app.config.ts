@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import {
   provideHttpClient,
@@ -9,6 +9,7 @@ import { routes } from './app.routes';
 import { authInterceptor } from './interceptors/auth/auth.interceptor';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { TranslateMaterial } from './core/translate-material/translate-material';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,5 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     {provide: MatPaginatorIntl, useClass: TranslateMaterial},
+    importProvidersFrom([SweetAlert2Module.forRoot()]),
   ],
 };

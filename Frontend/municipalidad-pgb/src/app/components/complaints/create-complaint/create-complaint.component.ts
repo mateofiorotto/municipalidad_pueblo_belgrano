@@ -6,6 +6,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ComplaintRequestDTO } from '../../../models/complaint.model';
 
 @Component({
+  standalone: true,
   selector: 'app-create-complaint',
   imports: [ReactiveFormsModule],
   templateUrl: './create-complaint.component.html',

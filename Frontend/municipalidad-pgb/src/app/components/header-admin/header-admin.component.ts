@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { inject } from '@angular/core';
 
 @Component({
+  standalone: true,
   selector: 'app-header-admin',
   imports: [],
   templateUrl: './header-admin.component.html',

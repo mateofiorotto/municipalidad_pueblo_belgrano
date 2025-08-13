@@ -18,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @PreAuthorize("denyAll()")
@@ -185,9 +186,9 @@ public class ComplaintController {
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE')")
-    public ResponseEntity<String> deleteComplaint(@PathVariable Long id){
+    public ResponseEntity<Map<String,String>> deleteComplaint(@PathVariable Long id){
         complaintService.deleteComplaint(id);
 
-        return ResponseEntity.ok("Reclamo eliminado con exito");
+        return ResponseEntity.ok(Map.of("message", "Reclamo eliminado con exito"));
     }
 }

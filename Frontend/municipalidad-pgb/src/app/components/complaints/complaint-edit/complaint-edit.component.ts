@@ -12,6 +12,7 @@ import { AreasService } from '../../../services/areas/areas.service';
 import { AreaResponseDTO } from '../../../models/area.model';
 
 @Component({
+  standalone: true,
   selector: 'app-complaint-edit',
   imports: [ReactiveFormsModule],
   templateUrl: './complaint-edit.component.html',
@@ -23,7 +24,7 @@ export class ComplaintEditComponent {
   private _router = inject(Router);
   private _complaintsService = inject(ComplaintService);
   private _areaService = inject(AreasService);
-
+  
   public areasList: AreaResponseDTO[] = [];
   public complaint!: ComplaintResponseDTO;
   public updateComplaintForm!: FormGroup;
@@ -53,7 +54,13 @@ export class ComplaintEditComponent {
             area: { id: res.result.area?.id ?? ''},
           });
         },
-        error: (err) => console.error(err),
+        error: (err) => {
+          if (err.status === 404) {
+            this._router.navigate(['/no-encontrado']);
+          } else {
+            console.error('Error al cargar reclamos o no estas autorizado/a');
+          }
+      },
       });
     }
   }

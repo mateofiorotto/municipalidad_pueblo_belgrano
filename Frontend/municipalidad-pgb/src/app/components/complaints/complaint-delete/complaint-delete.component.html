@@ -1,0 +1,9 @@
+@if (complaint) {
+  <h2>Borrar reclamo</h2>
+  <p>¿Estás seguro/a de querer borrar este reclamo?</p>
+
+  <button class="btn btn-danger me-2" (click)="deleteComplaint()">Borrar</button>
+  <button class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+} @else {
+  <p class="error-msg text-center">Ocurrio un error al cargar el reclamo o no estas autorizado/a.</p>
+}

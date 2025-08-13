@@ -5,6 +5,7 @@ import { ComplaintResponseDTO } from '../../../models/complaint.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
+  standalone: true,
   selector: 'app-complaint-details',
   imports: [],
   templateUrl: './complaint-details.component.html',
@@ -29,7 +30,7 @@ export class ComplaintDetailsComponent {
           if (err.status === 404) {
             this._router.navigate(['/no-encontrado']);
           } else {
-            console.error('Error al cargar noticia', err);
+            console.error('Error al cargar reclamos o no estas autorizado/a');
           }
       },
       });

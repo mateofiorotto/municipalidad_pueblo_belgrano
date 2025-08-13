@@ -68,6 +68,16 @@ export const routes: Routes = [
             "ROLE_INTENDENTE"
         ] }
     },
+    {
+        'path': 'admin/reclamos/:id/borrar',
+        loadComponent: () => import('./pages/admin/complaints/complaint-delete.page/complaint-delete.page.component').then((m) => m.ComplaintDeletePageComponent),
+        canActivate: [authGuard],
+        data: { roles: [
+            'ROLE_ADMIN',
+            'ROLE_RESPONSABLE_RECLAMOS',
+            "ROLE_INTENDENTE"
+        ] }
+    },
     { 
         path: '**', 
         loadComponent: () => import('./pages/not-found.page/not-found.page.component').then((m) => m.NotFoundPageComponent)

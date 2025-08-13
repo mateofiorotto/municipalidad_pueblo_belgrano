@@ -4,8 +4,10 @@ import { Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
+  standalone: true,
   selector: 'app-login',
   imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
@@ -29,17 +31,30 @@ export class LoginComponent {
         next: (response) => {
           const token = response.jwt;
           localStorage.setItem('auth_token', token);
-          this.router.navigate(['admin/dashboard']);
+
+          this.router.navigate(['admin/dashboard']).then(() => {
+            Swal.fire({
+              icon: 'success',
+              title: '¡Bienvenido!',
+              text: 'Has iniciado sesión correctamente',
+              showConfirmButton: true,
+              timer: 3500,
+            });
+          });
         },
         error: (err) => {
           if (err.status == 401) {
-            this.error = {
-              message: 'El usuario o la contraseña son incorrectos',
-            };
+            Swal.fire({
+              icon: 'error',
+              title: 'Datos Incorrectos',
+              text: 'El usuario o la contraseña son incorrectos',
+            });
           } else {
-            this.error = {
-              message: 'Ocurrió un error. Lo estamos solucionando.',
-            };
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Ocurrió un error. Lo estamos solucionando.',
+            });
           }
         },
       });

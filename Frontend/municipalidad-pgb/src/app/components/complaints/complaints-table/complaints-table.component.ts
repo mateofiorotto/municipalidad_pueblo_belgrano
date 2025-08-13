@@ -8,6 +8,7 @@ import { AreaResponseDTO } from '../../../models/area.model';
 import { AreasService } from '../../../services/areas/areas.service';
 
 @Component({
+  standalone: true,
   selector: 'app-complaints-table',
   imports: [MatPaginatorModule, MatIconModule],
   templateUrl: './complaints-table.component.html',

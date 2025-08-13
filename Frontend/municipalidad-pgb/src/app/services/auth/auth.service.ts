@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { UserLoginResponse } from '../../models/user.model';
-import { shareReplay } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import Swal from 'sweetalert2';
 import { Token } from '../../models/token.model';
 import { Router } from '@angular/router';
 
@@ -16,14 +16,24 @@ export class AuthService {
   private _baseUrl = 'http://localhost:8080/auth/login';
 
   public login(username: string, password: string) {
-    return this._httpClient
-      .post<UserLoginResponse>(this._baseUrl, { username, password })
+    return this._httpClient.post<UserLoginResponse>(this._baseUrl, {
+      username,
+      password,
+    });
   }
 
   public logout(): void {
     localStorage.removeItem('auth_token');
 
-    this._router.navigate(['/login']);
+    this._router.navigate(['/login']).then(() => {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Sesión Cerrada',
+        text: 'Tu sesión ha sido cerrada',
+        showConfirmButton: true,
+        timer: 3500,
+      });
+    });
   }
 
   public isLogged(): boolean {
@@ -68,8 +78,8 @@ export class AuthService {
       }
 
       const rolesArray = decodedToken.authorities.split(',');
-      
-      return rolesArray.some(role => allowedRoles.includes(role));
+
+      return rolesArray.some((role) => allowedRoles.includes(role));
     } catch {
       this.logout();
       return false;
