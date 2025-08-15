@@ -1,0 +1,10 @@
+input[type=checkbox]
+{
+  -ms-transform: scale(1.75);
+  -moz-transform: scale(1.75);
+  -webkit-transform: scale(1.75);
+  -o-transform: scale(1.75);
+  transform: scale(1.75);
+  border-color: black !important;
+  padding: 10px;
+}

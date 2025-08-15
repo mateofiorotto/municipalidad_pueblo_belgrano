@@ -1,0 +1,10 @@
+.select-area {
+  font-size: 1.1em;
+  font-weight: bold !important;
+  text-transform: uppercase !important;
+  margin-bottom: 1em;
+}
+
+.select-area select {
+  padding: 0.5em !important;
+}

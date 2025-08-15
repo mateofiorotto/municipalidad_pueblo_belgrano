@@ -1,7 +1,34 @@
 @if (complaint) {
-  <h2>Borrar reclamo</h2>
-  <p>¿Estás seguro/a de querer borrar este reclamo?</p>
+<div class="text-center d-block m-auto">
+  <h2 class="mt-5">Reclamo #{{ complaint.id }}</h2>
 
-  <button class="btn btn-danger me-2" (click)="deleteComplaint()">Borrar</button>
-  <button class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+  <div class="row p-3 pt-2 text-break align-items-center justify-content-center">
+    <div class="col-lg-4 col-md-6 col-12 p-4">
+      <p><span class="fw-bold">Motivo:</span> {{ complaint.motivo }}</p>
+      <p><span class="fw-bold">Fecha:</span> {{ complaint.fecha_reclamo }}</p>
+      <p><span class="fw-bold">Celular:</span> {{ complaint.celular }}</p>
+    </div>
+    <div class="col-lg-4 col-md-6 col-12 p-4">
+      <p><span class="fw-bold">Dirección:</span> {{ complaint.direccion }}</p>
+      <p><span class="fw-bold">Imagen:</span> {{ complaint.imagen ? complaint.imagen : 'Sin imagen' }}</p>
+      <p><span class="fw-bold">Nombre y Apellido:</span> {{ complaint.nombre_apellido }}</p>
+    </div>
+    <div class="col-lg-4 col-md-6 col-12 p-4">
+      <p><span class="fw-bold">Email:</span> {{ complaint.email }}</p>
+      <p><span class="fw-bold">Descripción:</span> {{ complaint.descripcion }}</p>
+    </div>
+  </div>
+
+  <div class="status-complaint text-center">
+    <h3 class="text-center fw-bold pb-3">Estado del reclamo</h3>
+    <p><span class="fw-bold">Cerrado:</span> {{ complaint.cerrado ? 'Si' : 'No' }}</p>
+    <p><span class="fw-bold">Cerrado en:</span> {{ complaint.fecha_cerrado ? complaint.fecha_cerrado : 'Sin fecha' }}
+    </p>
+    <p><span class="fw-bold">Area:</span> {{ complaint.area?.nombre ? complaint.area?.nombre : 'Sin area' }}</p>
+    <p><span class="fw-bold">Comentario:</span> {{ complaint.comentario ? complaint.comentario : 'Sin comentario' }}</p>
+  </div>
+
+  <button class="btn btn-danger me-2 btn-borrar" (click)="deleteComplaint()">Borrar</button>
+  <button class="btn btn-secondary btn-cancelar" (click)="cancel()">Cancelar</button>
+</div>
 }
