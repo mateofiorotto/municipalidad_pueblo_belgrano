@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { AreasService } from '../../../services/areas/areas.service';
 import { AreaResponseDTO } from '../../../models/area.model';
+import Swal from 'sweetalert2';
 
 @Component({
   standalone: true,
@@ -24,7 +25,7 @@ export class ComplaintEditComponent {
   private _router = inject(Router);
   private _complaintsService = inject(ComplaintService);
   private _areaService = inject(AreasService);
-  
+
   public areasList: AreaResponseDTO[] = [];
   public complaint!: ComplaintResponseDTO;
   public updateComplaintForm!: FormGroup;
@@ -51,16 +52,23 @@ export class ComplaintEditComponent {
           this.updateComplaintForm.patchValue({
             cerrado: res.result.cerrado,
             comentario: res.result.comentario,
-            area: { id: res.result.area?.id ?? ''},
+            area: { id: res.result.area?.id ?? '' },
           });
         },
         error: (err) => {
           if (err.status === 404) {
             this._router.navigate(['/no-encontrado']);
           } else {
-            console.error('Error al cargar reclamos o no estas autorizado/a');
+            this._router.navigate(['/']).then(() => {
+              Swal.fire({
+                icon: 'error',
+                title: 'ERROR',
+                text: 'Error al cargar reclamos o no estas autorizado/a',
+                showConfirmButton: true,
+              });
+            });
           }
-      },
+        },
       });
     }
   }
@@ -70,17 +78,33 @@ export class ComplaintEditComponent {
       const updateData: ComplaintUpdateDTO = this.updateComplaintForm.value;
 
       if (!updateData.area.id) {
-      delete (updateData as any).area;
-    }
+        delete (updateData as any).area;
+      }
 
       this._complaintsService
         .updateComplaint(updateData, this.complaintId)
         .subscribe({
           next: () => {
             console.log('Actualizado correctamente');
-            this._router.navigate(['admin/reclamos']);
+            this._router.navigate(['admin/reclamos']).then(() => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Reclamo Actualizado',
+                text: 'Reclamo actualizado correctamente',
+                showConfirmButton: true,
+              });
+            });
           },
-          error: (err) => console.error('Error al actualizar', err),
+          error: (err) => {
+            this._router.navigate(['/admin/reclamos']).then(() => {
+              Swal.fire({
+                icon: 'error',
+                title: 'ERROR',
+                text: 'Error al actualizar reclamo',
+                showConfirmButton: true,
+              });
+            });
+          },
         });
     }
   }
@@ -90,7 +114,16 @@ export class ComplaintEditComponent {
       next: (data) => {
         this.areasList = data.result;
       },
-      error: (err) => console.error('Error al cargar areas', err),
+      error: (err) => {
+        this._router.navigate(['/']).then(() => {
+          Swal.fire({
+            icon: 'error',
+            title: 'ERROR',
+            text: 'Error al cargar areas o no estas autorizado/a',
+            showConfirmButton: true,
+          });
+        });
+      },
     });
     return this.areasList;
   }

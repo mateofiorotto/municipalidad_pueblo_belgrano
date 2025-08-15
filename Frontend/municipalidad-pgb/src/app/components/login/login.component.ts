@@ -59,9 +59,11 @@ export class LoginComponent {
         },
       });
     } else {
-      this.error = {
-        message: 'El usuario y la contraseña son requeridos',
-      };
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'El usuario o la contraseña son requeridos',
+      });
     }
   }
 

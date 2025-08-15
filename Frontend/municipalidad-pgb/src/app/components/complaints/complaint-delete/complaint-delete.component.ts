@@ -3,6 +3,7 @@ import { ComplaintService } from '../../../services/complaints/complaints.servic
 import { inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComplaintResponseDTO } from '../../../models/complaint.model';
+import Swal from 'sweetalert2';
 
 @Component({
   standalone: true,
@@ -22,7 +23,7 @@ export class ComplaintDeleteComponent {
 
   ngOnInit(): void {
     const id = this._route.snapshot.paramMap.get('id');
-    
+
     if (id) {
       this.complaintId = +id;
       this._complaintsService.getComplaintById(this.complaintId).subscribe({
@@ -31,9 +32,16 @@ export class ComplaintDeleteComponent {
           if (err.status === 404) {
             this._router.navigate(['/no-encontrado']);
           } else {
-            console.error('Error al cargar reclamos o no estas autorizado/a');
+            this._router.navigate(['/']).then(() => {
+              Swal.fire({
+                icon: 'error',
+                title: 'ERROR',
+                text: 'Error al cargar reclamos o no estas autorizado/a',
+                showConfirmButton: true,
+              });
+            });
           }
-      },
+        },
       });
     }
   }
@@ -42,9 +50,22 @@ export class ComplaintDeleteComponent {
     this._complaintsService.deleteComplaint(this.complaintId).subscribe({
       next: () => {
         this._router.navigate(['/admin/reclamos']);
+        Swal.fire({
+          icon: 'success',
+          title: 'Reclamo Eliminado',
+          text: 'Reclamo eliminado correctamente',
+          showConfirmButton: true,
+        });
       },
       error: (err) => {
-         console.error('Error al cargar reclamos o no estas autorizado/a'); 
+        this._router.navigate(['/admin/reclamos']).then(() => {
+          Swal.fire({
+            icon: 'error',
+            title: 'ERROR',
+            text: 'Error al eliminar reclamo',
+            showConfirmButton: true,
+          });
+        });
       },
     });
   }

@@ -30,8 +30,7 @@ export class AuthService {
         icon: 'warning',
         title: 'Sesión Cerrada',
         text: 'Tu sesión ha sido cerrada',
-        showConfirmButton: true,
-        timer: 3500,
+        showConfirmButton: true
       });
     });
   }

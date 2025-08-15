@@ -3,6 +3,7 @@ import { inject } from '@angular/core';
 import { ComplaintService } from '../../../services/complaints/complaints.service';
 import { ComplaintResponseDTO } from '../../../models/complaint.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   standalone: true,
@@ -30,9 +31,16 @@ export class ComplaintDetailsComponent {
           if (err.status === 404) {
             this._router.navigate(['/no-encontrado']);
           } else {
-            console.error('Error al cargar reclamos o no estas autorizado/a');
+            this._router.navigate(['/']).then(() => {
+              Swal.fire({
+                icon: 'error',
+                title: 'ERROR',
+                text: 'Error al cargar areas o no estas autorizado/a',
+                showConfirmButton: true,
+              });
+            });
           }
-      },
+        },
       });
     }
   }

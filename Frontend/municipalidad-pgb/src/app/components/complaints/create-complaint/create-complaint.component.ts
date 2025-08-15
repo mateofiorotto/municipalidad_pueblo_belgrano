@@ -4,6 +4,7 @@ import { inject } from '@angular/core';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ComplaintRequestDTO } from '../../../models/complaint.model';
+import Swal from 'sweetalert2';
 
 @Component({
   standalone: true,
@@ -64,17 +65,46 @@ export class CreateComplaintComponent {
           next: (data) => {
             this.errors = [];
             this.complaintsForm.reset();
+            Swal.fire({
+              icon: 'success',
+              title: 'Reclamo Recibido',
+              text: 'Tu reclamo se envió correctamente',
+              showConfirmButton: true,
+            });
           },
           error: (err) => {
             if (err.error && Array.isArray(err.error.errors)) {
               this.errors = err.error.errors;
+
+              const listaErrores = `
+              <ul style="text-align:left">
+                ${this.errors.map((e) => `<li>${e.defaultMessage}</li>`).join('')}
+              </ul>
+            `;
+
+              Swal.fire({
+                icon: 'error',
+                title: 'ERROR',
+                html: listaErrores,
+                showConfirmButton: true,
+              });
             } else {
-              this.errors = [{ defaultMessage: 'Error desconocido' }];
+              Swal.fire({
+                icon: 'error',
+                title: 'ERROR',
+                text: 'Ocurrio un error al enviar el reclamo. Lo estamos solucionando.',
+                showConfirmButton: true,
+              });
             }
           },
         });
     } else {
-      this.errors = [{ defaultMessage: 'Todos los campos son requeridos' }];
+      Swal.fire({
+        icon: 'error',
+        title: 'ERROR',
+        text: 'Completa los campos requeridos',
+        showConfirmButton: true,
+      });
     }
   }
 
