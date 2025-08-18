@@ -5,6 +5,9 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintRespons
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintUpdateDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.response.ResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.service.complaint.IComplaintService;
+import io.github.bucket4j.Bandwidth;
+import io.github.bucket4j.Bucket;
+import io.github.bucket4j.Refill;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -17,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
@@ -27,10 +31,17 @@ import java.util.Map;
 public class ComplaintController {
 
     private final IComplaintService complaintService;
+    private final Bucket bucket;
 
     public ComplaintController(IComplaintService complaintService) {
         this.complaintService = complaintService;
+
+        Bandwidth limit = Bandwidth.classic(1, Refill.greedy(1, Duration.ofMinutes(1)));
+        this.bucket = Bucket.builder()
+                .addLimit(limit)
+                .build();
     }
+
 
     /**
      * Endpoint que obtiene las reclamos de manera paginada. Accedible por admins, intendente o responsable de reclamos
@@ -133,11 +144,20 @@ public class ComplaintController {
     @PreAuthorize("permitAll()")
     public ResponseEntity<ResponseDTO<ComplaintRequestDTO>> saveComplaint(@Valid @RequestBody ComplaintRequestDTO complaint){
 
+        if (bucket.tryConsume(1)){
+
         complaintService.saveComplaint(complaint);
 
         ResponseDTO<ComplaintRequestDTO> saveComplaintResponse = new ResponseDTO<>(complaint,201,"Reclamo creado con exito");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(saveComplaintResponse);
+        }
+
+        ResponseDTO<ComplaintRequestDTO> errorResponse =
+                new ResponseDTO<>(complaint, 429, "Demasiadas solicitudes, intente más tarde");
+
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(errorResponse);
+
     }
 
     /**
