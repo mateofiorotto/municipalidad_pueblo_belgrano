@@ -49,6 +49,12 @@ export class LoginComponent {
               title: 'Datos Incorrectos',
               text: 'El usuario o la contraseña son incorrectos',
             });
+          } else if (err.status == 429) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Intentaste demasiadas veces. Por favor, intenta de nuevo en unos minutos.',
+            });
           } else {
             Swal.fire({
               icon: 'error',

@@ -1,7 +1,9 @@
 package ar.gob.pueblogeneralbelgrano.municipalidad.security.config;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.security.config.filter.JwtTokenValidator;
+import ar.gob.pueblogeneralbelgrano.municipalidad.security.config.filter.RateLimitFilter;
 import ar.gob.pueblogeneralbelgrano.municipalidad.utils.JwtUtils;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -39,7 +42,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("http://localhost:4200")); //cambiar en produccion
+        configuration.setAllowedOriginPatterns(List.of("http://localhost:4200", "http://192.168.0.251:4200")); //cambiar en produccion
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With", "Origin"));
         configuration.setAllowCredentials(true); // necesario para jwt
@@ -55,6 +58,7 @@ public class SecurityConfig {
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .csrf((csrf) -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(new RateLimitFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class);
         return http.build();
     }

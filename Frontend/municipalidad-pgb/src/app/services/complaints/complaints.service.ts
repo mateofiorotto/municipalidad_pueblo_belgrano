@@ -14,7 +14,7 @@ export class ComplaintService {
   private _baseUrl = 'http://localhost:8080/complaints'
 
   public createComplaint(complaint: ComplaintRequestDTO): Observable<ComplaintRequestDTO> {
-    return this._httpClient.post<ComplaintRequestDTO>(this._baseUrl, complaint);
+    return this._httpClient.post<ComplaintRequestDTO>(this._baseUrl+'/save', complaint);
   }
 
   public getComplaintsList(page: number): Observable<ComplaintListResponse> {

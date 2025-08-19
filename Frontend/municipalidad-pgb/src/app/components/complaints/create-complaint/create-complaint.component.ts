@@ -78,7 +78,9 @@ export class CreateComplaintComponent {
 
               const listaErrores = `
               <ul style="text-align:left">
-                ${this.errors.map((e) => `<li>${e.defaultMessage}</li>`).join('')}
+                ${this.errors
+                  .map((e) => `<li>${e.defaultMessage}</li>`)
+                  .join('')}
               </ul>
             `;
 
@@ -86,6 +88,13 @@ export class CreateComplaintComponent {
                 icon: 'error',
                 title: 'ERROR',
                 html: listaErrores,
+                showConfirmButton: true,
+              });
+            } else if (err.status == 429) {
+              Swal.fire({
+                icon: 'error',
+                title: 'ERROR',
+                text: 'Solo puedes enviar un reclamo cada 6 horas',
                 showConfirmButton: true,
               });
             } else {

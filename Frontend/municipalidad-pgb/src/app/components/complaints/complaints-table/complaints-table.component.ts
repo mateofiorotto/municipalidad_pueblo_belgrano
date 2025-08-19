@@ -56,6 +56,7 @@ export class ComplaintsTableComponent {
             text: 'Error al cargar reclamos o no estas autorizado/a',
             showConfirmButton: true,
           });
+          console.log(err);
         });
       },
     });

@@ -140,7 +140,7 @@ public class ComplaintController {
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
-    @PostMapping
+    @PostMapping("/save")
     @PreAuthorize("permitAll()")
     public ResponseEntity<ResponseDTO<ComplaintRequestDTO>> saveComplaint(@Valid @RequestBody ComplaintRequestDTO complaint){
 
