@@ -31,11 +31,8 @@ public class RateLimitFilter implements Filter {
 
         String ipAddress = httpRequest.getHeader("X-Forwarded-For");
         if (ipAddress == null || ipAddress.isEmpty()) {
-            ipAddress = httpRequest.getRemoteAddr();
+            ipAddress = "127.0.0.1";
         }
-
-        System.out.println(path);
-        System.out.println(ipAddress);
 
         // buscar limite para este path
         Bandwidth limit = limits.get(path);
@@ -50,10 +47,10 @@ public class RateLimitFilter implements Filter {
 
         if (bucket.tryConsume(1)){
             filterChain.doFilter(servletRequest, servletResponse);
-            System.out.println(ipAddress);
+            //System.out.println(ipAddress);
         } else {
             ((HttpServletResponse) servletResponse).setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
-            servletResponse.getWriter().write("Intentaste demasiado rapido, vuelve a intentarlo.");
+            servletResponse.getWriter().write("Intentaste demasiado rapido, vuelve a intentarlo más tarde.");
             servletResponse.getWriter().flush();
         }
     }

@@ -28,13 +28,13 @@
         @for (complaint of complaintsList; track complaint.id) {
         <tr class="text-break">
             <td class="fw-bold p-3 text-center">{{ complaint.id }}</td>
-            <td class="p-2">{{ complaint.motivo }}</td>
-            <td class="p-4">{{ complaint.direccion }}</td>
-            <td class="p-2">{{ complaint.descripcion.substr(0,50...) }}</td>
+            <td class="p-2">{{ complaint.motivo.substr(0,20...) }}...</td>
+            <td class="p-2">{{ complaint.direccion }}</td>
+            <td class="p-2">{{ complaint.descripcion.substr(0,20...) }}...</td>
             <td class="p-2">{{ complaint.fecha_reclamo }}</td>
             <td class="p-2">{{ complaint.area?.nombre || 'Sin área' }}</td>
 
-            <td class="actions-td p-2 text-center d-flex">
+            <td class="actions-td p-2 text-center">
                 <a href="/admin/reclamos/{{complaint.id}}/detalle"><mat-icon>visibility</mat-icon></a>
                 <a href="/admin/reclamos/{{complaint.id}}/editar"><mat-icon>edit</mat-icon></a>
                 <a href="/admin/reclamos/{{complaint.id}}/borrar"><mat-icon>delete</mat-icon></a>
@@ -44,7 +44,7 @@
         }
     </table>
 
-    <mat-paginator [length]="totalElements" [pageSize]=6 [pageIndex]="pageIndex" [pageSizeOptions]="[6]"
+    <mat-paginator class="mb-3" [length]="totalElements" [pageSize]=6 [pageIndex]="pageIndex" [pageSizeOptions]="[6]"
         (page)="onPageChange($event)" [showFirstLastButtons]="true">
     </mat-paginator>
 </div>

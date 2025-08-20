@@ -6,6 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 import Swal from 'sweetalert2';
 import { Token } from '../../models/token.model';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private _httpClient = inject(HttpClient);
   private _router = inject(Router);
-  private _baseUrl = 'http://localhost:8080/auth/login';
+  private _baseUrl = environment.baseUrl + '/auth/login';
 
   public login(username: string, password: string) {
     return this._httpClient.post<UserLoginResponse>(this._baseUrl, {

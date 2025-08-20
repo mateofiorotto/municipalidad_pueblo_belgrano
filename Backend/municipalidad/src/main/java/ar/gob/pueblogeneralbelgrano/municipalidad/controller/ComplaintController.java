@@ -144,19 +144,12 @@ public class ComplaintController {
     @PreAuthorize("permitAll()")
     public ResponseEntity<ResponseDTO<ComplaintRequestDTO>> saveComplaint(@Valid @RequestBody ComplaintRequestDTO complaint){
 
-        if (bucket.tryConsume(1)){
 
         complaintService.saveComplaint(complaint);
 
         ResponseDTO<ComplaintRequestDTO> saveComplaintResponse = new ResponseDTO<>(complaint,201,"Reclamo creado con exito");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(saveComplaintResponse);
-        }
-
-        ResponseDTO<ComplaintRequestDTO> errorResponse =
-                new ResponseDTO<>(complaint, 429, "Demasiadas solicitudes, intente más tarde");
-
-        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(errorResponse);
 
     }
 
