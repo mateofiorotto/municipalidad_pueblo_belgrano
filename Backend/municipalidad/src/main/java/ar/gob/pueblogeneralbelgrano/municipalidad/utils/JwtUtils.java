@@ -18,24 +18,30 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtUtils {
-    //Bring the environment JWT Variables
     @Value("${security.jwt.private.key}")
     private String privateKey;
 
     @Value("${security.jwt.user.generator}")
     private String userGenerator;
 
+    /**
+     * Creacion de token JWT
+     * @param auth
+     * @return token jwt
+     */
     public String createToken(Authentication auth){
+        //usar algoritmo hmac256 para la clave privada
         Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
 
         String username = auth.getPrincipal().toString();
 
-        //Get permissons
+        //Obtener permisos
         String authorities = auth.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
+        //Buildear JWT
         String jwtToken = JWT.create()
                 .withIssuer(this.userGenerator)
                 .withSubject(username)
@@ -49,6 +55,11 @@ public class JwtUtils {
         return jwtToken;
     }
 
+    /**
+     * Validar token con algoritmo HMAC256 y verificar
+     * @param token
+     * @return token decodificado
+     */
     public DecodedJWT validateToken(String token){
         try {
             Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
@@ -59,18 +70,34 @@ public class JwtUtils {
             DecodedJWT decodedJWT = verifier.verify(token);
             return decodedJWT;
         } catch(JWTVerificationException e){
-            throw new JWTVerificationException("Invalid Token. Unauthorized.");
+            throw new JWTVerificationException("Token invalido, no autorizado/a.");
         }
     }
 
+    /**
+     * Extraer usuario
+     * @param decodedJWT
+     * @return nombre de usuario
+     */
     public String extractUsername (DecodedJWT decodedJWT) {
         return decodedJWT.getSubject().toString();
     }
 
+    /**
+     * Obtener un claim en especifico
+     * @param decodedJWT
+     * @param claimName
+     * @return claim especifico
+     */
     public Claim getSpecificClaim (DecodedJWT decodedJWT, String claimName) {
         return decodedJWT.getClaim(claimName);
     }
 
+    /**
+     * Obtener todos los claims
+     * @param decodedJWT
+     * @return lista de claims
+     */
     public Map<String, Claim> returnAllClaims (DecodedJWT decodedJWT){
         return decodedJWT.getClaims();
     }

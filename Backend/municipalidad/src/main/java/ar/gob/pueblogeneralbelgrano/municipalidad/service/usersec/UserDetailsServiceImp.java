@@ -34,17 +34,17 @@ public class UserDetailsServiceImp implements UserDetailsService {
     }
 
     /**
-     * Load user by username and add the authorities of that user
+     * Cargar usuario por su nombre de usuario y los authorities de ese usuario
      *
      * @param username
      *
-     * @return user and authorities list
+     * @return usuario y authorities
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         UserSec userSec = userRepository.findUserEntityByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
 
@@ -64,18 +64,19 @@ public class UserDetailsServiceImp implements UserDetailsService {
     }
 
     /**
-     * Login with username and password
+     * Login con nombre de usuario y contraseña
      *
      * @param authLoginRequest
-     * @return response if the login is OK
+     * @return respuesta si el login esta OK o datos incorrectos (desde el metodo auth)
      */
     public AuthResponseDTO login (AuthLoginRequestDTO authLoginRequest){
         String username = authLoginRequest.username();
         String password = authLoginRequest.password();
 
-        //Call auth method
+        //llamar al metodo de autenticacion
         Authentication authentication = this.authenticate (username, password);
 
+        //creacion de jwt y response
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String accessToken = jwtUtils.createToken(authentication);
         AuthResponseDTO authResponseDTO = new AuthResponseDTO(username, "Login Exitoso", accessToken, true);
@@ -84,23 +85,23 @@ public class UserDetailsServiceImp implements UserDetailsService {
     }
 
     /**
-     * Authenticate the user
+     * Autentica al usaurio
      *
      * @param username
      * @param password
-     * @return username with authorities and password
+     * @return usuario, authorities y contraseña
      */
     public Authentication authenticate(String username, String password) {
         UserDetails userDetails;
 
-        //If !user
+        //si !user
         try {
             userDetails = this.loadUserByUsername(username);
         } catch (UsernameNotFoundException e) {
             throw new BadCredentialsException("Los datos ingresados son incorrectos");
         }
 
-        //If !pw
+        //si !pw
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Los datos ingresados son incorrectos");
         }

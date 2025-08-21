@@ -39,6 +39,10 @@ public class SecurityConfig {
         this.jwtUtils = jwtUtils;
     }
 
+    /**
+     * Configurar CORS para permitir ciertos verbos http, headers, credenciales y direcciones permitidas
+     * @return cors config
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
@@ -52,6 +56,12 @@ public class SecurityConfig {
         return source;
     }
 
+    /**
+     * Filter chain con la config de cors, csrf, session, filtros
+     * @param http
+     * @return filter chain
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -63,12 +73,22 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Manejar auth
+     * @param authenticationConfiguration
+     * @return auth manager
+     * @throws Exception
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    //Users, roles and permissions coming from the db
+    /**
+     * Roles y permisos provenientes de la base de datos usando DaoAuthProvider
+     * @param userDetailsService
+     * @return passwordencoder y userdetailservice
+     */
     @Bean
     public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -78,6 +98,11 @@ public class SecurityConfig {
         return provider;
     }
 
+    /**
+     * Codificar contraseña
+     *
+     * @return contraseña codificada
+     */
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
