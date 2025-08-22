@@ -1,0 +1,17 @@
+.img-login {
+    height: 90vh;
+    width: 100%;;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+
+.form-width {
+    width: 70%;
+}
+
+h2 {
+    color: rgb(27, 166, 27);
+}
+
+

@@ -22,7 +22,6 @@ export class AppComponent {
   private _authService = inject(AuthService);
   public router = inject(Router);
   title = 'municipalidad-pgb';
-  baseUrl = 'http://localhost:8080';
 
   ngOnInit(): void {
     this._authService.isTokenValidAndNotExpired();

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AreaListResponse, AreaResponseDTO } from '../../models/area.model';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { Observable } from 'rxjs';
 export class AreasService {
 
   private _httpClient = inject(HttpClient)
-  private _baseUrl = 'http://localhost:8080/areas'
+  private _baseUrl = environment.baseUrl + '/areas'
 
   public getAreasList(): Observable<AreaListResponse> {
     return this._httpClient.get<AreaListResponse>(this._baseUrl);
