@@ -19,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/categories")
@@ -183,9 +184,9 @@ public class CategoryController {
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
-    public ResponseEntity<String> deleteCategory(@PathVariable Long id){
+    public ResponseEntity<Map<String, String>> deleteCategory(@PathVariable Long id){
         categoryService.deleteCategory(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Categoria eliminada");
+        return ResponseEntity.ok(Map.of("message", "Categoria eliminada con exito"));
     }
 }

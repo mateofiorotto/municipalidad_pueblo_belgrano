@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/permissions")
@@ -150,9 +151,9 @@ public class PermissionController {
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> deletePermission(@PathVariable Long id){
+    public ResponseEntity<Map<String, String>> deletePermission(@PathVariable Long id){
         permissionService.deletePermission(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Permiso eliminado");
+        return ResponseEntity.ok(Map.of("message", "Permiso eliminado con exito"));
     }
 }

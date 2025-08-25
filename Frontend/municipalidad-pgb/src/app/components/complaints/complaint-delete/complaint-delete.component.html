@@ -1,5 +1,5 @@
 @if (complaint) {
-<div class="text-center d-block m-auto">
+<div class="d-block m-auto">
   <h2 class="mt-5">Reclamo #{{ complaint.id }}</h2>
 
   <div class="row p-3 pt-2 text-break align-items-center justify-content-center">
@@ -28,7 +28,9 @@
     <p><span class="fw-bold">Comentario:</span> {{ complaint.comentario ? complaint.comentario : 'Sin comentario' }}</p>
   </div>
 
-  <button class="btn btn-danger me-2 btn-borrar" (click)="deleteComplaint()">Borrar</button>
-  <button class="btn btn-secondary btn-cancelar" (click)="cancel()">Cancelar</button>
+  <div class="text-center">
+    <button class="btn btn-danger me-2 btn-borrar" (click)="deleteComplaint()">Borrar</button>
+    <button class="btn btn-secondary btn-cancelar" (click)="cancel()">Cancelar</button>
+  </div>
 </div>
 }

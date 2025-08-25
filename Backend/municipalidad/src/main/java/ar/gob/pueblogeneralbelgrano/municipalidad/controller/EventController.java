@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/events")
@@ -181,9 +182,9 @@ public class EventController {
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
-    public ResponseEntity<String> deleteEvent(@PathVariable Long id){
+    public ResponseEntity<Map<String, String>> deleteEvent(@PathVariable Long id){
         eventService.deleteEvent(id);
 
-        return ResponseEntity.ok("Evento eliminado con exito");
+        return ResponseEntity.ok(Map.of("message", "Evento eliminado con exito"));
     }
 }

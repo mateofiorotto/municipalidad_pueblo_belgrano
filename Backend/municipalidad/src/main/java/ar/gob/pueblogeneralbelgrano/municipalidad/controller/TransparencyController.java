@@ -18,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/transparencies")
@@ -155,10 +156,10 @@ public class TransparencyController {
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'SECRETARIA')")
-    public ResponseEntity<String> deleteTransparency(@PathVariable Long id){
+    public ResponseEntity<Map<String, String>> deleteTransparency(@PathVariable Long id){
         transparencyService.deleteTransparency(id);
 
-        return ResponseEntity.ok("Transparencia eliminada con exito");
+        return ResponseEntity.ok(Map.of("message", "Transparencia eliminada con exito"));
     }
 
 }

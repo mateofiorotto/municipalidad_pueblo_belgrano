@@ -16,6 +16,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/users")
 @PreAuthorize("denyAll()")
@@ -154,9 +156,9 @@ public class UserSecController {
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id){
+    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Usuario eliminado");
+        return ResponseEntity.ok(Map.of("message", "Usuario eliminado con exito"));
     }
 }

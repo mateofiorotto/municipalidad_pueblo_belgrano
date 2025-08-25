@@ -18,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/news")
@@ -155,10 +156,10 @@ public class NewsController {
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
-    public ResponseEntity<String> deleteNews(@PathVariable Long id){
+    public ResponseEntity<Map<String, String>> deleteNews(@PathVariable Long id){
         newsService.deleteNews(id);
 
-        return ResponseEntity.ok("Noticia eliminada con exito");
+        return ResponseEntity.ok(Map.of("message", "Noticia eliminada con exito"));
     }
 
 }

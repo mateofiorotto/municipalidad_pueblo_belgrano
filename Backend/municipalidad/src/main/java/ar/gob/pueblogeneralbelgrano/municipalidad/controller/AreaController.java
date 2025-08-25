@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/areas")
@@ -179,9 +180,9 @@ public class AreaController {
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE')")
-    public ResponseEntity<String> deleteArea(@PathVariable Long id){
+    public ResponseEntity<Map<String, String>> deleteArea(@PathVariable Long id){
         areaService.deleteArea(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Area eliminada");
+        return ResponseEntity.ok(Map.of("message", "Area eliminada con exito"));
     }
 }

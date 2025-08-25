@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/roles")
@@ -148,9 +149,9 @@ public class RoleController {
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> deleteRole(@PathVariable Long id){
+    public ResponseEntity<Map<String, String>> deleteRole(@PathVariable Long id){
         roleService.deleteRole(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Rol eliminado");
+        return ResponseEntity.ok(Map.of("message", "Rol eliminado con exito"));
     }
 }
