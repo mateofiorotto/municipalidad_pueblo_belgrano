@@ -23,7 +23,7 @@
     <p><span class="fw-bold">Cerrado:</span> {{ complaint.cerrado ? 'Si' : 'No' }}</p>
     <p><span class="fw-bold">Cerrado en:</span> {{ complaint.fecha_cerrado ? complaint.fecha_cerrado : 'Sin fecha' }}
     </p>
-    <p><span class="fw-bold">Area:</span> {{ complaint.area?.nombre ? complaint.area?.nombre : 'Sin area' }}</p>
+    <p><span class="fw-bold">Area:</span> {{ complaint.area.nombre ? complaint.area.nombre : 'Sin area' }}</p>
     <p><span class="fw-bold">Comentario:</span> {{ complaint.comentario ? complaint.comentario : 'Sin comentario' }}</p>
   </div>
 </div>

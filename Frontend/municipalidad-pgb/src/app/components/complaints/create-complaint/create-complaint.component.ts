@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { ComplaintService } from '../../../services/complaints/complaints.service';
 import { inject } from '@angular/core';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ComplaintRequestDTO } from '../../../models/complaint.model';
 import Swal from 'sweetalert2';
+
+declare global {
+  interface Window {
+    grecaptcha: any;
+  }
+}
 
 @Component({
   standalone: true,
@@ -13,7 +19,10 @@ import Swal from 'sweetalert2';
   templateUrl: './create-complaint.component.html',
   styleUrl: './create-complaint.component.css',
 })
-export class CreateComplaintComponent {
+
+export class CreateComplaintComponent implements AfterViewInit {
+  captchaToken: string | null = null;
+  siteKey = '6LeVbbMrAAAAAB2NUZWTGVenSrwgi0afOlv6kPgi';
   errors: { defaultMessage: string }[] = [];
   private _complaintService = inject(ComplaintService);
 
@@ -113,6 +122,17 @@ export class CreateComplaintComponent {
         title: 'ERROR',
         text: 'Completa los campos requeridos',
         showConfirmButton: true,
+      });
+    }
+  }
+
+  ngAfterViewInit() {
+    if (window['grecaptcha']) {
+      window['grecaptcha'].render('captchaDiv', {
+        sitekey: this.siteKey,
+        callback: (token: string) => {
+          this.captchaToken = token;
+        }
       });
     }
   }

@@ -116,6 +116,8 @@
         @if(descripcion?.touched && descripcion?.errors?.['maxlength']) {
         <p class="input-error">La descripción debe tener menos de 1000 caracteres</p>
         }
+
+        <div id="captchaDiv" style="margin-bottom: 16px;"></div>
     </div>
 
     <button [disabled]="complaintsForm.invalid" type="submit" class="btn-send-form">Enviar</button>
