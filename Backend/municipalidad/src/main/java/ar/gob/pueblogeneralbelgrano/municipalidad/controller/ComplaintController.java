@@ -4,6 +4,7 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintRequest
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintUpdateDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.response.ResponseDTO;
+import ar.gob.pueblogeneralbelgrano.municipalidad.service.captcha.ICaptchaService;
 import ar.gob.pueblogeneralbelgrano.municipalidad.service.complaint.IComplaintService;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
@@ -31,10 +33,12 @@ import java.util.Map;
 public class ComplaintController {
 
     private final IComplaintService complaintService;
+    private final ICaptchaService captchaService;
     private final Bucket bucket;
 
-    public ComplaintController(IComplaintService complaintService) {
+    public ComplaintController(IComplaintService complaintService, ICaptchaService captchaService) {
         this.complaintService = complaintService;
+        this.captchaService = captchaService;
 
         Bandwidth limit = Bandwidth.classic(1, Refill.greedy(1, Duration.ofMinutes(1)));
         this.bucket = Bucket.builder()
@@ -142,8 +146,10 @@ public class ComplaintController {
     })
     @PostMapping("/save")
     @PreAuthorize("permitAll()")
-    public ResponseEntity<ResponseDTO<ComplaintRequestDTO>> saveComplaint(@Valid @RequestBody ComplaintRequestDTO complaint){
+    public ResponseEntity<ResponseDTO<ComplaintRequestDTO>> saveComplaint(@Valid @RequestBody ComplaintRequestDTO complaint, HttpServletRequest request){
 
+        String response = request.getParameter("g-recaptcha-response");
+        captchaService.processResponse(complaint.captcha(), request);
 
         complaintService.saveComplaint(complaint);
 

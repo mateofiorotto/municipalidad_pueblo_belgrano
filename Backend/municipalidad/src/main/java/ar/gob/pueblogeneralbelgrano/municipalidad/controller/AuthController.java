@@ -2,10 +2,12 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.controller;
 
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.auth.AuthLoginRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.auth.AuthResponseDTO;
+import ar.gob.pueblogeneralbelgrano.municipalidad.service.captcha.ICaptchaService;
 import ar.gob.pueblogeneralbelgrano.municipalidad.service.usersec.UserDetailsServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class AuthController {
     private final UserDetailsServiceImp userDetailsServiceImp;
+    private final ICaptchaService captchaService;
 
-    public AuthController(UserDetailsServiceImp userDetailsServiceImp) {
+    public AuthController(UserDetailsServiceImp userDetailsServiceImp, ICaptchaService captchaService) {
         this.userDetailsServiceImp = userDetailsServiceImp;
+        this.captchaService = captchaService;
     }
 
     /**
@@ -40,7 +44,11 @@ public class AuthController {
     })
     @PreAuthorize("permitAll()")
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid AuthLoginRequestDTO userRequest){
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid AuthLoginRequestDTO userRequest, HttpServletRequest request){
+
+        String response = request.getParameter("g-recaptcha-response");
+        captchaService.processResponse(userRequest.captcha(), request);
+
         return new ResponseEntity<>(this.userDetailsServiceImp.login(userRequest), HttpStatus.OK);
     }
 }

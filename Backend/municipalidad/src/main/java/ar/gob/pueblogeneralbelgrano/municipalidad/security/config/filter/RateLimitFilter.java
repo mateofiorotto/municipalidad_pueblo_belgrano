@@ -20,7 +20,7 @@ public class RateLimitFilter implements Filter {
 
     //Limites por endpoint
     private final Map<String, Bandwidth> limits = Map.of(
-            "/complaints/save", Bandwidth.classic(1, Refill.greedy(1, Duration.ofHours(6))),
+            "/complaints/save", Bandwidth.classic(1, Refill.greedy(1, Duration.ofHours(3))),
             "/auth/login", Bandwidth.classic(3, Refill.greedy(3, Duration.ofMinutes(2)))
     );
 

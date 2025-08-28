@@ -6,5 +6,7 @@ public record AuthLoginRequestDTO(
         @NotBlank(message = "Usuario requerido")
         String username,
         @NotBlank(message = "Contraseña requerida")
-        String password) {
+        String password,
+        String captcha
+        ) {
 }

@@ -14,6 +14,8 @@ import Swal from 'sweetalert2';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  captchaToken: string | null = null;
+  siteKey = '6LeVbbMrAAAAAB2NUZWTGVenSrwgi0afOlv6kPgi';
   public error: any = null;
   private _authService = inject(AuthService);
   private router = inject(Router);
@@ -26,8 +28,8 @@ export class LoginComponent {
   public onSubmit(): void {
     const val = this.loginForm.value;
 
-    if (val.username && val.password) {
-      this._authService.login(val.username, val.password).subscribe({
+    if (val.username && val.password && this.captchaToken) {
+      this._authService.login(val.username, val.password, this.captchaToken).subscribe({
         next: (response) => {
           const token = response.jwt;
           localStorage.setItem('auth_token', token);
@@ -43,19 +45,33 @@ export class LoginComponent {
           });
         },
         error: (err) => {
+          window.grecaptcha.reset();
+          this.captchaToken = null;
           if (err.status == 401) {
             Swal.fire({
               icon: 'error',
               title: 'Datos Incorrectos',
               text: 'El usuario o la contraseña son incorrectos',
             });
+          } else if (err.status == 400){
+            window.grecaptcha.reset();
+            this.captchaToken = null;
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: err.error.message,
+            });
           } else if (err.status == 429) {
+            window.grecaptcha.reset();
+            this.captchaToken = null;
             Swal.fire({
               icon: 'error',
               title: 'Error',
               text: 'Intentaste demasiadas veces. Por favor, intenta de nuevo en unos minutos.',
             });
           } else {
+            window.grecaptcha.reset();
+            this.captchaToken = null;
             Swal.fire({
               icon: 'error',
               title: 'Error',
@@ -65,13 +81,25 @@ export class LoginComponent {
         },
       });
     } else {
+      window.grecaptcha.reset();
+      this.captchaToken = null;
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'El usuario o la contraseña son requeridos',
+        text: 'El usuario, la contraseña y el ReCaptcha son requeridos',
       });
     }
   }
+
+  ngAfterViewInit() {
+    if (window['grecaptcha']) {
+      window['grecaptcha'].render('captchaDiv', {
+        sitekey: this.siteKey,
+        callback: (token: string) => {
+          this.captchaToken = token;
+        },
+      });
+    }}
 
   get username() {
     return this.loginForm.get('username');

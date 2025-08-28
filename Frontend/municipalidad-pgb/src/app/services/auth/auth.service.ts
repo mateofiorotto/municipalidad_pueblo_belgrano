@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { Token } from '../../models/token.model';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,10 +17,11 @@ export class AuthService {
   private _router = inject(Router);
   private _baseUrl = environment.baseUrl + '/auth/login';
 
-  public login(username: string, password: string) {
+  public login(username: string, password: string, captcha: string): Observable<UserLoginResponse> {
     return this._httpClient.post<UserLoginResponse>(this._baseUrl, {
       username,
       password,
+      captcha
     });
   }
 

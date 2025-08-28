@@ -19,7 +19,6 @@ declare global {
   templateUrl: './create-complaint.component.html',
   styleUrl: './create-complaint.component.css',
 })
-
 export class CreateComplaintComponent implements AfterViewInit {
   captchaToken: string | null = null;
   siteKey = '6LeVbbMrAAAAAB2NUZWTGVenSrwgi0afOlv6kPgi';
@@ -66,14 +65,24 @@ export class CreateComplaintComponent implements AfterViewInit {
       val.celular &&
       val.email &&
       val.direccion &&
-      val.nombre_apellido
+      val.nombre_apellido &&
+      this.captchaToken
     ) {
+      const complaintRequest: ComplaintRequestDTO & { captcha: string } = {
+        ...(val as ComplaintRequestDTO),
+        captcha: this.captchaToken,
+      };
+
+      console.log(complaintRequest);
       this._complaintService
-        .createComplaint(val as ComplaintRequestDTO)
+        .createComplaint(complaintRequest)
         .subscribe({
           next: (data) => {
+            window.grecaptcha.reset();
+            this.captchaToken = null;
             this.errors = [];
             this.complaintsForm.reset();
+            this.captchaToken = null;
             Swal.fire({
               icon: 'success',
               title: 'Reclamo Recibido',
@@ -100,13 +109,27 @@ export class CreateComplaintComponent implements AfterViewInit {
                 showConfirmButton: true,
               });
             } else if (err.status == 429) {
+              window.grecaptcha.reset();
+              this.captchaToken = null;
               Swal.fire({
                 icon: 'error',
                 title: 'ERROR',
-                text: 'Solo puedes enviar un reclamo cada 6 horas',
+                text: 'Solo podes intentar enviar un reclamo cada 3 horas.',
+                showConfirmButton: true,
+              });
+              
+            } else if (err.status == 400){
+              window.grecaptcha.reset();
+              this.captchaToken = null;
+               Swal.fire({
+                icon: 'error',
+                title: 'ERROR',
+                text: err.error.message,
                 showConfirmButton: true,
               });
             } else {
+              window.grecaptcha.reset();
+              this.captchaToken = null;
               Swal.fire({
                 icon: 'error',
                 title: 'ERROR',
@@ -132,7 +155,7 @@ export class CreateComplaintComponent implements AfterViewInit {
         sitekey: this.siteKey,
         callback: (token: string) => {
           this.captchaToken = token;
-        }
+        },
       });
     }
   }

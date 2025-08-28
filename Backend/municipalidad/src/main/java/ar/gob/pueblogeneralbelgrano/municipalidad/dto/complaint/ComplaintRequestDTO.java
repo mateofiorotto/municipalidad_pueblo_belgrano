@@ -34,7 +34,8 @@ public record ComplaintRequestDTO(
         String descripcion,
 
         //opcional
-        String imagen
+        String imagen,
+        String captcha
 
         //Se controlan desde el dashboard admin
 //        String comentario,
