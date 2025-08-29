@@ -46,7 +46,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("http://localhost:4200", "http://192.168.0.251:4200")); //cambiar en produccion
+        configuration.setAllowedOriginPatterns(List.of("http://localhost:4200", "http://192.168.0.251:4200", "http://201.235.228.196:4200")); //cambiar en produccion
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With", "Origin"));
         configuration.setAllowCredentials(true); // necesario para jwt

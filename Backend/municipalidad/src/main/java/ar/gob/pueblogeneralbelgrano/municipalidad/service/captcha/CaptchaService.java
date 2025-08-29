@@ -43,8 +43,6 @@ public class CaptchaService implements ICaptchaService {
 
         GoogleResponse googleResponse = restTemplate.getForObject(verifyUri, GoogleResponse.class);
 
-        System.out.println("Success: " + googleResponse.isSuccess());
-        System.out.println("Error codes: " + Arrays.toString(googleResponse.getErrorCodes()));
         if (googleResponse == null || !googleResponse.isSuccess() || googleResponse.hasClientError()) {
             throw new BadRequestException("Él ReCaptcha es incorrecto o expiro.");
         }

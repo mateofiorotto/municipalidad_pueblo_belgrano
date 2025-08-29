@@ -13,6 +13,7 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.model.Complaint;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Complaint;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IAreaRepository;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IComplaintRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -87,7 +88,7 @@ public class ComplaintService implements IComplaintService {
     }
 
     @Override
-    public ComplaintRequestDTO saveComplaint(ComplaintRequestDTO complaint) {
+    public ComplaintRequestDTO saveComplaint(ComplaintRequestDTO complaint, HttpServletRequest request) {
 
         Complaint complaintToSave = IComplaintMapper.mapper.complaintRequestDTOToComplaint(complaint);
 
@@ -97,7 +98,14 @@ public class ComplaintService implements IComplaintService {
         complaintToSave.setComentario("");
         complaintToSave.setArea(null);
 
-        //implementar rate limiter
+        String ipAddress = request.getHeader("X-Forwarded-For");
+
+        if (ipAddress == null || ipAddress.isEmpty()) {
+            ipAddress = "127.0.0.1";
+        }
+
+        complaintToSave.setIp(ipAddress);
+
         complaintRepository.save(complaintToSave);
 
         return complaint;

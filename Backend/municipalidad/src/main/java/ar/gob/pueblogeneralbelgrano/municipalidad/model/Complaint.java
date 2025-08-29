@@ -34,13 +34,14 @@ public class Complaint {
     private Boolean cerrado = Boolean.FALSE;
     private boolean deleted = Boolean.FALSE;
     private String comentario; //Solo backend en la web
+    private String ip; //automatico --> guarda ip del creador del reclamo
     @ManyToOne
     @JoinColumn(name="area_id", nullable = true)
     private Area area; //Solo backend
 
     public Complaint(){}
 
-    public Complaint(Long id, String motivo, String nombre_apellido, String celular, String direccion, String email, String descripcion, String imagen, String comentario, Area area, LocalDate fecha_reclamo, LocalDate fecha_cerrado, Boolean cerrado) {
+    public Complaint(Long id, String motivo, String nombre_apellido, String celular, String direccion, String email, String descripcion, String imagen, String comentario, Area area, LocalDate fecha_reclamo, LocalDate fecha_cerrado, Boolean cerrado, String ip) {
         this.id = id;
         this.motivo = motivo;
         this.nombre_apellido = nombre_apellido;
@@ -54,6 +55,7 @@ public class Complaint {
         this.fecha_reclamo = fecha_reclamo;
         this.fecha_cerrado = fecha_cerrado;
         this.cerrado = cerrado;
+        this.ip = ip;
     }
 
     public Long getId() {
@@ -166,6 +168,14 @@ public class Complaint {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     @Override

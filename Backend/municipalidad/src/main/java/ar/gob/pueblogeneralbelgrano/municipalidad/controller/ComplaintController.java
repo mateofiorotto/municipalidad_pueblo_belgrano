@@ -148,10 +148,11 @@ public class ComplaintController {
     @PreAuthorize("permitAll()")
     public ResponseEntity<ResponseDTO<ComplaintRequestDTO>> saveComplaint(@Valid @RequestBody ComplaintRequestDTO complaint, HttpServletRequest request){
 
+        //recaptcha
         String response = request.getParameter("g-recaptcha-response");
         captchaService.processResponse(complaint.captcha(), request);
 
-        complaintService.saveComplaint(complaint);
+        complaintService.saveComplaint(complaint, request);
 
         ResponseDTO<ComplaintRequestDTO> saveComplaintResponse = new ResponseDTO<>(complaint,201,"Reclamo creado con exito");
 

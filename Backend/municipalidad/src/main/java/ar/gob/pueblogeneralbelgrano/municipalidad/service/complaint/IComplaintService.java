@@ -4,6 +4,7 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintRequest
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintUpdateDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.news.NewsResponseDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.web.PagedModel;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public interface IComplaintService {
      * @param complaint
      * @return complainto creado
      * */
-    public ComplaintRequestDTO saveComplaint(ComplaintRequestDTO complaint);
+    public ComplaintRequestDTO saveComplaint(ComplaintRequestDTO complaint, HttpServletRequest request);
 
     /**
      * Actualizar complainto por id
