@@ -1,12 +1,18 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-footer',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {
-
+  public scrollToTop(){
+    window.scroll({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 }

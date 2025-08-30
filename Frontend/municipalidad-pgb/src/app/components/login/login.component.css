@@ -1,8 +1,9 @@
 
 
 .input-form-login {
-    width: 100% !important;
-    border: none !important;
+    width: 50% !important;
+    margin: auto;
+    border: 1px solid transparent !important;
     background-color: rgb(219, 221, 226);
     font-size: 1em;
     border-radius: 10px;
@@ -16,10 +17,16 @@
 }
 
 .btn-send-form {
-    background-color: green;
     transition: all 0.2s ease-in-out;
+    margin-top: 3em;
 }
 
 .btn-send-form:hover {
     background-color: rgb(6, 93, 6);
+}
+
+.input-error {
+  margin: 1em auto;
+  width: 50%;
+  text-align: left;
 }

@@ -1,9 +1,9 @@
 @if(this._authService.isAuthenticated() && this._authService.isAuthorized(['ROLE_ADMIN', 'ROLE_COMUNICACION', 'ROLE_SECRETARIA', 'ROLE_RESPONSABLE_RECLAMOS', 'ROLE_INTENDENTE'])) {
 <header id="header">
     <nav class="navbar navbar-expand-lg">
-        <div class="container">
+        <div class="container content">
             <!-- logo -->
-            <a id="logo" class="navbar-brand" href="/"><span class="d-none">Logo</span></a>
+            <a id="logo" class="navbar-brand" routerLink="/admin/dashboard"><span class="d-none">Logo</span></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -15,19 +15,17 @@
                 <ul class="navbar-nav ms-auto d-flex align-items-baseline align-items-lg-center text-center mt-2 mt-lg-0"
                     id="izq-nav">
                     <li class="nav-item">
-                        <a href="/" class="nav-link">Inicio</a>
+                        <a routerLink="/admin/dashboard" class="nav-link" routerLinkActive="active-link">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a href="admin/reclamos" class="nav-link">Reclamos</a>
+                        <a routerLink="/admin/reclamos" class="nav-link" routerLinkActive="active-link">Reclamos</a>
                     </li>
                     <!--Cerrar sesion-->
-                    @if (this._authService.isLogged()) {
-                    <li>
-                        <button type="button" class="btn btn-danger" (click)="logout()">Cerrar sesion</button>
+                    <li class="ms-3">
+                        <button class="btn-header" type="button" (click)="logout()"><i class="bi bi-box-arrow-right"><span class="d-none">Cerrar sesion</span></i></button>
                     </li>
-                    }
-                    <li>
-                        <a href="/" class="btn btn-danger">Inicio</a>
+                    <li class="ms-3">
+                        <a routerLink="/" class="btn-header"><i class="bi bi-house-fill"><span class="d-none">Inicio</span></i></a>
                     </li>
                 </ul>
             </div>

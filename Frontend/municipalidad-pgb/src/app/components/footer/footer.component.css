@@ -1,4 +1,25 @@
 footer {
-    border-top: 1px solid gray;
+    border-top: 2px solid rgb(151, 218, 52);
     margin-top: 3em;
+}
+
+footer h3 {
+    font-weight: bold;
+    font-size: 1.4em;
+    color: rgb(27, 166, 27);
+}
+
+footer p {
+    font-size: 1.1em;
+}
+
+.footer-brand {
+    display: block;
+    background-image: url('/logo.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 200px;
+    height: 120px;
+    margin-bottom: 1em;
 }

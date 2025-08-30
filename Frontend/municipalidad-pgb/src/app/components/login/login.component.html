@@ -7,14 +7,14 @@
         }
     </div>
 
-    <div class="">
+    <div>
         <label class="d-none form-label" for="password">Contraseña<span class="required-input">*</span></label>
         <input placeholder="Contraseña *" class="input-form-login form-control" id="password" type="password" formControlName="password">
         @if(password?.touched && password?.errors?.['required']) {
-        <p class="input-error">La contraseña es requerida</p>
+            <p class="input-error">La contraseña es requerida</p>
         }
 
-        <div id="captchaDiv" style="margin-bottom: 16px;"></div>
+        <div id="captchaDiv"></div>
     </div>
 
     <div class="mt-5">

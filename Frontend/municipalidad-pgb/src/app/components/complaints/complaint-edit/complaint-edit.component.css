@@ -7,4 +7,5 @@ input[type=checkbox]
   transform: scale(1.75);
   border-color: black !important;
   padding: 10px;
+  accent-color: rgb(27, 166, 27);
 }

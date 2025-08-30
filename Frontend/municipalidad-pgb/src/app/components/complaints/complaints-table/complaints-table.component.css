@@ -7,4 +7,9 @@
 
 .select-area select {
   padding: 0.5em !important;
+  border: 2px solid;
+}
+
+select {
+
 }

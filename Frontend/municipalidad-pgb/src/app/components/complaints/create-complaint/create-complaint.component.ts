@@ -143,7 +143,7 @@ export class CreateComplaintComponent implements AfterViewInit {
       Swal.fire({
         icon: 'error',
         title: 'ERROR',
-        text: 'Completa los campos requeridos',
+        text: 'Todos los campos y el ReCaptcha son requeridos',
         showConfirmButton: true,
       });
     }

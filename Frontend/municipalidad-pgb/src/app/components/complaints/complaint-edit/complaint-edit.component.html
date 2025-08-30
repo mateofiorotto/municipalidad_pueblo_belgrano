@@ -23,16 +23,16 @@
         <form [formGroup]="updateComplaintForm" (ngSubmit)="onSubmit()">
             <div class="row justify-content-center align-items-center">
                 <div class="col-7 p-2">
-                    <label class="form-label mt-3">Comentario</label>
-                        <textarea class="form-control" formControlName="comentario"></textarea>
+                    <label class="d-none form-label mt-3">Comentario</label>
+                        <textarea placeholder="Comentario" class="form-control" formControlName="comentario"></textarea>
                 </div>
                 <div class="col-7 pb-3">
                     <div formGroupName="area">
-                        <label class="form-label mt-3">Área</label>
-                            <select class="w-75 d-block m-auto form-control" formControlName="id">
+                        <label class="form-label mt-3 d-none">Área</label>
+                            <select class="w-75 mt-3 d-block m-auto form-control" formControlName="id">
                                 <option value="">Sin área asignada</option>
                                 @for(area of areasList; track area.id){
-                                <option value="{{ area.id }}">{{ area.nombre }}</option>
+                                <option value="{{ area.id }}">AREA: {{ area.nombre }}</option>
                                 }
                             </select>
                         
