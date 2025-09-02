@@ -25,16 +25,18 @@
                     <li class="nav-item">
                         <a routerLink="/eventos" class="nav-link" routerLinkActive="active-link">Eventos</a>
                     </li>
-                    <!--Cerrar sesion-->
-                    @if (this._authService.isLogged()) {
-                    <li class="ms-3">
-                        <button class="btn-header" type="button" (click)="logout()"><i class="bi bi-box-arrow-right"><span class="d-none">Cerrar sesion</span></i></button>
-                    </li>
-                    }
+                    
 
                     @if(this._authService.isAuthenticated() && this._authService.isAuthorized(['ROLE_ADMIN', 'ROLE_COMUNICACION', 'ROLE_SECRETARIA', 'ROLE_RESPONSABLE_RECLAMOS', 'ROLE_INTENDENTE'])) {
                     <li class="ms-3">
                         <a routerLink="/admin/dashboard" class="btn-header"><i class="bi bi-lock-fill"><span class="d-none">Dashboard</span></i></a>
+                    </li>
+                    }
+
+                    <!--Cerrar sesion-->
+                    @if (this._authService.isLogged()) {
+                    <li class="ms-3">
+                        <button class="btn-header" type="button" (click)="logout()"><i class="bi bi-box-arrow-right"><span class="d-none">Cerrar sesion</span></i></button>
                     </li>
                     }
                 </ul>

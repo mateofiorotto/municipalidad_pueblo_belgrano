@@ -40,16 +40,20 @@
 
     <div class="row pt-3 pb-2 ps-4 pe-4">
         <div class="col-lg-6 col-12">
-            <!--Email-->
-            <label class="form-label d-none" for="email">Email<span class="required-input">*</span></label>
-            <input placeholder="Email *" class="form-control" id="email" type="text" formControlName="email">
+            <!--Direccion-->
+            <label class="form-label d-none" for="direccion">Dirección<span class="required-input">*</span></label>
+            <input placeholder="Dirección (domicilio/reclamo) *" class="form-control" id="direccion" type="text" formControlName="direccion">
 
-            @if(email?.touched && email?.errors?.['required']) {
-            <p class="input-error">El email es requerido</p>
+            @if(direccion?.touched && direccion?.errors?.['required']) {
+            <p class="input-error">La dirección es requerida</p>
             }
 
-            @if(email?.touched && email?.errors?.['email']) {
-            <p class="input-error">El email debe ser valido</p>
+            @if(direccion?.touched && direccion?.errors?.['minlength']) {
+            <p class="input-error">La dirección debe tener al menos 5 caracteres</p>
+            }
+
+            @if(direccion?.touched && direccion?.errors?.['maxlength']) {
+            <p class="input-error">La dirección debe tener menos de 150 caracteres</p>
             }
 
         </div>
@@ -77,28 +81,18 @@
         </div>
     </div>
     <div class="row pt-3 pb-2 ps-4 pe-4">
-        <div class="col-lg-6 col-12">
-            <!--Direccion-->
-            <label class="form-label d-none" for="direccion">Dirección<span class="required-input">*</span></label>
-            <input placeholder="Dirección (domicilio/reclamo) *" class="form-control" id="direccion" type="text" formControlName="direccion">
+        <div class="col-12">
+            <!--Email-->
+            <label class="form-label d-none" for="email">Email<span class="required-input">*</span></label>
+            <input placeholder="Email *" class="form-control" id="email" type="text" formControlName="email">
 
-            @if(direccion?.touched && direccion?.errors?.['required']) {
-            <p class="input-error">La dirección es requerida</p>
+            @if(email?.touched && email?.errors?.['required']) {
+            <p class="input-error">El email es requerido</p>
             }
 
-            @if(direccion?.touched && direccion?.errors?.['minlength']) {
-            <p class="input-error">La dirección debe tener al menos 5 caracteres</p>
+            @if(email?.touched && email?.errors?.['email']) {
+            <p class="input-error">El email debe ser valido</p>
             }
-
-            @if(direccion?.touched && direccion?.errors?.['maxlength']) {
-            <p class="input-error">La dirección debe tener menos de 150 caracteres</p>
-            }
-
-        </div>
-        <div class="col-lg-6 col-12">
-            <!--Imagen-->
-            <label class="form-label d-none" for="imagen">Imagen (opcional)</label>
-            <input placeholder="Imagen (opcional)" class="form-control" id="imagen" type="text" formControlName="imagen">
         </div>
     </div>
 

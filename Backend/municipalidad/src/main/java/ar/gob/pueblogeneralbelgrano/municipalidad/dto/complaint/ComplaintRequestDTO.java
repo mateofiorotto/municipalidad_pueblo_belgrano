@@ -33,17 +33,7 @@ public record ComplaintRequestDTO(
         @Size(min = 20, max = 1000, message = "La descripción debe tener entre 20 y 1000 caracteres")
         String descripcion,
 
-        //opcional
-        String imagen,
         String captcha
 
-        //Se controlan desde el dashboard admin
-//        String comentario,
-//        String area,
-//        boolean cerrado
-
-        //NO SE PUEDEN MODIFICAR X EL USUARIO:
-        //Date fecha_cerrado
-        //Date fecha_reclamo
 ) {
 }

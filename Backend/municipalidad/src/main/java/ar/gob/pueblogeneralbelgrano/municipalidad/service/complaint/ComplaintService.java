@@ -111,7 +111,6 @@ public class ComplaintService implements IComplaintService {
         return complaint;
     }
 
-    // LA IMAGEN NO SE MODIFICA
     @Override
     public ComplaintUpdateDTO updateComplaint(ComplaintUpdateDTO complaint, Long id) {
 

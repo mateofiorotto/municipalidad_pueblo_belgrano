@@ -48,7 +48,6 @@ export class CreateComplaintComponent implements AfterViewInit {
       Validators.minLength(5),
       Validators.maxLength(150),
     ]),
-    imagen: new FormControl(''),
     nombre_apellido: new FormControl('', [
       Validators.required,
       Validators.minLength(5),
@@ -73,7 +72,6 @@ export class CreateComplaintComponent implements AfterViewInit {
         captcha: this.captchaToken,
       };
 
-      console.log(complaintRequest);
       this._complaintService
         .createComplaint(complaintRequest)
         .subscribe({
@@ -178,10 +176,6 @@ export class CreateComplaintComponent implements AfterViewInit {
 
   get direccion() {
     return this.complaintsForm.get('direccion');
-  }
-
-  get imagen() {
-    return this.complaintsForm.get('imagen');
   }
 
   get nombre_apellido() {

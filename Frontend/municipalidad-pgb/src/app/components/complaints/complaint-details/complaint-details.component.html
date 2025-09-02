@@ -9,7 +9,6 @@
     </div>
     <div class="col-lg-4 col-md-6 col-12 p-4">
       <p><span class="fw-bold">Dirección:</span> {{ complaint.direccion }}</p>
-      <p><span class="fw-bold">Imagen:</span> {{ complaint.imagen ? complaint.imagen : 'Sin imagen' }}</p>
       <p><span class="fw-bold">Nombre y Apellido:</span> {{ complaint.nombre_apellido }}</p>
     </div>
     <div class="col-lg-4 col-md-6 col-12 p-4">
@@ -18,13 +17,13 @@
     </div>
   </div>
 
-  <div class="status-complaint text-center">
+  <div class="status-complaint text-center text-break">
     <h3 class="text-center fw-bold pb-3">Estado del reclamo</h3>
     <p><span class="fw-bold">Cerrado:</span> {{ complaint.cerrado ? 'Si' : 'No' }}</p>
     <p><span class="fw-bold">Cerrado en:</span> {{ complaint.fecha_cerrado ? complaint.fecha_cerrado : 'Sin fecha' }}
     </p>
-    <p><span class="fw-bold">Area:</span> {{ complaint.area.nombre ? complaint.area.nombre : 'Sin area' }}</p>
-    <p><span class="fw-bold">Comentario:</span> {{ complaint.comentario ? complaint.comentario : 'Sin comentario' }}</p>
+    <p><span class="fw-bold">Area:</span> {{ complaint.area?.nombre ? complaint.area.nombre : 'Sin area' }}</p>
+    <p><span class="fw-bold">Comentario:</span> {{ complaint?.comentario ? complaint.comentario : 'Sin comentario' }}</p>
   </div>
 </div>
 }

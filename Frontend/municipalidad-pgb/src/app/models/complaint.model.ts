@@ -6,7 +6,6 @@ export interface ComplaintRequestDTO {
     descripcion: string;
     celular: string;
     direccion: string;
-    imagen?: string;
     nombre_apellido: string;
     email: string;
 }
@@ -17,7 +16,6 @@ export interface ComplaintResponseDTO {
     descripcion: string;
     celular: string;
     direccion: string;
-    imagen: string;
     nombre_apellido: string;
     email: string;
     fecha_reclamo: string;

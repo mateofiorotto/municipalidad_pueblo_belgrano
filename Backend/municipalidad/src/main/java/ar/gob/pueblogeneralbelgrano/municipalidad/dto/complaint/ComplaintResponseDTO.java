@@ -13,7 +13,6 @@ public record ComplaintResponseDTO(
         String direccion,
         String email,
         String descripcion,
-        String imagen,
         String comentario,
         AreaResponseDTO area,
         Boolean cerrado,

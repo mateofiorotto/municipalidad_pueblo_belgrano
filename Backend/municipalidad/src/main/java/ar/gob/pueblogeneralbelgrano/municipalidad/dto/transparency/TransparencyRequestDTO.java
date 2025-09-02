@@ -10,7 +10,7 @@ import java.util.Date;
 public record TransparencyRequestDTO(
         @NotNull(message = "La fecha es obligatoria")
         LocalDate fecha,
-        @NotBlank(message = "El nombre o URL del PDF no puede estar vacío")
-        @Pattern(regexp = ".*\\.pdf$", message = "El archivo debe tener formato .pdf")
+
+        @NotBlank(message = "La URL del PDF no puede estar vacío")
         String pdf) {
 }

@@ -14,8 +14,7 @@ public record EventRequestDTO(
         @NotNull(message = "La fecha es obligatoria")
         LocalDate fecha,
 
-        @NotBlank(message = "La imagen no puede estar vacía")
-        @Size(max = 255, message = "La ruta o URL de la imagen no puede superar los 255 caracteres")
+        @NotBlank(message = "La URL de la imagen no puede estar vacía")
         String imagen,
 
         @NotBlank(message = "La descripción no puede estar vacía")
