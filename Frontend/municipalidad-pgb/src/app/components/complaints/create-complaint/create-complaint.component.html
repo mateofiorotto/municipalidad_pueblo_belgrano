@@ -1,7 +1,7 @@
 <form [formGroup]="complaintsForm" (ngSubmit)="onSubmit()" class="p-4">
     <!--Motivo-->
-    <div class="row pt-3 pb-2 ps-4 pe-4">
-        <div class="col-lg-6 col-12">
+    <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
+        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
             <label class="form-label d-none" for="motivo">Motivo<span class="required-input">*</span></label>
             <input placeholder="Motivo *" class="form-control" id="motivo" type="text" formControlName="motivo">
             @if(motivo?.touched && motivo?.errors?.['required']) {
@@ -17,7 +17,7 @@
             }
         </div>
 
-        <div class="col-lg-6 col-12">
+        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
 
             <!--Nombre y Apellido-->
             <label class="form-label d-none" for="nombre_apellido">Nombre y Apellido<span
@@ -38,8 +38,8 @@
         </div>
     </div>
 
-    <div class="row pt-3 pb-2 ps-4 pe-4">
-        <div class="col-lg-6 col-12">
+    <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
+        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
             <!--Direccion-->
             <label class="form-label d-none" for="direccion">Dirección<span class="required-input">*</span></label>
             <input placeholder="Dirección (domicilio/reclamo) *" class="form-control" id="direccion" type="text" formControlName="direccion">
@@ -57,7 +57,7 @@
             }
 
         </div>
-        <div class="col-lg-6 col-12">
+        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
             <!--Celular-->
             <label class="form-label d-none" for="celular">Celular<span class="required-input">*</span></label>
             <input placeholder="Celular *" class="form-control" id="celular" type="text" formControlName="celular">
@@ -80,8 +80,8 @@
 
         </div>
     </div>
-    <div class="row pt-3 pb-2 ps-4 pe-4">
-        <div class="col-12">
+    <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
+        <div class="col-12 pb-4 pb-lg-0">
             <!--Email-->
             <label class="form-label d-none" for="email">Email<span class="required-input">*</span></label>
             <input placeholder="Email *" class="form-control" id="email" type="text" formControlName="email">
@@ -97,7 +97,7 @@
     </div>
 
     <!--Descripcion-->
-    <div class="pt-3 pb-2 ps-4 pe-4">
+    <div class="pt-lg-3 pb-lg-2 ps-4 pe-4">
         <label class="form-label d-none" for="descripcion">Descripción<span class="required-input">*</span></label>
         <textarea placeholder="Descripción *" class="form-control" id="descripcion" type="text" formControlName="descripcion"></textarea>
         @if(descripcion?.touched && descripcion?.errors?.['required']) {
@@ -111,7 +111,7 @@
         <p class="input-error">La descripción debe tener menos de 1000 caracteres</p>
         }
 
-        <div id="captchaDiv" style="margin-bottom: 16px;"></div>
+        <div id="captchaDiv" class="pb-4"></div>
     </div>
 
     <button [disabled]="complaintsForm.invalid" type="submit" class="btn-send-form">Enviar</button>

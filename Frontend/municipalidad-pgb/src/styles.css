@@ -47,7 +47,8 @@ label {
   font-weight: bold;
 }
 
-.btn-send-form, .btn-actualizar-form {
+.btn-send-form,
+.btn-actualizar-form {
   background-color: green;
   color: white;
   border-radius: 10px;
@@ -61,11 +62,13 @@ label {
   transition: 0.25s ease-in-out all;
 }
 
-.btn-send-form:hover, .btn-actualizar-form:hover {
-    background-color: rgb(6, 93, 6);
+.btn-send-form:hover,
+.btn-actualizar-form:hover {
+  background-color: rgb(6, 93, 6);
 }
 
-.btn-borrar, .btn-cancelar {
+.btn-borrar,
+.btn-cancelar {
   background-color: rgb(26, 100, 197);
   color: white;
   border-radius: 5px;
@@ -91,7 +94,8 @@ label {
 }
 
 /*disabled send*/
-.btn-send-form:disabled, .btn-actualizar-form:disabled {
+.btn-send-form:disabled,
+.btn-actualizar-form:disabled {
   background-color: rgba(15, 139, 34, 0.5);
 }
 
@@ -113,17 +117,18 @@ body {
 }
 
 .actions-td a:hover {
-  color: rgb(26, 100, 197) !important;
+  color: rgb(27, 166, 27) !important;
 }
 
-table, tr, .mat-mdc-paginator-outer-container {
+table,
+tr,
+.mat-mdc-paginator-outer-container {
   border: 1px solid black !important;
   border-color: black !important;
 }
 
 #captchaDiv {
   margin-top: 3em;
-  
 }
 
 #captchaDiv iframe {
@@ -131,23 +136,37 @@ table, tr, .mat-mdc-paginator-outer-container {
 }
 
 #captchaDiv div:first-child {
-  
   display: block !important;
   margin: auto !important;
 }
 
+.navbar-toggler {
+  border: none;
+  font-weight: bold;
+  color: rgb(27, 166, 27) !important;
+  text-transform: uppercase;
+  font-size: 1.05em;
+}
+
 /*FORMS*/
 .form-control {
-    border: 1px solid transparent !important;
-    background-color: rgb(219, 221, 226);
-    font-size: 1em;
-    border-radius: 10px;
-    border: 1px solid transparent;
+  border: 1px solid transparent !important;
+  background-color: rgb(219, 221, 226);
+  font-size: 1em;
+  border-radius: 10px;
+  border: 1px solid transparent;
 }
 
 .form-control:focus {
-    border: 1px solid green !important;
-    background-color: rgb(219, 221, 226);
-    border-radius: 10px;
-    box-shadow: none !important;
+  border: 1px solid green !important;
+  background-color: rgb(219, 221, 226);
+  border-radius: 10px;
+  box-shadow: none !important;
+}
+
+@media screen and (max-width: 992px) {
+  .btn-send-form,
+  .btn-actualizar-form {
+    padding: 0.5em 3em;
+  }
 }

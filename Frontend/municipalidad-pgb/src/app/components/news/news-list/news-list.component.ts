@@ -19,7 +19,7 @@ export class NewsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.newsService.getNewsList().subscribe({
-      next: (data) => { this.newsList = data.result.content, console.log(data)},
+      next: (data) => { this.newsList = data.result.content},
       error: (err) => console.error('Error al cargar noticias', err),
     });
   }

@@ -1,5 +1,10 @@
-<a [routerLink]="['/noticias', news.id]">
-    <img [src]="news.imagen" [alt]="news.titular">
-    <h3>{{news.titular}}</h3>
-    <p>{{news.subtitulo}}</p>
-</a>
+<div class="card-noticias">
+    <a class="text-break" [routerLink]="['/noticias', news.id]">
+        <!--<img [src]="news.imagen" [alt]="news.titular">-->
+        <img class="img-fluid" src="/banners/banner.jpg" [alt]="news.titular">
+        <div class="info-noticia">
+            <h3>{{news.titular}}</h3>
+            <p>{{news.subtitulo}}</p>
+        </div>
+    </a>
+</div>

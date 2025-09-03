@@ -85,7 +85,6 @@ export class ComplaintEditComponent {
         .updateComplaint(updateData, this.complaintId)
         .subscribe({
           next: () => {
-            console.log('Actualizado correctamente');
             this._router.navigate(['admin/reclamos']).then(() => {
               Swal.fire({
                 icon: 'success',
