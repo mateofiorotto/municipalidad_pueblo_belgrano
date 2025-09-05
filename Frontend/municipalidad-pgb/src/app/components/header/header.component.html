@@ -1,20 +1,31 @@
 <header id="header">
     <nav class="navbar navbar-expand-lg">
-        <div class="container content">
+        <div class="container content 
+                d-flex flex-column flex-lg-row 
+                align-items-center justify-content-center justify-content-lg-between">
+
             <!-- logo -->
-            <a id="logo" class="navbar-brand" routerLink="/"><span class="d-none">Logo</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a id="logo" class="navbar-brand mb-2 mb-lg-0 text-center" routerLink="/">
+                <span class="d-none">Logo</span>
+            </a>
+
+            <!-- botón hamburguesa -->
+            <button class="navbar-toggler mb-3 mt-4 mb-lg-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="d-flex">Menú<i class="ms-2 bi bi-arrow-down"></i></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- menú -->
+            <div class="collapse navbar-collapse mb-2 mb-lg-0 justify-content-lg-end justify-content-center" id="navbarNav">
+                <ul class="navbar-nav 
+                            d-flex flex-column flex-lg-row 
+                            align-items-center justify-content-center
+                            text-center  mt-2 mt-lg-0" id="izq-nav">
 
-                <!-- derecha -->
-                <ul class="navbar-nav ms-auto d-flex align-items-baseline align-items-lg-center text-center mt-2 mt-lg-0"
-                    id="izq-nav">
                     <li class="nav-item">
-                        <a [routerLinkActiveOptions]="{ exact: true }" routerLink="/" class="nav-link" routerLinkActive="active-link">Inicio</a>
+                        <a [routerLinkActiveOptions]="{ exact: true }" routerLink="/" class="nav-link"
+                            routerLinkActive="active-link">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a routerLink="/noticias" class="nav-link" routerLinkActive="active-link">Noticias</a>
@@ -25,18 +36,23 @@
                     <li class="nav-item">
                         <a routerLink="/eventos" class="nav-link" routerLinkActive="active-link">Eventos</a>
                     </li>
-                    
 
-                    @if(this._authService.isAuthenticated() && this._authService.isAuthorized(['ROLE_ADMIN', 'ROLE_COMUNICACION', 'ROLE_SECRETARIA', 'ROLE_RESPONSABLE_RECLAMOS', 'ROLE_INTENDENTE'])) {
-                    <li class="ms-3">
-                        <a routerLink="/admin/dashboard" class="btn-header"><i class="bi bi-lock-fill"><span class="d-none">Dashboard</span></i></a>
+                    <!-- dashboard -->
+                    @if(this._authService.isAuthenticated() && this._authService.isAuthorized(['ROLE_ADMIN',
+                    'ROLE_COMUNICACION', 'ROLE_SECRETARIA', 'ROLE_RESPONSABLE_RECLAMOS', 'ROLE_INTENDENTE'])) {
+                    <li class="nav-item mb-2 mt-2 mb-lg-0 mt-lg-0 ms-lg-3">
+                        <a routerLink="/admin/dashboard" class="btn-header">
+                            <i class="bi bi-lock-fill"><span class="d-none">Dashboard</span></i>
+                        </a>
                     </li>
                     }
 
-                    <!--Cerrar sesion-->
+                    <!-- cerrar sesión -->
                     @if (this._authService.isLogged()) {
-                    <li class="ms-3">
-                        <button class="btn-header" type="button" (click)="logout()"><i class="bi bi-box-arrow-right"><span class="d-none">Cerrar sesion</span></i></button>
+                    <li class="nav-item mb-2 mt-2 mb-lg-0 mt-lg-0 ms-lg-3">
+                        <button class="btn-header" type="button" (click)="logout()">
+                            <i class="bi bi-box-arrow-right"><span class="d-none">Cerrar sesion</span></i>
+                        </button>
                     </li>
                     }
                 </ul>

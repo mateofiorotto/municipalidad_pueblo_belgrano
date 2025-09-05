@@ -20,6 +20,7 @@
     - MapStruct (for DTOs conversion)
     - Spring Security (with roles, permissions and users)
       - JWT implementation
+    - Bucket4j (rate limiter por IP)
 - Maven (Dependencies)
 - HTML5
 - CSS3
@@ -31,6 +32,8 @@
 - XAMPP (Development Environment, Apache, phpmyadmin)
 - IntelliJ Idea (IDE)
 - Git + GitHub
+- Google ReCaptcha
+- Amazon S3 (Files, Images)
 
 
 ---
@@ -71,9 +74,7 @@ Este proyecto se trata acerca de un sitio web institucional para la municipalida
  - Patron de diseño DTO y Mappers (con mapstruct)
  - Consultas SQL personalizadas y con Spring Data JPA
 - Documentación Swagger: http://localhost:8080/swagger-ui/index.html#/
-- Validacion y manejo de archivos (imagenes y pdfs) (proximamente)
-- Rate limiter y Recaptcha para creacion de reclamos (proximamente)
-- Logs (proximamente)
+- Rate limiter y Recaptcha para creacion de reclamos y login
 - CRUD y metodos personalizados para todas las entidades
 - Paginacion (Pageable, PagedModel, Page)
 - Configuracion de CORS y Spring Security
@@ -81,6 +82,7 @@ Este proyecto se trata acerca de un sitio web institucional para la municipalida
 
 ### Estructuras de carpetas backend
 <img src="/imgs-readme/carpetas-backend.jpg" alt="carpetas-backend">
+(actualizar)
 
 ### Frontend
 - Vistas
