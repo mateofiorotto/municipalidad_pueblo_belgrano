@@ -60,6 +60,16 @@ public class NewsController {
         return ResponseEntity.ok(getResponseNews);
     }
 
+    @GetMapping("/last-three-news")
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<ResponseDTO<List<NewsResponseDTO>>> getLastThreeNews(){
+        List<NewsResponseDTO> lastThreeNews = newsService.getLastThreeNews();
+
+        ResponseDTO<List<NewsResponseDTO>> getResponseLastThreeNews = new ResponseDTO<>(lastThreeNews, 200, "Ultimas tres noticias retornadas correctamente");
+
+        return ResponseEntity.ok(getResponseLastThreeNews);
+    }
+
     /**
      * Endpoint que obtiene una noticia por ID. accedible por todos
      * @param id

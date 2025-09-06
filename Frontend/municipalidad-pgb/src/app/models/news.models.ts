@@ -23,6 +23,12 @@ export interface NewsListResponse {
   };
 }
 
+export interface NewsThreeLastResponse {
+  status: number;
+  message: string;
+  result: NewsResponseDTO[];
+}
+
 export interface NewsByIdResponse {
   status: number;
   message: string;

@@ -3,18 +3,34 @@
     <div class="seccion-home uso-comun pt-5">
         <h2 class="mb-5">Areas de uso común</h2>
         <div class="row justify-content-center align-items-center">
-            <div class="col-lg-3 col-6 col-12 card-reclamos"><p><i>I</i> Reclamos</p></div>
-            <div class="col-lg-3 col-6 col-12 card-noticias"><p><i>I</i> Noticias</p></div>
-            <div class="col-lg-3 col-6 col-12 card-eventos"><p><i>I</i> Eventos</p></div>
+            <div class="col-lg-3 col-6 col-12 card-reclamos">
+                <p><i>I</i> Reclamos</p>
+            </div>
+            <div class="col-lg-3 col-6 col-12 card-noticias">
+                <p><i>I</i> Noticias</p>
+            </div>
+            <div class="col-lg-3 col-6 col-12 card-eventos">
+                <p><i>I</i> Eventos</p>
+            </div>
         </div>
     </div>
     <div class="seccion-home ultimas-noticias">
         <h2>Ultimas noticias</h2>
-        <!--Aca va ir el componente o lo que consuma el endpoint de ultimas noticias-->
+        @if (lastThreeNews && lastThreeNews.length > 0) {
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 col-12 mb-3 mt-3 p-4" *ngFor="let news of lastThreeNews">
+                <app-news-card [news]="news"></app-news-card>
+            </div>
+        </div>
+        } @else {
+        <div>
+            <p class="text-center mt-5 mb-5">Ocurrio un error al cargar las noticias. Lo estamos solucionado.</p>
+        </div>
+        }
     </div>
     <div class="seccion-home autoridades-municipales">
         <h2>Autoridades municipales</h2>
-        
+
     </div>
     <div class="seccion-home numeros-emergencia pb-3">
         <h2>Numeros de emergencia</h2>
@@ -27,5 +43,5 @@
             <div class="col-lg-4 col-6 col-12">+6</div>
         </div>
     </div>
-    
+
 </section>

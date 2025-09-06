@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { NewsByIdResponse, NewsListResponse } from '../../models/news.models';
+import { NewsByIdResponse, NewsListResponse, NewsThreeLastResponse } from '../../models/news.models';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
@@ -18,5 +18,10 @@ export class NewsService {
 
   public getNewsById(id: number): Observable<NewsByIdResponse> {
     return this._httpClient.get<NewsByIdResponse>(`${this._baseUrl}/${id}`);
+  }
+
+  public getLastThreeNews(): Observable<NewsThreeLastResponse> {
+    console.log(this._httpClient.get<NewsThreeLastResponse>(`${this._baseUrl}/last-three-news`))
+    return this._httpClient.get<NewsThreeLastResponse>(`${this._baseUrl}/last-three-news`);
   }
 }

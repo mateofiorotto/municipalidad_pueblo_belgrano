@@ -56,6 +56,14 @@ public class NewsService implements INewsService {
     }
 
     @Override
+    public List<NewsResponseDTO> getLastThreeNews() {
+        return newsRepository.findLastThreeNews()
+                .stream()
+                .map(news -> INewsMapper.mapper.newsToNewsResponseDTO(news))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public NewsResponseDTO getNewsById(Long id) {
         News news = newsRepository.findById(id).orElseThrow(() -> new NotFoundException("Noticia no encontrada, ID: " + id));
 

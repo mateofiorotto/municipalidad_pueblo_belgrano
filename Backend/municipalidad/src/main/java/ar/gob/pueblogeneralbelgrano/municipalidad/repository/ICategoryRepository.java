@@ -9,7 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ICategoryRepository extends JpaRepository<Category,Long> {
+public interface
+ICategoryRepository extends JpaRepository<Category,Long> {
     @Query(value = "SELECT COUNT(*) FROM noticias WHERE categoria_id=?1 AND deleted <> TRUE",nativeQuery = true)
     Long relatedCategories(Long id);
 

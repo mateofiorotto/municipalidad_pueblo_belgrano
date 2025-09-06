@@ -18,6 +18,12 @@ public interface INewsService {
     public PagedModel<NewsResponseDTO> getPaginatedNews(int page, int size);
 
     /**
+     * Obtener las ultimas tres noticias
+     * @return lista con 3 noticias
+     */
+    public List<NewsResponseDTO> getLastThreeNews();
+
+    /**
      * Devolver una noticia por su ID
      * @param id
      * @return noticia por id

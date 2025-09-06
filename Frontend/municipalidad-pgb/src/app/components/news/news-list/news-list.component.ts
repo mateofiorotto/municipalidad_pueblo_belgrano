@@ -13,12 +13,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './news-list.component.css'
 })
 export class NewsListComponent implements OnInit {
-  private newsService = inject(NewsService);
+  private _newsService = inject(NewsService);
   
   public newsList: NewsResponseDTO[] = [];
 
   ngOnInit(): void {
-    this.newsService.getNewsList().subscribe({
+    this._newsService.getNewsList().subscribe({
       next: (data) => { this.newsList = data.result.content},
       error: (err) => console.error('Error al cargar noticias', err),
     });

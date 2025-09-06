@@ -17,6 +17,6 @@ public interface INewsRepository extends JpaRepository<News,Long> {
     Page<News> findAllByCategoriaIdOrderByFechaDesc(Long id, Pageable pageable);
 
     //ultimas 3 noticias
-    @Query(value = "SELECT * FROM news ORDER BY fecha DESC LIMIT 3", nativeQuery = true)
+    @Query(value = "SELECT * FROM noticias WHERE deleted = FALSE ORDER BY fecha DESC, id DESC LIMIT 3", nativeQuery = true)
     List<News> findLastThreeNews();
 }
