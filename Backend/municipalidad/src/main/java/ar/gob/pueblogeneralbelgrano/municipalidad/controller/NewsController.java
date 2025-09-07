@@ -44,7 +44,6 @@ public class NewsController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Noticias retornadas correctamente."),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping
     @PreAuthorize("permitAll()")
@@ -60,6 +59,18 @@ public class NewsController {
         return ResponseEntity.ok(getResponseNews);
     }
 
+    /**
+     * Endpoint que obtiene las ultimas 3 noticias
+     *
+     * @return ultimas 3 noticias ordenadas por fecha
+     */
+    @Operation(summary = "Obtener una lista con las ultimas 3 noticias segun fecha e ID",
+            description = "Devuelve una lista con las ultimas 3 noticias ordenadas por fecha e ID. Accedible por todos",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ultimas Noticias retornadas correctamente."),
+    })
     @GetMapping("/last-three-news")
     @PreAuthorize("permitAll()")
     public ResponseEntity<ResponseDTO<List<NewsResponseDTO>>> getLastThreeNews(){
@@ -82,7 +93,6 @@ public class NewsController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Noticia retornada correctamente"),
             @ApiResponse(responseCode = "404", description = "Noticia no encontrada"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
     })
     @GetMapping("/{id}")
     @PreAuthorize("permitAll()")

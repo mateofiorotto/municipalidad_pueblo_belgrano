@@ -17,7 +17,7 @@ public interface IComplaintService {
      * @param size
      * @return reclamos paginados
      */
-    public PagedModel<ComplaintResponseDTO> getPaginatedComplaints(int page, int size);
+    public PagedModel<ComplaintResponseDTO> getPaginatedComplaints(int page, int size, String status);
 
     /**
      * Devolver reclamos por area paginados

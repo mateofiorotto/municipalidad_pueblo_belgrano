@@ -11,11 +11,12 @@ import { AreaResponseDTO } from '../../../models/area.model';
 import { AreasService } from '../../../services/areas/areas.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'app-complaints-table',
-  imports: [MatPaginatorModule, MatIconModule],
+  imports: [MatPaginatorModule, MatIconModule, FormsModule],
   templateUrl: './complaints-table.component.html',
   styleUrl: './complaints-table.component.css',
 })
@@ -30,6 +31,7 @@ export class ComplaintsTableComponent {
   public complaintsList: ComplaintResponseDTO[] = [];
   public areasList: AreaResponseDTO[] = [];
   public selectedAreaId: number = 0;
+  public selectedStatus: string = '';
 
   private setComplaintsData(data: ComplaintListResponse): void {
     this.complaintsList = data.result.content;
@@ -43,8 +45,8 @@ export class ComplaintsTableComponent {
     this.loadComplaints(this.pageIndex);
   }
 
-  loadComplaints(page: number): void {
-    this._complaintService.getComplaintsList(page).subscribe({
+  loadComplaints(page: number, status?: string): void {
+    this._complaintService.getComplaintsList(page, status).subscribe({
       next: (data) => {
         this.setComplaintsData(data);
       },
@@ -100,13 +102,16 @@ export class ComplaintsTableComponent {
             });
           },
         });
+    } else if (this.selectedStatus) {
+        this.loadComplaints(this.pageIndex, this.selectedStatus);
     } else {
-      this.loadComplaints(this.pageIndex);
+        this.loadComplaints(this.pageIndex);
     }
   }
 
   onAreaChange(selectedValue: number): void {
     this.selectedAreaId = selectedValue;
+    this.selectedStatus = '';
     this.pageIndex = 0;
 
     if (this.selectedAreaId == 0) {
@@ -132,4 +137,11 @@ export class ComplaintsTableComponent {
         },
       });
   }
+
+  onStatusChange(selectedValue: string): void {
+  this.selectedStatus = selectedValue;
+  this.selectedAreaId = 0;
+  this.pageIndex = 0;
+  this.loadComplaints(this.pageIndex, this.selectedStatus);
+}
 }

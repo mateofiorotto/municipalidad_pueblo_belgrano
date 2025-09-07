@@ -64,11 +64,13 @@ public class ComplaintController {
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
     public ResponseEntity<ResponseDTO<PagedModel<ComplaintResponseDTO>>> getPaginatedComplaints(
-            @RequestParam(value = "page", defaultValue = "0") int page) {
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "status", defaultValue = "", required = false) String status
+    ) {
 
         final int size = 6;
 
-        PagedModel<ComplaintResponseDTO> complaints = complaintService.getPaginatedComplaints(page, size);
+        PagedModel<ComplaintResponseDTO> complaints = complaintService.getPaginatedComplaints(page, size, status);
 
         ResponseDTO<PagedModel<ComplaintResponseDTO>> getResponseComplaints = new ResponseDTO<>(complaints, 200, "Reclamos retornados correctamente");
 
@@ -92,7 +94,9 @@ public class ComplaintController {
     @GetMapping("/area")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
     public ResponseEntity<ResponseDTO<PagedModel<ComplaintResponseDTO>>> getPaginatedComplaintsByArea(
-            @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam Long area_id) {
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam Long area_id
+    ) {
 
         final int size = 6;
 

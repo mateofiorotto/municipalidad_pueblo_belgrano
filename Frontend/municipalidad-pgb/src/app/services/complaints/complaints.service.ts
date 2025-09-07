@@ -18,8 +18,8 @@ export class ComplaintService {
     return this._httpClient.post<ComplaintRequestDTO>(this._baseUrl+'/save', complaint);
   }
 
-  public getComplaintsList(page: number): Observable<ComplaintListResponse> {
-    return this._httpClient.get<ComplaintListResponse>(`${this._baseUrl}?page=${page}`);
+  public getComplaintsList(page: number, status?: string): Observable<ComplaintListResponse> {
+    return this._httpClient.get<ComplaintListResponse>(`${this._baseUrl}?page=${page}&status=${status}`);
   }
 
   public getComplaintsListByArea(page: number, areaId: number): Observable<ComplaintListResponse> {

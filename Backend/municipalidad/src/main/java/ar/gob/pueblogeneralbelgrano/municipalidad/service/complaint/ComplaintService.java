@@ -40,10 +40,17 @@ public class ComplaintService implements IComplaintService {
     }
 
     @Override
-    public PagedModel<ComplaintResponseDTO> getPaginatedComplaints(int page, int size) {
+    public PagedModel<ComplaintResponseDTO> getPaginatedComplaints(int page, int size, String status) {
         Pageable pageable = PageRequest.of(page, size);
+        Page<Complaint> paginatedComplaints;
 
-        Page<Complaint> paginatedComplaints = complaintRepository.findAllRecentOpenComplaints(pageable);
+        if ("cerrados".equalsIgnoreCase(status)) {
+            paginatedComplaints = complaintRepository.findAllRecentClosedComplaints(pageable);
+        } else if ("abiertos".equalsIgnoreCase(status)){
+            paginatedComplaints = complaintRepository.findAllOpenComplaints(pageable);
+        } else {
+            paginatedComplaints = complaintRepository.findAllRecentClosedOrOpenComplaints(pageable);
+        }
 
         List<ComplaintResponseDTO> complaintDTOList = paginatedComplaints
                 .stream()
