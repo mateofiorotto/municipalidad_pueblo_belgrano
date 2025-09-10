@@ -38,7 +38,7 @@ export class ComplaintService {
     return this._httpClient.put<ComplaintUpdateDTO>(`${this._baseUrl}/${id}`, complaint);
   }
 
-  public deleteComplaint(id: number): Observable<void> {
-    return this._httpClient.delete<void>(`${this._baseUrl}/${id}`);
+  public deleteComplaint(id: number): Observable<String> {
+    return this._httpClient.delete<String>(`${this._baseUrl}/${id}`);
   }
 }

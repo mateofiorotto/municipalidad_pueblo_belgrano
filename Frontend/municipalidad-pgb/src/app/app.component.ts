@@ -6,6 +6,8 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
 import { AuthService } from './services/auth/auth.service';
+import { HealthService } from './services/health/health.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +22,10 @@ import { AuthService } from './services/auth/auth.service';
 })
 export class AppComponent {
   private _authService = inject(AuthService);
+  private _healthService = inject(HealthService);
+  public apiIsUp = false;
   public router = inject(Router);
+
   title = 'municipalidad-pgb';
 
   ngOnInit(): void {
@@ -29,5 +34,9 @@ export class AppComponent {
     setInterval(() => {
       this._authService.isTokenValidAndNotExpired();
     }, 60000);
+
+    this._healthService.getHealthStatus().subscribe((isUp) => {
+      this.apiIsUp = isUp;
+    });
   }
 }
