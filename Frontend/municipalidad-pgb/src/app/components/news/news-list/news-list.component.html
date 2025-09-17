@@ -4,6 +4,9 @@
     <app-news-card [news]="news"></app-news-card>
   </div>
 </div>
+<mat-paginator class="mb-3" [length]="totalElements" [pageSize]=6 [pageIndex]="pageIndex" [pageSizeOptions]="[6]"
+        (page)="onPageChange($event)" [showFirstLastButtons]="true">
+    </mat-paginator>
 } @else {
 <div>
     <p class="text-center">Ocurrio un error al cargar las noticias. Lo estamos solucionado.</p>

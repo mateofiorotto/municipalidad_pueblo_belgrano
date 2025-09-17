@@ -9,5 +9,4 @@ import { NewsListComponent } from '../../components/news/news-list/news-list.com
   styleUrl: './news.page.component.css'
 })
 export class NewsPageComponent {
-  
 }

@@ -20,7 +20,6 @@ export class HomePageComponent {
       ngOnInit(): void {
         this._newsService.getLastThreeNews().subscribe({
           next: (data) => { this.lastThreeNews = data.result },
-          error: (err) => console.error('Error al cargar noticias', err),
         });
       }
 }

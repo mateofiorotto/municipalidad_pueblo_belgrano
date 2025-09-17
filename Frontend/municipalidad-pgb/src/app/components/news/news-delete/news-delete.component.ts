@@ -61,7 +61,6 @@ deleteNews(): void {
       },
       error: (err) => {
         this._router.navigate(['/admin/noticias']).then(() => {
-          console.log(this.newsId, err)
           Swal.fire({
             icon: 'error',
             title: 'ERROR',

@@ -66,7 +66,6 @@ export class NewsEditComponent {
 
   onSubmit(): void {
     const val = this.newsForm.value;
-    console.log(val);
 
     if (
       val.titular &&
@@ -80,9 +79,12 @@ export class NewsEditComponent {
 
       //parsear categoria y evento
       newsRequest.categoria = { id: newsRequest.categoria };
-      newsRequest.evento = newsRequest.evento
-        ? { id: newsRequest.evento }
-        : null;
+
+      if (newsRequest.evento) {
+        newsRequest.evento = { id: newsRequest.evento };
+      } else if (newsRequest.evento === '') {
+        newsRequest.evento = null;
+      }
 
       this._newsService.updateNews(newsRequest, Number(this._route.snapshot.paramMap.get('id'))).subscribe({
         next: (data) => {

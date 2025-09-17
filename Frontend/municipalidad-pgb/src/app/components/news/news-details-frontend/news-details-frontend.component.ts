@@ -32,8 +32,6 @@ export class NewsDetailsFrontendComponent {
         error: (err) => {
           if (err.status === 404) {
             this._router.navigate(['/no-encontrado']);
-          } else {
-            console.error('Error al cargar noticia', err);
           }
       },
       });

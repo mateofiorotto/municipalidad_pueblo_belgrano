@@ -99,13 +99,14 @@ public class NewsService implements INewsService {
         newsFinded.setSubtitulo(news.subtitulo());
         newsFinded.setDescripcion(news.descripcion());
 
-        if(news.descripcion_adicional() != null) {
+        if(news.descripcion_adicional() != null && !news.descripcion_adicional().isBlank()) {
             newsFinded.setDescripcion_adicional(news.descripcion_adicional());
+        } else {
+            newsFinded.setDescripcion_adicional("");
         }
 
         newsFinded.setFecha(news.fecha());
         newsFinded.setImagen(news.imagen());
-        //logica img..
 
         newsFinded.setCategoria(categoryRepository
                 .findById(news.categoria().id())
@@ -115,6 +116,8 @@ public class NewsService implements INewsService {
             newsFinded.setEvento(eventRepository
                     .findById(news.evento().id())
                     .orElseThrow(() -> new NotFoundException("Evento no encontrado, ID: " + news.evento().id())));
+        } else {
+            newsFinded.setEvento(null);
         }
 
         newsRepository.save(newsFinded);
@@ -125,8 +128,6 @@ public class NewsService implements INewsService {
     @Override
     public void deleteNews(Long id) {
         News newToDelete = newsRepository.findById(id).orElseThrow(() -> new NotFoundException("Noticia no encontrada, ID: " + id));
-
-        //logica img..
 
         newsRepository.delete(newToDelete);
     }

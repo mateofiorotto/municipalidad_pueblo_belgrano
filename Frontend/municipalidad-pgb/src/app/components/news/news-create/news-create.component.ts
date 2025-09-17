@@ -61,7 +61,6 @@ export class NewsCreateComponent {
 
   onSubmit(): void {
     const val = this.newsForm.value;
-    console.log(val);
 
     if (
       val.titular &&
