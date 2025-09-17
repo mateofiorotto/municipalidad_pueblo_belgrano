@@ -35,7 +35,7 @@ export class ComplaintDetailsComponent {
               Swal.fire({
                 icon: 'error',
                 title: 'ERROR',
-                text: 'Error al cargar areas o no estas autorizado/a',
+                text: 'Error al cargar reclamo o no estas autorizado/a',
                 showConfirmButton: true,
               });
             });

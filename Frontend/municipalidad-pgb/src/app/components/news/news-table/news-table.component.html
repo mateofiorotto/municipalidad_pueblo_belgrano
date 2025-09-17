@@ -1,0 +1,42 @@
+<div class="text-center">
+    <a class="mb-5 mt-0 btn-crear-crud d-inline-block" routerLink="/admin/noticias/crear"><span class="me-2">+</span>Crear noticia</a>
+</div>
+@if (newsList && newsList.length > 0) {
+<div class="overflow-auto">
+
+    <table class="table table-striped table-hover table-bordered text-center">
+        <tr>
+            <th class="p-4">N°</th>
+            <th class="p-4">Titular</th>
+            <th class="p-4">Subtitulo</th>
+            <th class="p-4">Descripcion</th>
+            <th class="p-4">Fecha</th>
+            <th>Acciones</th>
+        </tr>
+        @for (news of newsList; track news.id) {
+        <tr class="text-break">
+            <td class="fw-bold p-3 text-center">{{ news.id }}</td>
+            <td class="p-2">{{ news.titular }}</td>
+            <td class="p-2">{{ news.subtitulo.substr(0, 20) }}...</td>
+            <td class="p-2">{{ news.descripcion.substr(0, 20) }}...</td>
+            <td class="p-2">{{ news.fecha }}</td>
+
+            <td class="actions-td p-2 text-center">
+                <div class="d-flex justify-content-center gap-2">
+                    <a href="/admin/noticias/{{news.id}}/detalle"><mat-icon>visibility</mat-icon></a>
+                    <a href="/admin/noticias/{{news.id}}/editar"><mat-icon>edit</mat-icon></a>
+                    <a href="/admin/noticias/{{news.id}}/borrar"><mat-icon>delete</mat-icon></a>
+                </div>
+            </td>
+
+        </tr>
+        }
+    </table>
+
+    <mat-paginator class="mb-3" [length]="totalElements" [pageSize]=6 [pageIndex]="pageIndex" [pageSizeOptions]="[6]"
+        (page)="onPageChange($event)" [showFirstLastButtons]="true">
+    </mat-paginator>
+</div>
+} @else {
+<p class="text-center mt-5">No se encontraron noticias</p>
+}

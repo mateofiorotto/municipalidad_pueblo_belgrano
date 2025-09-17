@@ -1,7 +1,7 @@
 @if (complaint) {
-<div>
+<div class="pt-4">
     <div class="row p-3 text-break align-items-center justify-content-center">
-        <h2>Reclamo #{{ complaint.id }}</h2>
+        <h2 class="">Editar Reclamo #{{ complaint.id }}</h2>
         <div class="col-lg-4 col-md-6 col-12 p-4">
             <p><span class="fw-bold">Motivo:</span> {{ complaint.motivo }}</p>
             <p><span class="fw-bold">Fecha:</span> {{ complaint.fecha_reclamo }}</p>
@@ -31,7 +31,7 @@
                             <select class="w-75 mt-3 d-block m-auto form-control" formControlName="id">
                                 <option value="">Sin área asignada</option>
                                 @for(area of areasList; track area.id){
-                                <option value="{{ area.id }}">AREA: {{ area.nombre }}</option>
+                                <option value="{{ area.id }}">{{ area.nombre }}</option>
                                 }
                             </select>
                         

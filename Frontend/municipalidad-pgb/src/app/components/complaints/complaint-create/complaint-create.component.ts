@@ -14,12 +14,12 @@ declare global {
 
 @Component({
   standalone: true,
-  selector: 'app-create-complaint',
+  selector: 'app-complaint-create',
   imports: [ReactiveFormsModule],
-  templateUrl: './create-complaint.component.html',
-  styleUrl: './create-complaint.component.css',
+  templateUrl: './complaint-create.component.html',
+  styleUrl: './complaint-create.component.css',
 })
-export class CreateComplaintComponent implements AfterViewInit {
+export class ComplaintCreateComponent implements AfterViewInit {
   captchaToken: string | null = null;
   siteKey = '6LeVbbMrAAAAAB2NUZWTGVenSrwgi0afOlv6kPgi';
   errors: { defaultMessage: string }[] = [];

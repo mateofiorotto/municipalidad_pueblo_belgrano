@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { CreateComplaintComponent } from '../../components/complaints/create-complaint/create-complaint.component';
+import { ComplaintCreateComponent } from '../../components/complaints/complaint-create/complaint-create.component';
+
 
 @Component({
   selector: 'app-complaints.page',
-  imports: [CreateComplaintComponent],
+  imports: [ComplaintCreateComponent],
   templateUrl: './complaints.page.component.html',
   styleUrl: './complaints.page.component.css',
 })

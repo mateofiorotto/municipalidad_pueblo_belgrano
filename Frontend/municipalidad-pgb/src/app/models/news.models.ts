@@ -1,6 +1,7 @@
-import { CategoryResponseDTO } from './category.model';
+import { CategoryIdDTO, CategoryResponseDTO } from './category.model';
 import { EventResponseDTO } from './event.model';
 import { Page } from './page.model';
+import { EventIdDTO } from './event.model';
 
 export interface NewsResponseDTO {
   id: number;
@@ -33,4 +34,15 @@ export interface NewsByIdResponse {
   status: number;
   message: string;
   result: NewsResponseDTO;
+}
+
+export interface NewsRequestDTO {
+  titular: string;
+  subtitulo: string;
+  fecha: string;
+  imagen: string;
+  descripcion: string;
+  descripcion_adicional?: string;
+  categoria: CategoryIdDTO;
+  evento?: EventIdDTO;
 }

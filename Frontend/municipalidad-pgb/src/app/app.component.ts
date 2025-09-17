@@ -8,6 +8,8 @@ import { HeaderAdminComponent } from './components/header-admin/header-admin.com
 import { AuthService } from './services/auth/auth.service';
 import { HealthService } from './services/health/health.service';
 import { map } from 'rxjs';
+import * as AOS from 'aos';
+import 'aos/dist/aos.css';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +29,11 @@ export class AppComponent {
   public router = inject(Router);
 
   title = 'municipalidad-pgb';
+
+  ngAfterViewInit(): void {
+    AOS.init({
+    });
+  }
 
   ngOnInit(): void {
     this._authService.isTokenValidAndNotExpired();

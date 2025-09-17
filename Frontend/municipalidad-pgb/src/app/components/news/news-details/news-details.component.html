@@ -1,17 +1,27 @@
 @if (news) {
 <div>
-  <h2>{{ news.titular }}</h2>
-  <p>{{ news.categoria.nombre }}</p>
-  <p *ngIf="news.evento">{{ news.evento.titular}}</p>
-  <p>{{ news.descripcion }}</p>
-  <img [src]="news.imagen" [alt]="news.titular" />
-  <p>{{ news.fecha }}</p>
-  <p *ngIf="news.descripcion_adicional">{{ news.descripcion_adicional }}</p>
-</div>
-} @else {
-<div>
-  <div class="col-12">
-    <p>Ocurrio un error al cargar la noticia. Lo estamos solucionado.</p>
+  <div class="row p-3 mt-5 text-break align-items-center justify-content-center">
+    <h2 class="mb-3">Noticia #{{ news.id }}</h2>
+    <div class="col-lg-5 col-md-6 col-12 p-4">
+      <p><span class="fw-bold">Titular:</span> {{ news.titular }}</p>
+      <p><span class="fw-bold">Subtitulo:</span> {{ news.subtitulo }}</p>
+      <p><span class="fw-bold">Fecha:</span> {{ news.fecha }}</p>
+      <p><span class="fw-bold">Categoria:</span> {{ news.categoria.nombre }}</p>
+      @if(news.evento){
+        <p><span class="fw-bold">Evento:</span> {{ news.evento.titular }}</p>
+      }
+    </div>
+    <div class="col-lg-5 col-md-6 col-12 p-4">
+      <p><span class="fw-bold">Imagen:</span></p>
+      <img class="img-fluid" src="{{ news.imagen }}" alt="Imagen de la noticia">
+      <img class="img-fluid" src="banners/banner.jpg" alt="Imagen de la noticia">
+    </div>
+    <div class="col-11 p-4 text-center ">
+      <p class="pb-lg-3 pt-lg-3 pb-0 pt-0"><span class="fw-bold">Descripción:</span> {{ news.descripcion }}</p>
+      @if(news.descripcion_adicional){
+        <p><span class="fw-bold">Descripción Adicional:</span> {{ news.descripcion_adicional }}</p>
+      }
+    </div>
   </div>
 </div>
 }

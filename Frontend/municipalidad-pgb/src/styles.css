@@ -52,7 +52,8 @@ label {
 }
 
 .btn-send-form,
-.btn-actualizar-form {
+.btn-actualizar-form,
+.btn-crear-crud {
   background-color: green;
   color: white;
   border-radius: 10px;
@@ -64,10 +65,12 @@ label {
   text-transform: uppercase;
   font-weight: bold;
   transition: 0.25s ease-in-out all;
+  text-decoration: none;
 }
 
 .btn-send-form:hover,
-.btn-actualizar-form:hover {
+.btn-actualizar-form:hover,
+.btn-crear-crud:hover {
   background-color: rgb(6, 93, 6);
 }
 
@@ -99,7 +102,8 @@ label {
 
 /*disabled send*/
 .btn-send-form:disabled,
-.btn-actualizar-form:disabled {
+.btn-actualizar-form:disabled,
+.btn-crear-crud:disabled {
   background-color: rgba(15, 139, 34, 0.5);
 }
 

@@ -10,6 +10,7 @@ import { authInterceptor } from './interceptors/auth/auth.interceptor';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { TranslateMaterial } from './core/translate-material/translate-material';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { Aos } from 'aos';
 
 export const appConfig: ApplicationConfig = {
   providers: [

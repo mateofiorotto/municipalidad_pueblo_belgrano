@@ -11,7 +11,8 @@
         </select>
 
         <label class="ms-4" for="status">Estado:</label>
-        <select id="status" class="ms-3" (change)="onStatusChange($any($event.target).value)" [(ngModel)]="selectedStatus">
+        <select id="status" class="ms-3" (change)="onStatusChange($any($event.target).value)"
+            [(ngModel)]="selectedStatus">
             <option value="">Todos los reclamos</option>
             <option value="abiertos">Abiertos</option>
             <option value="cerrados">Cerrados</option>
@@ -44,9 +45,11 @@
             <td class="p-2">{{ complaint.cerrado ? 'Cerrado' : 'Abierto' }}</td>
 
             <td class="actions-td p-2 text-center">
-                <a href="/admin/reclamos/{{complaint.id}}/detalle"><mat-icon>visibility</mat-icon></a>
-                <a href="/admin/reclamos/{{complaint.id}}/editar"><mat-icon>edit</mat-icon></a>
-                <a href="/admin/reclamos/{{complaint.id}}/borrar"><mat-icon>delete</mat-icon></a>
+                <div class="d-flex justify-content-center gap-2">
+                    <a href="/admin/reclamos/{{complaint.id}}/detalle"><mat-icon>visibility</mat-icon></a>
+                    <a href="/admin/reclamos/{{complaint.id}}/editar"><mat-icon>edit</mat-icon></a>
+                    <a href="/admin/reclamos/{{complaint.id}}/borrar"><mat-icon>delete</mat-icon></a>
+                </div>
             </td>
 
         </tr>
