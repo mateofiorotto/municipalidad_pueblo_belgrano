@@ -44,7 +44,7 @@ public class AreaController {
             @ApiResponse(responseCode = "200", description = "Areas retornadas correctamente."),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
     })
-    @GetMapping("paginado")
+    @GetMapping("/paginado")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
     public ResponseEntity<ResponseDTO<PagedModel<AreaResponseDTO>>> getPaginatedAreas(
             @RequestParam(value = "page", defaultValue = "0") int page) {

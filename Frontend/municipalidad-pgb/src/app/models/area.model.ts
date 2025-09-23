@@ -18,3 +18,18 @@ export interface AreaListResponse {
     message: string;
     result: AreaResponseDTO[];
 }
+
+export interface AreaListPaginatedResponse {
+    status: number;
+    message: string;
+    result: {
+        content: AreaResponseDTO[];
+        page: Page;
+    };
+}
+
+export interface AreaByIdResponse {
+  status: number;
+  message: string;
+  result: AreaResponseDTO;
+}

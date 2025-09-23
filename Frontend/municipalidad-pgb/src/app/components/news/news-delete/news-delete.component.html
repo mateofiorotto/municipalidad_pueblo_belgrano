@@ -14,9 +14,8 @@
     <div class="col-lg-5 col-md-6 col-12 p-4">
       <p><span class="fw-bold">Imagen:</span></p>
       <img class="img-fluid" src="{{ news.imagen }}" alt="Imagen de la noticia">
-      <img class="img-fluid" src="banners/banner.jpg" alt="Imagen de la noticia">
     </div>
-    <div class="col-11 p-4 text-center ">
+    <div class="col-11 p-4 pb-0 text-center">
       <p class="pb-lg-3 pt-lg-3 pb-0 pt-0"><span class="fw-bold">Descripción:</span> {{ news.descripcion }}</p>
       @if(news.descripcion_adicional){
         <p><span class="fw-bold">Descripción Adicional:</span> {{ news.descripcion_adicional }}</p>

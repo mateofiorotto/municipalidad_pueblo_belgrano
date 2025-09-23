@@ -129,7 +129,7 @@ export class NewsEditComponent {
             Swal.fire({
               icon: 'error',
               title: 'ERROR',
-              text: 'Ocurrio un error al crear la noticia. Lo estamos solucionando.',
+              text: 'Ocurrio un error al editar la noticia. Lo estamos solucionando.',
               showConfirmButton: true,
             });
           }

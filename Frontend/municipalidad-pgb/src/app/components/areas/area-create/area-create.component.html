@@ -1,0 +1,25 @@
+<form [formGroup]="areaForm" (ngSubmit)="onSubmit()" class="p-4">
+    <!--Nombre-->
+    <div class="d-flex flex-column justify-content-center align-items-center pt-lg-3 pb-lg-2 ps-4 pe-4">
+        <div class="pb-4 pb-lg-0">
+            <label class="form-label d-none" for="nombre">Nombre<span class="required-input">*</span></label>
+            <input placeholder="Nombre *" class="form-control" id="nombre" type="text" formControlName="nombre">
+        </div>
+        <div class="pb-4 pb-lg-0 mb-4">
+            @if(nombre?.touched && nombre?.errors?.['required']) {
+            <p class="input-error">El nombre de área es requerido</p>
+            }
+
+            @if(nombre?.touched && nombre?.errors?.['minlength']) {
+            <p class="input-error">El nombre de área debe tener al menos 3 caracteres</p>
+            }
+
+            @if(nombre?.touched && nombre?.errors?.['maxlength']) {
+            <p class="input-error">El nombre de área debe tener menos de 100 caracteres</p>
+            }
+        </div>
+       
+    </div>
+
+    <button [disabled]="areaForm.invalid" type="submit" class="btn-send-form">CREAR</button>
+</form>

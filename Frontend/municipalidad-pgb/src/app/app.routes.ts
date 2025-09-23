@@ -113,12 +113,68 @@ export const routes: Routes = [
       roles: ['ROLE_ADMIN', 'ROLE_RESPONSABLE_RECLAMOS', 'ROLE_INTENDENTE'],
     },
   },
+  //areas
+  {
+    path: 'admin/areas',
+    loadComponent: () =>
+      import('./pages/admin/areas/areas-list.page/areas-list.page.component').then(
+        (m) => m.AreasListPageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_RESPONSABLE_RECLAMOS'],
+    },
+  },
+  {
+    path: 'admin/areas/crear',
+    loadComponent: () =>
+      import('./pages/admin/areas/area-create.page/area-create.page.component').then(
+        (m) => m.AreaCreatePageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_RESPONSABLE_RECLAMOS'],
+    },
+  },
+  {
+    path: 'admin/areas/:id/borrar',
+    loadComponent: () =>
+      import('./pages/admin/areas/area-delete.page/area-delete.page.component').then(
+        (m) => m.AreaDeletePageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_RESPONSABLE_RECLAMOS'],
+    },
+  },
+  {
+    path: 'admin/areas/:id/detalle',
+    loadComponent: () =>
+      import('./pages/admin/areas/area-details.page/area-details.page.component').then(
+        (m) => m.AreaDetailsPageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_RESPONSABLE_RECLAMOS'],
+    },
+  },
+  {
+    path: 'admin/areas/:id/editar',
+    loadComponent: () =>
+      import('./pages/admin/areas/area-edit.page/area-edit.page.component').then(
+        (m) => m.AreaEditPageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_RESPONSABLE_RECLAMOS'],
+    },
+  },
 //noticias
   {
     path: 'admin/noticias',
     loadComponent: () =>
       import(
-        './pages/admin/news/news.list.page/news.list.page.component'
+        './pages/admin/news/news-list.page/news.list.page.component'
       ).then((m) => m.NewsListPageComponent),
     canActivate: [authGuard, maintenanceGuard],
     data: {
@@ -128,7 +184,7 @@ export const routes: Routes = [
   {
     path: 'admin/noticias/crear',
     loadComponent: () =>
-      import('./pages/admin/news/news.create.page/news.create.page.component').then(
+      import('./pages/admin/news/news-create.page/news.create.page.component').then(
         (m) => m.NewsCreatePageComponent
       ),
     canActivate: [authGuard, maintenanceGuard],
@@ -139,7 +195,7 @@ export const routes: Routes = [
   {
     path: 'admin/noticias/:id/editar',
     loadComponent: () =>
-      import('./pages/admin/news/news.edit.page/news.edit.page.component').then(
+      import('./pages/admin/news/news-edit.page/news.edit.page.component').then(
         (m) => m.NewsEditPageComponent
       ),
     canActivate: [authGuard, maintenanceGuard],
@@ -150,7 +206,7 @@ export const routes: Routes = [
   {
     path: 'admin/noticias/:id/borrar',
     loadComponent: () =>
-      import('./pages/admin/news/news.delete.page/news.delete.page.component').then(
+      import('./pages/admin/news/news-delete.page/news.delete.page.component').then(
         (m) => m.NewsDeletePageComponent
       ),
     canActivate: [authGuard, maintenanceGuard],
@@ -162,7 +218,7 @@ export const routes: Routes = [
     path: 'admin/noticias/:id/detalle',
     loadComponent: () =>
       import(
-        './pages/admin/news/news.details.page/news.details.page.component'
+        './pages/admin/news/news-details.page/news.details.page.component'
       ).then((m) => m.NewsDetailsPageComponent),
     canActivate: [authGuard, maintenanceGuard],
     data: {

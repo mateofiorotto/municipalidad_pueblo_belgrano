@@ -1,5 +1,5 @@
 <div class="select-area d-flex">
-    <div class="mt-4 mb-4">
+    <div class="mt-¿ mb-4">
         <label for="area">Área:</label>
         <select id="area" class="ms-3" (change)="onAreaChange($any($event.target).value)" [(ngModel)]="selectedAreaId">
             <option value="0">Todas las Áreas</option>
@@ -46,9 +46,9 @@
 
             <td class="actions-td p-2 text-center">
                 <div class="d-flex justify-content-center gap-2">
-                    <a href="/admin/reclamos/{{complaint.id}}/detalle"><mat-icon>visibility</mat-icon></a>
-                    <a href="/admin/reclamos/{{complaint.id}}/editar"><mat-icon>edit</mat-icon></a>
-                    <a href="/admin/reclamos/{{complaint.id}}/borrar"><mat-icon>delete</mat-icon></a>
+                    <a routerLink="/admin/reclamos/{{complaint.id}}/detalle"><mat-icon>visibility</mat-icon></a>
+                    <a routerLink="/admin/reclamos/{{complaint.id}}/editar"><mat-icon>edit</mat-icon></a>
+                    <a routerLink="/admin/reclamos/{{complaint.id}}/borrar"><mat-icon>delete</mat-icon></a>
                 </div>
             </td>
 

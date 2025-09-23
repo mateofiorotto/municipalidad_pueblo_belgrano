@@ -46,7 +46,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "200", description = "Categorias retornadas correctamente."),
             @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
     })
-    @GetMapping("paginado")
+    @GetMapping("/paginado")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
     public ResponseEntity<ResponseDTO<PagedModel<CategoryResponseDTO>>> getPaginatedCategories(
             @RequestParam(value = "page", defaultValue = "0") int page) {

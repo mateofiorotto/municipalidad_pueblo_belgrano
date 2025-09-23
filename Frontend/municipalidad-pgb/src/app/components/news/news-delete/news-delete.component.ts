@@ -13,7 +13,7 @@ import { NewsService } from '../../../services/news/news.service';
   styleUrl: './news-delete.component.css'
 })
 export class NewsDeleteComponent {
-private _route = inject(ActivatedRoute);
+  private _route = inject(ActivatedRoute);
   private _router = inject(Router);
   private _newsService = inject(NewsService);
   private newsId!: number;

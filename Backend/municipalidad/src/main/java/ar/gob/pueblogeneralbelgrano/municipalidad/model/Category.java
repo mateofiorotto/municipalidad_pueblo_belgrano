@@ -9,8 +9,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "categorias")
-@SQLDelete(sql = "UPDATE categorias SET deleted = true WHERE id=?")
-@SQLRestriction("deleted=false")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +17,6 @@ public class Category {
     private String nombre;
     @OneToMany(mappedBy = "categoria")
     private Set<News> noticias;
-    private boolean deleted = Boolean.FALSE;
 
     public Category(){}
 
@@ -51,14 +48,6 @@ public class Category {
 
     public void setNoticias(Set<News> noticias) {
         this.noticias = noticias;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
     }
 
     @Override

@@ -9,14 +9,14 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { AreaResponseDTO } from '../../../models/area.model';
 import { AreasService } from '../../../services/areas/areas.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'app-complaints-table',
-  imports: [MatPaginatorModule, MatIconModule, FormsModule],
+  imports: [MatPaginatorModule, MatIconModule, FormsModule, RouterLink],
   templateUrl: './complaints-table.component.html',
   styleUrl: './complaints-table.component.css',
 })
