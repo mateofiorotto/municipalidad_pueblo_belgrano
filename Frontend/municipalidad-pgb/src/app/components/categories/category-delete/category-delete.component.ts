@@ -2,30 +2,30 @@ import { Component } from '@angular/core';
 import { inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { AreasService } from '../../../services/areas/areas.service';
-import { AreaResponseDTO } from '../../../models/area.model';
+import { CategoriesService } from '../../../services/categories/categories.service'; 
+import { CategoryResponseDTO } from '../../../models/category.model';
 
 @Component({
-  selector: 'app-area-delete',
+  selector: 'app-category-delete',
   imports: [],
-  templateUrl: './area-delete.component.html',
-  styleUrl: './area-delete.component.css',
+  templateUrl: './category-delete.component.html',
+  styleUrl: './category-delete.component.css'
 })
-export class AreaDeleteComponent {
+export class CategoryDeleteComponent {
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
-  private _areaService = inject(AreasService);
-  private areaId!: number;
+  private _categoriesService = inject(CategoriesService);
+  private categoryId!: number;
 
-  public area!: AreaResponseDTO;
+  public category!: CategoryResponseDTO;
 
   ngOnInit(): void {
     const id = this._route.snapshot.paramMap.get('id');
 
     if (id) {
-      this._areaService.getAreaById(+id).subscribe({
+      this._categoriesService.getCategoryById(+id).subscribe({
         next: (data) => {
-          this.area = data.result;
+          this.category = data.result;
         },
         error: (err) => {
           if (err.status === 404) {
@@ -35,7 +35,7 @@ export class AreaDeleteComponent {
               Swal.fire({
                 icon: 'error',
                 title: 'ERROR',
-                text: 'Error al cargar área o no estas autorizado/a',
+                text: 'Error al cargar categoría o no estas autorizado/a',
                 showConfirmButton: true,
               });
             });
@@ -45,35 +45,35 @@ export class AreaDeleteComponent {
     }
   }
 
-  deleteArea(): void {
-    this.areaId = this.area.id;
+  deleteCategory(): void {
+    this.categoryId = this.category.id;
 
-    this._areaService.deleteArea(this.areaId).subscribe({
+    this._categoriesService.deleteCategory(this.categoryId).subscribe({
       next: () => {
-        this._router.navigate(['/admin/areas']);
+        this._router.navigate(['/admin/categorias']);
         Swal.fire({
           icon: 'success',
-          title: 'Área Eliminada',
-          text: 'Área eliminada correctamente',
+          title: 'Categoría Eliminada',
+          text: 'Categoría eliminada correctamente',
           showConfirmButton: true,
         });
       },
       error: (err) => {
         if (err.status === 409) {
-          this._router.navigate(['/admin/areas']).then(() => {
+          this._router.navigate(['/admin/categorias']).then(() => {
             Swal.fire({
               icon: 'error',
               title: 'ERROR',
-              text: 'El área tiene reclamos asociados actualmente o fue asociado a un reclamo viejo.',
+              text: 'La categoría tiene noticias asociadas actualmente o fue asociada a una noticia vieja.',
               showConfirmButton: true,
             });
           });
         } else {
-          this._router.navigate(['/admin/areas']).then(() => {
+          this._router.navigate(['/admin/categorias']).then(() => {
             Swal.fire({
               icon: 'error',
               title: 'ERROR',
-              text: 'Error al eliminar el área',
+              text: 'Error al eliminar la categoría',
               showConfirmButton: true,
             });
           });
@@ -83,6 +83,6 @@ export class AreaDeleteComponent {
   }
 
   cancel(): void {
-    this._router.navigate(['/admin/areas']);
+    this._router.navigate(['/admin/noticias']);
   }
 }

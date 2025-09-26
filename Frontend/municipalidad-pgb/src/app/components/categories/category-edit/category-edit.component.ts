@@ -9,24 +9,24 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AreasService } from '../../../services/areas/areas.service';
-import { AreaResponseDTO } from '../../../models/area.model';
+import { CategoriesService } from '../../../services/categories/categories.service';
+import { CategoryResponseDTO } from '../../../models/category.model';
 
 @Component({
-  selector: 'app-area-edit',
+  selector: 'app-category-edit',
   imports: [ReactiveFormsModule],
-  templateUrl: './area-edit.component.html',
-  styleUrl: './area-edit.component.css'
+  templateUrl: './category-edit.component.html',
+  styleUrl: './category-edit.component.css'
 })
-export class AreaEditComponent {
-  errors: { defaultMessage: string }[] = [];
-  private _areaService = inject(AreasService);
+export class CategoryEditComponent {
+errors: { defaultMessage: string }[] = [];
+  private _categoriesService = inject(CategoriesService);
   private _router = inject(Router);
   private _route = inject(ActivatedRoute);
 
-  public area!: AreaResponseDTO;
+  public category!: CategoryResponseDTO;
 
-  areaForm = new FormGroup({
+  categoryForm = new FormGroup({
     nombre: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
@@ -35,27 +35,27 @@ export class AreaEditComponent {
   });
 
   ngOnInit(): void {
-    this.loadArea();
+    this.loadCategory();
   }
 
   onSubmit(): void {
-    const val = this.areaForm.value;
+    const val = this.categoryForm.value;
 
     if (
       val.nombre
     ) {
-      const areaRequest: any = val;
+      const categoryRequest: any = val;
 
-      this._areaService.updateArea(areaRequest, Number(this._route.snapshot.paramMap.get('id'))).subscribe({
+      this._categoriesService.updateCategory(categoryRequest, Number(this._route.snapshot.paramMap.get('id'))).subscribe({
         next: (data) => {
           this.errors = [];
-          this.areaForm.reset();
+          this.categoryForm.reset();
 
-          this._router.navigate(['/admin/areas']).then(() => {
+          this._router.navigate(['/admin/categorias']).then(() => {
             Swal.fire({
               icon: 'success',
-              title: 'Área editada',
-              text: 'Área editada correctamente',
+              title: 'Categoría editada',
+              text: 'Categoría editada correctamente',
               showConfirmButton: true,
             });
           });
@@ -96,7 +96,7 @@ export class AreaEditComponent {
             Swal.fire({
               icon: 'error',
               title: 'ERROR',
-              text: 'Ocurrio un error al editar el Área. Lo estamos solucionando.',
+              text: 'Ocurrio un error al editar la categoría. Lo estamos solucionando.',
               showConfirmButton: true,
             });
           }
@@ -112,26 +112,26 @@ export class AreaEditComponent {
     }
   }
 
-  public loadArea(): void {
+  public loadCategory(): void {
     const id = Number(this._route.snapshot.paramMap.get('id'));
 
-    this._areaService.getAreaById(id).subscribe({
+    this._categoriesService.getCategoryById(id).subscribe({
       next: (data) => {
-        this.area = data.result;
+        this.category = data.result;
 
-        this.areaForm.patchValue({
-          nombre: this.area.nombre
+        this.categoryForm.patchValue({
+          nombre: this.category.nombre
         });
       },
       error: (err) => {
         if (err.status === 404) {
             this._router.navigate(['/no-encontrado']);
           } else {
-            this._router.navigate(['/admin/areas']).then(() => {
+            this._router.navigate(['/admin/categorias']).then(() => {
               Swal.fire({
                 icon: 'error',
                 title: 'ERROR',
-                text: 'Error al cargar el área',
+                text: 'Error al cargar la categoría',
                 showConfirmButton: true,
               });
             });
@@ -141,6 +141,6 @@ export class AreaEditComponent {
   }
 
   get nombre() {
-    return this.areaForm.get('nombre');
+    return this.categoryForm.get('nombre');
   }
 }

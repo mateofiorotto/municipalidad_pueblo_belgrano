@@ -1,13 +1,13 @@
-@if (area) {
+@if (category) {
 <div>
     <div class="p-3 mt-5 pb-0 text-break align-items-center justify-content-center">
-        <h2 class="mb-3">Área #{{ area.id }}</h2>
+        <h2 class="mb-3">Categoría #{{ category.id }}</h2>
         <div class="text-center p-4">
-            <p><span class="fw-bold">Área:</span> {{ area.nombre }}</p>
+            <p><span class="fw-bold">Categoría:</span> {{ category.nombre }}</p>
         </div>
     </div>
     <div class="text-center">
-        <button class="btn btn-danger me-2 btn-borrar" (click)="deleteArea()">Borrar</button>
+        <button class="btn btn-danger me-2 btn-borrar" (click)="deleteCategory()">Borrar</button>
         <button class="btn btn-secondary btn-cancelar" (click)="cancel()">Cancelar</button>
     </div>
 </div>

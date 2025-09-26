@@ -225,6 +225,62 @@ export const routes: Routes = [
       roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_COMUNICACION'],
     },
   },
+  //categorias
+  {
+    path: 'admin/categorias',
+    loadComponent: () =>
+      import(
+        './pages/admin/categories/categories-list.page/categories-list.page.component'
+      ).then((m) => m.CategoriesListPageComponent),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_COMUNICACION'],
+    },
+  },
+  {
+    path: 'admin/categorias/crear',
+    loadComponent: () =>
+      import(
+        './pages/admin/categories/category-create.page/category-create.page.component'
+      ).then((m) => m.CategoryCreatePageComponent),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_COMUNICACION'],
+    },
+  },
+  {
+    path: 'admin/categorias/:id/borrar',
+    loadComponent: () =>
+      import(
+        './pages/admin/categories/category-delete.page/category-delete.page.component'
+      ).then((m) => m.CategoryDeletePageComponent),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_COMUNICACION'],
+    },
+  },
+  {
+    path: 'admin/categorias/:id/editar',
+    loadComponent: () =>
+      import(
+        './pages/admin/categories/category-edit.page/category-edit.page.component'
+      ).then((m) => m.CategoryEditPageComponent),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_COMUNICACION'],
+    },
+  },
+  {
+    path: 'admin/categorias/:id/detalle',
+    loadComponent: () =>
+      import(
+        './pages/admin/categories/category-details.page/category-details.page.component'
+      ).then((m) => m.CategoryDetailsPageComponent),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_COMUNICACION'],
+    },
+  },
   {
     path: 'mantenimiento',
     loadComponent: () =>

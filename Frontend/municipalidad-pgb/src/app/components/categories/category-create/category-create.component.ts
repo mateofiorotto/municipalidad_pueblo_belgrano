@@ -4,19 +4,20 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { inject } from '@angular/core';
+import { CategoriesService } from '../../../services/categories/categories.service';
 
 @Component({
-  selector: 'app-area-create',
+  selector: 'app-category-create',
   imports: [ReactiveFormsModule],
-  templateUrl: './area-create.component.html',
-  styleUrl: './area-create.component.css'
+  templateUrl: './category-create.component.html',
+  styleUrl: './category-create.component.css'
 })
-export class AreaCreateComponent {
-  errors: { defaultMessage: string }[] = [];
-  private _areasService = inject(AreasService);
+export class CategoryCreateComponent {
+errors: { defaultMessage: string }[] = [];
+  private _categoriesService = inject(CategoriesService);
   private _router = inject(Router);
 
-  areaForm = new FormGroup({
+  categoryForm = new FormGroup({
     nombre: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
@@ -25,23 +26,23 @@ export class AreaCreateComponent {
   });
 
   onSubmit(): void {
-    const val = this.areaForm.value;
+    const val = this.categoryForm.value;
 
     if (
       val.nombre
     ) {
-      const areaRequest: any = val;
+      const categoryRequest: any = val;
 
-      this._areasService.createArea(areaRequest).subscribe({
+      this._categoriesService.createCategory(categoryRequest).subscribe({
         next: (data) => {
           this.errors = [];
-          this.areaForm.reset();
+          this.categoryForm.reset();
 
-          this._router.navigate(['/admin/areas']).then(() => {
+          this._router.navigate(['/admin/categorias']).then(() => {
             Swal.fire({
               icon: 'success',
-              title: 'Área creada',
-              text: 'Área creada correctamente',
+              title: 'Categoría creada',
+              text: 'Categoría creada correctamente',
               showConfirmButton: true,
             });
           });
@@ -82,7 +83,7 @@ export class AreaCreateComponent {
             Swal.fire({
               icon: 'error',
               title: 'ERROR',
-              text: 'Ocurrio un error al crear el área. Lo estamos solucionando.',
+              text: 'Ocurrio un error al crear la categoría. Lo estamos solucionando.',
               showConfirmButton: true,
             });
           }
@@ -99,7 +100,6 @@ export class AreaCreateComponent {
   }
 
   get nombre() {
-    return this.areaForm.get('nombre');
+    return this.categoryForm.get('nombre');
   }
 }
-
