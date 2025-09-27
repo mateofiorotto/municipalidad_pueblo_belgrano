@@ -281,6 +281,15 @@ export const routes: Routes = [
       roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_COMUNICACION'],
     },
   },
+  //transparencias
+  {
+    path: 'transparencias',
+    loadComponent: () =>
+      import('./pages/transparencies.page/transparencies.page.component').then(
+        (m) => m.TransparenciesPageComponent
+      ),
+      canActivate: [maintenanceGuard],
+  },
   {
     path: 'mantenimiento',
     loadComponent: () =>
