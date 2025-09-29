@@ -34,7 +34,7 @@ export class NewsDetailsComponent {
               Swal.fire({
                 icon: 'error',
                 title: 'ERROR',
-                text: 'Error al cargar noticia o no estas autorizado/a',
+                text: 'Error al cargar noticia',
                 showConfirmButton: true,
               });
             });

@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ITransparencyRepository extends JpaRepository<Transparency, Long> {
-    Page<Transparency> findAllByOrderByIdDesc(Pageable pageable);
+    Page<Transparency> findAllByOrderByFechaDesc(Pageable pageable);
 }

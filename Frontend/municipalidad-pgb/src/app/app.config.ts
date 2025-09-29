@@ -11,13 +11,20 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { TranslateMaterial } from './core/translate-material/translate-material';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { Aos } from 'aos';
+import { LOCALE_ID } from '@angular/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
+
     provideRouter(routes),
+
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
-    {provide: MatPaginatorIntl, useClass: TranslateMaterial},
+
+    { provide: MatPaginatorIntl, useClass: TranslateMaterial },
+
+    { provide: LOCALE_ID, useValue: 'es' },
+    
     importProvidersFrom([SweetAlert2Module.forRoot()]),
   ],
 };

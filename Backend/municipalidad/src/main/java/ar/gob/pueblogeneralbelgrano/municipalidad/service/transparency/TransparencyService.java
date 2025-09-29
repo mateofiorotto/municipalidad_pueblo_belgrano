@@ -29,7 +29,7 @@ public class TransparencyService implements ITransparencyService {
     public PagedModel<TransparencyResponseDTO> getPaginatedTransparencies(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<Transparency> paginatedTransparency = transparencyRepository.findAllByOrderByIdDesc(pageable);
+        Page<Transparency> paginatedTransparency = transparencyRepository.findAllByOrderByFechaDesc(pageable);
 
         List<TransparencyResponseDTO> transparencyDTOList = paginatedTransparency
                 .stream()

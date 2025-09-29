@@ -1,7 +1,7 @@
 <div class="card-transparencia">
     <a class="text-break" [href]="transparency.pdf" target="_blank" rel="noopener noreferrer">
         <div class="info-noticia">
-            <h3>{{transparency.fecha}}</h3>
+            <h3>{{transparency.fecha | date:'MMMM, yyyy' | titlecase}}</h3>
         </div>
     </a>
 </div>

@@ -11,6 +11,6 @@ public record TransparencyRequestDTO(
         @NotNull(message = "La fecha es obligatoria")
         LocalDate fecha,
 
-        @NotBlank(message = "La URL del PDF no puede estar vacío")
+        @NotBlank(message = "La URL del PDF no puede estar vacía")
         String pdf) {
 }

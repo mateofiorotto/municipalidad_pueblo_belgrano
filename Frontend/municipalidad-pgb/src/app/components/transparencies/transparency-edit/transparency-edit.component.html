@@ -1,1 +1,27 @@
-<p>transparency-edit works!</p>
+<form [formGroup]="transparencyForm" (ngSubmit)="onSubmit()" class="p-4">
+    <!--PDF (URL)-->
+    <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
+        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
+            <label class="form-label d-none" for="pdf">PDF (URL)<span class="required-input">*</span></label>
+            <input placeholder="PDF (URL) *" class="form-control" id="pdf" type="text" formControlName="pdf">
+            @if(pdf?.touched && pdf?.errors?.['required']) {
+            <p class="input-error">La URL de PDF es requerida</p>
+            }
+        </div>
+
+        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
+
+            <!--Fecha-->
+            <label class="form-label d-none" for="fecha">Fecha<span class="required-input">*</span></label>
+            <input placeholder="Fecha *" class="form-control" id="fecha" type="date"
+                formControlName="fecha">
+
+            @if(fecha?.touched && fecha?.errors?.['required']) {
+            <p class="input-error">La fecha es requerida</p>
+            }
+
+        </div>
+    </div>
+
+    <button [disabled]="transparencyForm.invalid" type="submit" class="btn-send-form mt-5">EDITAR</button>
+</form>

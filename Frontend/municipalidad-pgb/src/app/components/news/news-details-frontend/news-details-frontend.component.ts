@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   standalone: true,
@@ -32,8 +33,17 @@ export class NewsDetailsFrontendComponent {
         error: (err) => {
           if (err.status === 404) {
             this._router.navigate(['/no-encontrado']);
+          } else {
+            this._router.navigate(['/']).then(() => {
+              Swal.fire({
+                icon: 'error',
+                title: 'ERROR',
+                text: 'Error al cargar noticia',
+                showConfirmButton: true,
+              });
+            });
           }
-      },
+        },
       });
     }
   }

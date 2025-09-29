@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 import { inject } from '@angular/core';
 import { NewsService } from '../../../services/news/news.service';
 
-
 @Component({
   selector: 'app-news-delete',
   imports: [],
@@ -72,7 +71,7 @@ deleteNews(): void {
     });
 }
 
-cancel(): void {
+  cancel(): void {
     this._router.navigate(['/admin/noticias']);
   }
 }

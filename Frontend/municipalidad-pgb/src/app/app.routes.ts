@@ -291,6 +291,61 @@ export const routes: Routes = [
       canActivate: [maintenanceGuard],
   },
   {
+    path: 'admin/transparencias',
+    loadComponent: () =>
+      import('./pages/admin/transparencies/transparencies-list.page/transparencies-list.page.component').then(
+        (m) => m.TransparenciesListPageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_SECRETARIA'],
+    },
+  },
+  {
+    path: 'admin/transparencias/crear',
+    loadComponent: () =>
+      import('./pages/admin/transparencies/transparency-create.page/transparency-create.page.component').then(
+        (m) => m.TransparencyCreatePageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_SECRETARIA'],
+    },
+  },
+  {
+    path: 'admin/transparencias/:id/editar',
+    loadComponent: () =>
+      import('./pages/admin/transparencies/transparency-edit.page/transparency-edit.page.component').then(
+        (m) => m.TransparencyEditPageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_SECRETARIA'],
+    },
+  },
+  {
+    path: 'admin/transparencias/:id/borrar',
+    loadComponent: () =>
+      import('./pages/admin/transparencies/transparency-delete.page/transparency-delete.page.component').then(
+        (m) => m.TransparencyDeletePageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_SECRETARIA'],
+    },
+  },
+  {
+    path: 'admin/transparencias/:id/detalle',
+    loadComponent: () =>
+      import('./pages/admin/transparencies/transparency-details.page/transparency-details.page.component').then(
+        (m) => m.TransparencyDetailsPageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_SECRETARIA'],
+    },
+  },
+  {
     path: 'mantenimiento',
     loadComponent: () =>
       import('./pages/maintenance.page/maintenance.page.component').then(
