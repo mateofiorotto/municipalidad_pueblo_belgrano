@@ -112,7 +112,7 @@ export class ComplaintCreateComponent implements AfterViewInit {
               Swal.fire({
                 icon: 'error',
                 title: 'ERROR',
-                text: 'Solo podes intentar enviar un reclamo cada 3 horas.',
+                text: 'Solo podes intentar enviar dos reclamos cada 3 horas.',
                 showConfirmButton: true,
               });
               

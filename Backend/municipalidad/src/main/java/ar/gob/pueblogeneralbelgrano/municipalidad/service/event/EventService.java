@@ -89,8 +89,6 @@ public class EventService implements IEventService {
             eventToUpdate.setDescripcion_adicional(event.descripcion_adicional());
         }
 
-        //metodo para img:
-
         eventToUpdate.setImagen(event.imagen());
 
         eventRepository.save(eventToUpdate);

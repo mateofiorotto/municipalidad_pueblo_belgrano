@@ -1,3 +1,5 @@
+import { Page } from "./page.model";
+
 export interface EventResponseDTO {
   id: number;
   titular: string;
@@ -14,5 +16,22 @@ export interface EventIdDTO {
 export interface EventListResponse {
   status: number;
   message: string;
-  result: EventResponseDTO[];
+  result: {
+      content: EventResponseDTO[];
+      page: Page;
+    };
+}
+
+export interface EventByIdResponse {
+  status: number;
+  message: string;
+  result: EventResponseDTO;
+}
+
+export interface EventRequestDTO {
+  titular: string;
+  fecha: string;
+  imagen: string;
+  descripcion: string;
+  descripcion_adicional?: string;
 }

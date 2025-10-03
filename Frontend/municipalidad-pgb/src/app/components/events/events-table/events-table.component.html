@@ -1,0 +1,42 @@
+<div class="text-center">
+    <a class="mb-5 mt-0 btn-crear-crud d-inline-block" routerLink="/admin/eventos/crear"><span class="me-2">+</span>Crear evento</a>
+</div>
+@if (eventsList && eventsList.length > 0) {
+<div class="overflow-auto">
+
+    <table class="table table-striped table-hover table-bordered text-center">
+        <tr>
+            <th class="p-4">N°</th>
+            <th class="p-4">Titular</th>
+            <th class="p-4">Descripcion</th>
+            <th class="p-4">Imagen</th>
+            <th class="p-4">Fecha</th>
+            <th>Acciones</th>
+        </tr>
+        @for (event of eventsList; track event.id) {
+        <tr class="text-break">
+            <td class="fw-bold p-3 text-center">{{ event.id }}</td>
+            <td class="p-2">{{ event.titular }}</td>
+            <td class="p-2">{{ event.descripcion.substr(0, 20) }}...</td>
+            <td class="p-2">{{ event.imagen.substr(0, 20) }}...</td>
+            <td class="p-2">{{ event.fecha }}</td>
+
+            <td class="actions-td p-2 text-center">
+                <div class="d-flex justify-content-center gap-2">
+                    <a routerLink="/admin/eventos/{{event.id}}/detalle"><mat-icon>visibility</mat-icon></a>
+                    <a routerLink="/admin/eventos/{{event.id}}/editar"><mat-icon>edit</mat-icon></a>
+                    <a routerLink="/admin/eventos/{{event.id}}/borrar"><mat-icon>delete</mat-icon></a>
+                </div>
+            </td>
+
+        </tr>
+        }
+    </table>
+
+    <mat-paginator class="mb-3" [length]="totalElements" [pageSize]=6 [pageIndex]="pageIndex" [pageSizeOptions]="[6]"
+        (page)="onPageChange($event)" [showFirstLastButtons]="true">
+    </mat-paginator>
+</div>
+} @else {
+<p class="text-center mt-5">No se encontraron noticias</p>
+}

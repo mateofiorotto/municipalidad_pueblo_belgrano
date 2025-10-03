@@ -64,7 +64,7 @@ export class CategoryDeleteComponent {
             Swal.fire({
               icon: 'error',
               title: 'ERROR',
-              text: 'La categoría tiene noticias asociadas actualmente o fue asociada a una noticia vieja.',
+              text: 'La categoría tiene noticias asociadas actualmente o fue asociada a una noticia vieja',
               showConfirmButton: true,
             });
           });

@@ -52,6 +52,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'eventos/:id',
+    canActivate: [maintenanceGuard],
+    loadComponent: () =>
+      import('./pages/event-details.page/event-details.page.component').then(
+        (m) => m.EventDetailsPageComponent
+      ),
+  },
+  {
     path: 'admin/dashboard',
     loadComponent: () =>
       import('./pages/admin/dashboard.page/dashboard.page.component').then(
@@ -343,6 +351,62 @@ export const routes: Routes = [
     canActivate: [authGuard, maintenanceGuard],
     data: {
       roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_SECRETARIA'],
+    },
+  },
+  //eventos
+  {
+    path: 'admin/eventos',
+    loadComponent: () =>
+      import('./pages/admin/events/events-list.page/events-list.page.component').then(
+        (m) => m.EventsListPageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_COMUNICACION'],
+    },
+  },
+  {
+    path: 'admin/eventos/crear',
+    loadComponent: () =>
+      import('./pages/admin/events/event-create.page/event-create.page.component').then(
+        (m) => m.EventCreatePageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_COMUNICACION'],
+    },
+  },
+  {
+    path: 'admin/eventos/:id/editar',
+    loadComponent: () =>
+      import('./pages/admin/events/event-edit.page/event-edit.page.component').then(
+        (m) => m.EventEditPageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_COMUNICACION'],
+    },
+  },
+  {
+    path: 'admin/eventos/:id/detalle',
+    loadComponent: () =>
+      import('./pages/admin/events/event-details.page/event-details.page.component').then(
+        (m) => m.EventDetailsPageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_COMUNICACION'],
+    },
+  },
+  {
+    path: 'admin/eventos/:id/borrar',
+    loadComponent: () =>
+      import('./pages/admin/events/event-delete.page/event-delete.page.component').then(
+        (m) => m.EventDeletePageComponent
+      ),
+    canActivate: [authGuard, maintenanceGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_INTENDENTE', 'ROLE_COMUNICACION'],
     },
   },
   {

@@ -1,0 +1,14 @@
+@if (eventsList && eventsList.length > 0) {
+<div class="row justify-content-center">
+  <div class="col-lg-4 col-md-6 col-12 mb-3 mt-3 p-4" *ngFor="let event of eventsList">
+    <app-event-card [event]="event"></app-event-card>
+  </div>
+</div>
+    <mat-paginator class="mb-3" [length]="totalElements" [pageSize]=6 [pageIndex]="pageIndex" [pageSizeOptions]="[6]"
+        (page)="onPageChange($event)" [showFirstLastButtons]="true">
+    </mat-paginator>
+} @else {
+<div>
+    <p class="text-center">Ocurrio un error al cargar los eventos. Lo estamos solucionado.</p>
+</div>
+}

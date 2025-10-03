@@ -9,7 +9,6 @@ import {
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { inject } from '@angular/core';
-import { NewsRequestDTO } from '../../../models/news.models';
 import { CategoryResponseDTO } from '../../../models/category.model';
 import { CategoriesService } from '../../../services/categories/categories.service';
 import { EventsService } from '../../../services/events/events.service';
@@ -159,7 +158,7 @@ export class NewsCreateComponent {
   public loadEvents(): EventResponseDTO[] {
     this._eventsService.getEventsList().subscribe({
       next: (data) => {
-        this.eventsList = data.result;
+        this.eventsList = data.result.content;
       },
       error: (err) => {
         this._router.navigate(['/']).then(() => {

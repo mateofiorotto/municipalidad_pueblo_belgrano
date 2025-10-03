@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 public record EventRequestDTO(
         @NotBlank(message = "El titular no puede estar vacío")
-        @Size(min = 5, max = 100, message = "El titular debe tener entre 5 y 100 caracteres")
+        @Size(min = 15, max = 100, message = "El titular debe tener entre 15 y 100 caracteres")
         String titular,
 
         @NotNull(message = "La fecha es obligatoria")

@@ -1,0 +1,10 @@
+<div class="card-eventos">
+    <a class="text-break" [routerLink]="['/eventos', event.id]">
+        <!--<img [src]="events.imagen" [alt]="events.titular">-->
+        <img class="img-fluid" src="/banners/banner.jpg" [alt]="event.titular">
+        <div class="info-noticia">
+            <h3>{{event.titular}}</h3>
+            <p>{{event.fecha}}</p>
+        </div>
+    </a>
+</div>
