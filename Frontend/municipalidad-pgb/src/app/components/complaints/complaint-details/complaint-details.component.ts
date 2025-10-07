@@ -44,4 +44,16 @@ export class ComplaintDetailsComponent {
       });
     }
   }
+
+  downloadPDF() {}
+
+  seePDF() {
+  this._complaintsService.generateComplaintPDF(this.complaint.id)
+    .subscribe((pdfBlob: Blob) => {
+      const fileURL = URL.createObjectURL(pdfBlob);
+      window.open(fileURL, "_blank");
+    }, (error: any) => {
+      console.error('Error al generar PDF', error);
+    });
+}
 }

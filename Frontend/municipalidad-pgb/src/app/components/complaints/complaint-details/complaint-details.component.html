@@ -1,7 +1,10 @@
 @if (complaint) {
-<div>
+<div class="pb-5">
   <div class="row p-3 mt-5 text-break align-items-center justify-content-center">
     <h2 class="mb-3">Reclamo #{{ complaint.id }}</h2>
+    <div class="mt-1 mb-1">
+    <button class="btn btn-crear-crud" (click)="seePDF()">Ver Reclamo en PDF</button>
+  </div>
     <div class="col-lg-4 col-md-6 col-12 p-4">
       <p><span class="fw-bold">Motivo:</span> {{ complaint.motivo }}</p>
       <p><span class="fw-bold">Fecha:</span> {{ complaint.fecha_reclamo }}</p>

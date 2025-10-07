@@ -21,6 +21,7 @@
     - Spring Security (with roles, permissions and users)
       - JWT implementation
     - Bucket4j (rate limiter por IP)
+    - OpenPDF
 - Maven (Dependencies)
 - HTML5
 - CSS3
@@ -33,7 +34,7 @@
 - IntelliJ Idea (IDE)
 - Git + GitHub
 - Google ReCaptcha
-- Amazon S3 (Files, Images)
+- Amazon S3 (Files, Images) or other
 
 
 ---

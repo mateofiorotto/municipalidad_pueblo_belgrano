@@ -5,6 +5,9 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintRespons
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.complaint.ComplaintUpdateDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.news.NewsResponseDTO;
 import jakarta.servlet.http.HttpServletRequest;
+import org.openpdf.text.Font;
+import org.openpdf.text.Paragraph;
+import org.openpdf.text.pdf.PdfWriter;
 import org.springframework.data.web.PagedModel;
 
 import java.util.List;
@@ -60,4 +63,21 @@ public interface IComplaintService {
      * */
     public void deleteComplaint(Long id);
 
+    /**
+     * Metodo para generar el PDF de un reclamo segun su id
+     * Utilizando la libreria OpenPDF. Utiliza el metodo createLabelValueParagraph
+     * @param id
+     */
+    public byte[] generateComplaintPDF(Long id);
+
+    /**
+     * Metodo que crea parrafos reutilizables con etiquetas bold y valores normales
+     * para simplificar la creacion de los mismos
+     * @param label subtitulo (ej: Direccion)
+     * @param value datos del reclamo (ej: Calle 123)
+     * @param labelFont font usada para subtitulo
+     * @param valueFont font usada para datos
+     * @return
+     */
+    public Paragraph createLabelValueParagraph(String label, String value, Font labelFont, Font valueFont);
 }

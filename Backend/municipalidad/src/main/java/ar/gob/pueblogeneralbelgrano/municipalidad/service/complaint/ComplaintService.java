@@ -9,18 +9,27 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.exception.NotFoundException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IAreaMapper;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IComplaintMapper;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.IComplaintMapper;
+import ar.gob.pueblogeneralbelgrano.municipalidad.model.Area;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Complaint;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Complaint;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IAreaRepository;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.IComplaintRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import org.openpdf.text.*;
+import org.openpdf.text.pdf.PdfWriter;
+import org.openpdf.text.pdf.draw.LineSeparator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -33,6 +42,9 @@ public class ComplaintService implements IComplaintService {
 
     private final IComplaintRepository complaintRepository;
     private final IAreaRepository areaRepository;
+    private final Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
+    private final Font subHeaderFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
+    private final Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 14);
 
     public ComplaintService(IComplaintRepository complaintRepository, IAreaRepository areaRepository) {
         this.complaintRepository = complaintRepository;
@@ -46,7 +58,7 @@ public class ComplaintService implements IComplaintService {
 
         if ("cerrados".equalsIgnoreCase(status)) {
             paginatedComplaints = complaintRepository.findAllRecentClosedComplaints(pageable);
-        } else if ("abiertos".equalsIgnoreCase(status)){
+        } else if ("abiertos".equalsIgnoreCase(status)) {
             paginatedComplaints = complaintRepository.findAllOpenComplaints(pageable);
         } else {
             paginatedComplaints = complaintRepository.findAllRecentClosedOrOpenComplaints(pageable);
@@ -168,8 +180,81 @@ public class ComplaintService implements IComplaintService {
 
         Complaint complaintToDelete = complaintRepository.findById(id).orElseThrow(() -> new NotFoundException("Reclamo no encontrado, ID: " + id));
 
-        //Logica para eliminar IMG
-
         complaintRepository.delete(complaintToDelete);
+    }
+
+    @Override
+    public byte[] generateComplaintPDF(Long id) {
+
+        Complaint complaint = complaintRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Reclamo no encontrado, ID: " + id));
+
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            Document document = new Document();
+
+            PdfWriter.getInstance(document, baos);
+            document.open();
+
+            //logo
+            Image logo = Image.getInstance("src/main/resources/static/logo.png");
+            logo.scaleToFit(212, 125);
+            logo.setAlignment(Element.ALIGN_CENTER);
+            document.add(logo);
+
+            document.add(new Paragraph(" "));
+            document.add(new LineSeparator());
+            document.add(new Paragraph(" "));
+
+            // Header: N° Reclamo
+            Paragraph numReclamo = new Paragraph();
+            numReclamo.add(new Chunk("RECLAMO N°: " + id, headerFont));
+            numReclamo.setSpacingAfter(20);
+            document.add(numReclamo);
+
+            // Datos reclamo
+            document.add(createLabelValueParagraph("Nombre y Apellido: ", complaint.getNombre_apellido(), subHeaderFont, paragraphFont));
+            document.add(createLabelValueParagraph("Dirección: ", complaint.getDireccion(), subHeaderFont, paragraphFont));
+            document.add(createLabelValueParagraph("Email: ", complaint.getEmail(), subHeaderFont, paragraphFont));
+            document.add(createLabelValueParagraph("Celular: ", complaint.getCelular(), subHeaderFont, paragraphFont));
+            document.add(createLabelValueParagraph("Descripción: ", complaint.getDescripcion(), subHeaderFont, paragraphFont));
+            document.add(createLabelValueParagraph("Fecha de Reclamo: ",
+                    complaint.getFecha_reclamo() != null ? complaint.getFecha_reclamo().toString() : "-", subHeaderFont, paragraphFont));
+
+            document.add(Chunk.NEWLINE);
+
+            // Header estado
+            Paragraph estadoHeader = new Paragraph("ESTADO DEL RECLAMO", headerFont);
+            estadoHeader.setSpacingBefore(20);
+            estadoHeader.setSpacingAfter(20);
+            document.add(estadoHeader);
+
+            // Estado del reclamo
+            document.add(createLabelValueParagraph("Cerrado: ",
+                    complaint.getCerrado() != null ? (complaint.getCerrado() ? "Sí" : "No") : "-", subHeaderFont, paragraphFont));
+
+            document.add(createLabelValueParagraph("Fecha de Cierre: ",
+                    complaint.getFecha_cerrado() != null ? complaint.getFecha_cerrado().toString() : "-", subHeaderFont, paragraphFont));
+
+            document.add(createLabelValueParagraph("Área: ",
+                    complaint.getArea() != null ? complaint.getArea().getNombre() : "-", subHeaderFont, paragraphFont));
+
+            document.add(createLabelValueParagraph("Comentarios: ",
+                    complaint.getComentario() != null && !complaint.getComentario().isBlank() ? complaint.getComentario() : "-", subHeaderFont, paragraphFont));
+
+            document.close();
+
+            return baos.toByteArray();
+
+        } catch (DocumentException | IOException exception) {
+            throw new RuntimeException("Error al generar el pdf", exception);
+        }
+    }
+
+    public Paragraph createLabelValueParagraph(String label, String value, Font labelFont, Font valueFont) {
+        Paragraph p = new Paragraph();
+        p.add(new Chunk(label, labelFont));
+        p.add(new Chunk(value != null ? value : "-", valueFont));
+        p.setSpacingAfter(6);
+        return p;
     }
 }

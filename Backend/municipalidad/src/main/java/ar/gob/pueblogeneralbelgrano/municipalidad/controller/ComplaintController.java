@@ -16,7 +16,9 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.web.PagedModel;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -131,6 +133,18 @@ public class ComplaintController {
         ResponseDTO<ComplaintResponseDTO> getResponseComplaint = new ResponseDTO<>(complaint, 200, "Reclamo retornado con exito");
 
         return ResponseEntity.ok(getResponseComplaint);
+    }
+
+    @GetMapping("/pdf/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
+    public ResponseEntity<byte[]> getComplaintPDF(@PathVariable Long id) {
+        byte[] pdfBytes = complaintService.generateComplaintPDF(id);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("inline", "Reclamo_" + id + ".pdf");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
 
     /**
