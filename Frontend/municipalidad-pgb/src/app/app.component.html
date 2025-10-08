@@ -1,20 +1,28 @@
-@if(apiIsUp) {
-  @if(router.url.includes('admin')) {
-    <app-header-admin></app-header-admin>
+<!-- Loader mientras se conecta -->
+@if(loading) {
+  <section class="loader-container">
+    <app-loader></app-loader>
+  </section>
+} @else {
+  <!-- Aquí va todo tu código actual -->
+  @if(apiIsUp) {
+    @if(router.url.includes('admin')) {
+      <app-header-admin></app-header-admin>
+    } @else {
+      <app-header></app-header>
+    }
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+    @if(!router.url.includes('admin')) {
+      <app-footer></app-footer>
+    }
   } @else {
     <app-header></app-header>
-  }
-  <main>
-    <router-outlet></router-outlet>
-  </main>
-  @if(!router.url.includes('admin')) {
+    <section class="container mantenimiento text-center mt-5 mb-5 pt-5 pb-5">
+      <h2>Estamos en mantenimiento</h2>
+      <p>Disculpe las molestias. Vuelva a entrar más tarde.</p>
+    </section>
     <app-footer></app-footer>
   }
-} @else {
-  <app-header></app-header>
-  <section class="container mantenimiento text-center mt-5 mb-5 pt-5 pb-5">
-    <h2>Estamos en mantenimiento</h2>
-    <p>Disculpe las molestias. Vuelva a entrar más tarde.</p>
-  </section>
-  <app-footer></app-footer>
 }

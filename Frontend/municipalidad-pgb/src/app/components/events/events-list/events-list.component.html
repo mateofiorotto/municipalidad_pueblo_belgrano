@@ -1,3 +1,8 @@
+@if (loading === true) {
+  <div>
+    <app-loader></app-loader>
+  </div>
+} @else {
 @if (eventsList && eventsList.length > 0) {
 <div class="row justify-content-center">
   <div class="col-lg-4 col-md-6 col-12 mb-3 mt-3 p-4" *ngFor="let event of eventsList">
@@ -11,4 +16,5 @@
 <div>
     <p class="text-center">Ocurrio un error al cargar los eventos. Lo estamos solucionado.</p>
 </div>
+}
 }

@@ -8,10 +8,11 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TransparencyListResponse, TransparencyResponseDTO } from '../../../models/transparency.model';
+import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   selector: 'app-transparencies-list',
-  imports: [TransparencyCardComponent, CommonModule, MatPaginatorModule],
+  imports: [TransparencyCardComponent, CommonModule, MatPaginatorModule, LoaderComponent],
   templateUrl: './transparencies-list.component.html',
   styleUrl: './transparencies-list.component.css',
 })
@@ -19,6 +20,7 @@ export class TransparenciesListComponent {
   private _transparenciesService = inject(TransparenciesService);
   private _router = inject(Router);
 
+  public loading: boolean = true;
   public transparenciesList: TransparencyResponseDTO[] = [];
   public error: any;
   public pageIndex: number = 0;
@@ -39,6 +41,8 @@ export class TransparenciesListComponent {
     this._transparenciesService.getTransparenciesList(page).subscribe({
       next: (data) => {
         this.setTransparenciesData(data);
+
+        this.loading = false;
       },
       error: (err) => {
         this._router.navigate(['/']).then(() => {

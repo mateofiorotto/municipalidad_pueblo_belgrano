@@ -9,11 +9,12 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { NewsListResponse } from '../../../models/news.models';
+import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   standalone: true,
   selector: 'app-news-list',
-  imports: [NewsCardComponent, CommonModule, MatPaginatorModule],
+  imports: [NewsCardComponent, CommonModule, MatPaginatorModule, LoaderComponent],
   templateUrl: './news-list.component.html',
   styleUrl: './news-list.component.css',
 })
@@ -21,10 +22,12 @@ export class NewsListComponent implements OnInit {
   private _newsService = inject(NewsService);
   private _router = inject(Router);
 
+  public loading: boolean = true;
   public newsList: NewsResponseDTO[] = [];
   public error: any;
   public pageIndex: number = 0;
   public totalElements = 0;
+
 
   private setNewsData(data: NewsListResponse): void {
     this.newsList = data.result.content;
@@ -41,6 +44,8 @@ export class NewsListComponent implements OnInit {
     this._newsService.getNewsList(page).subscribe({
       next: (data) => {
         this.setNewsData(data);
+
+        this.loading = false;
       },
       error: (err) => {
         this._router.navigate(['/']).then(() => {

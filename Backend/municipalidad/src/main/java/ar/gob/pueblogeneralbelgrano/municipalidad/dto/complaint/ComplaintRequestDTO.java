@@ -14,6 +14,7 @@ public record ComplaintRequestDTO(
 
         @NotBlank(message = "El nombre y apellido no pueden estar vacíos")
         @Size(min = 5, max = 100, message = "El nombre y apellido deben tener entre 5 y 100 caracteres")
+        @Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message = "El nombre y apellido no puede contener números ni caracteres especiales")
         String nombre_apellido,
 
         @NotBlank(message = "El celular no puede estar vacío")

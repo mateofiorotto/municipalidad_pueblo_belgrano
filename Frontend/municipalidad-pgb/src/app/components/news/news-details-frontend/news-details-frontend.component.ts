@@ -7,11 +7,12 @@ import { NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   standalone: true,
-  selector: 'app-news-details',
-  imports: [CommonModule, NgIf],
+  selector: 'app-news-details-frontend',
+  imports: [CommonModule, NgIf, LoaderComponent],
   templateUrl: './news-details-frontend.component.html',
   styleUrl: './news-details-frontend.component.css',
 })
@@ -21,6 +22,7 @@ export class NewsDetailsFrontendComponent {
   private _newsService = inject(NewsService);
 
   news!: NewsResponseDTO;
+  public loading: boolean = true;
 
   ngOnInit(): void {
     const id = this._route.snapshot.paramMap.get('id');
@@ -29,6 +31,8 @@ export class NewsDetailsFrontendComponent {
       this._newsService.getNewsById(+id).subscribe({
         next: (data) => {
           this.news = data.result;
+
+          this.loading = false;
         },
         error: (err) => {
           if (err.status === 404) {

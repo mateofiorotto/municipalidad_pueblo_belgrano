@@ -1,14 +1,26 @@
+@if (loading === true) {
+  <div>
+    <app-loader></app-loader>
+  </div>
+} @else {
 @if (transparenciesList && transparenciesList.length > 0) {
 <div class="row justify-content-center">
-  <div class="col-lg-4 col-md-6 col-12 mb-3 mt-3 p-4" *ngFor="let transparency of transparenciesList">
+  <div class="col-lg-4 col-md-6 col-12 mb-3 mt-3 p-4"
+       *ngFor="let transparency of transparenciesList">
     <app-transparency-card [transparency]="transparency"></app-transparency-card>
   </div>
 </div>
-<mat-paginator class="mb-3" [length]="totalElements" [pageSize]=12 [pageIndex]="pageIndex" [pageSizeOptions]="[12]"
-        (page)="onPageChange($event)" [showFirstLastButtons]="true">
-    </mat-paginator>
+<mat-paginator class="mb-3"
+               [length]="totalElements"
+               [pageSize]=12
+               [pageIndex]="pageIndex"
+               [pageSizeOptions]="[12]"
+               (page)="onPageChange($event)"
+               [showFirstLastButtons]="true">
+</mat-paginator>
 } @else {
 <div>
-    <p class="text-center">Ocurrio un error al cargar las transparencias. Lo estamos solucionado.</p>
+  <p class="text-center">Ocurrio un error al cargar las transparencias. Lo estamos solucionado.</p>
 </div>
+}
 }

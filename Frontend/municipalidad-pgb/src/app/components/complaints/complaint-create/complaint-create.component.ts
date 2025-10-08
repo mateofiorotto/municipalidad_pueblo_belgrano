@@ -52,6 +52,7 @@ export class ComplaintCreateComponent implements AfterViewInit {
       Validators.required,
       Validators.minLength(5),
       Validators.maxLength(100),
+      Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$'),
     ]),
   });
 
@@ -72,27 +73,25 @@ export class ComplaintCreateComponent implements AfterViewInit {
         captcha: this.captchaToken,
       };
 
-      this._complaintService
-        .createComplaint(complaintRequest)
-        .subscribe({
-          next: (data) => {
-            window.grecaptcha.reset();
-            this.captchaToken = null;
-            this.errors = [];
-            this.complaintsForm.reset();
-            this.captchaToken = null;
-            Swal.fire({
-              icon: 'success',
-              title: 'Reclamo Recibido',
-              text: 'Tu reclamo se envió correctamente',
-              showConfirmButton: true,
-            });
-          },
-          error: (err) => {
-            if (err.error && Array.isArray(err.error.errors)) {
-              this.errors = err.error.errors;
+      this._complaintService.createComplaint(complaintRequest).subscribe({
+        next: (data) => {
+          window.grecaptcha.reset();
+          this.captchaToken = null;
+          this.errors = [];
+          this.complaintsForm.reset();
+          this.captchaToken = null;
+          Swal.fire({
+            icon: 'success',
+            title: 'Reclamo Recibido',
+            text: 'Tu reclamo se envió correctamente',
+            showConfirmButton: true,
+          });
+        },
+        error: (err) => {
+          if (err.error && Array.isArray(err.error.errors)) {
+            this.errors = err.error.errors;
 
-              const listaErrores = `
+            const listaErrores = `
               <ul style="text-align:left">
                 ${this.errors
                   .map((e) => `<li>${e.defaultMessage}</li>`)
@@ -100,43 +99,42 @@ export class ComplaintCreateComponent implements AfterViewInit {
               </ul>
             `;
 
-              Swal.fire({
-                icon: 'error',
-                title: 'ERROR',
-                html: listaErrores,
-                showConfirmButton: true,
-              });
-            } else if (err.status == 429) {
-              window.grecaptcha.reset();
-              this.captchaToken = null;
-              Swal.fire({
-                icon: 'error',
-                title: 'ERROR',
-                text: 'Solo podes intentar enviar dos reclamos cada 3 horas.',
-                showConfirmButton: true,
-              });
-              
-            } else if (err.status == 400){
-              window.grecaptcha.reset();
-              this.captchaToken = null;
-               Swal.fire({
-                icon: 'error',
-                title: 'ERROR',
-                text: err.error.message,
-                showConfirmButton: true,
-              });
-            } else {
-              window.grecaptcha.reset();
-              this.captchaToken = null;
-              Swal.fire({
-                icon: 'error',
-                title: 'ERROR',
-                text: 'Ocurrio un error al enviar el reclamo. Lo estamos solucionando.',
-                showConfirmButton: true,
-              });
-            }
-          },
-        });
+            Swal.fire({
+              icon: 'error',
+              title: 'ERROR',
+              html: listaErrores,
+              showConfirmButton: true,
+            });
+          } else if (err.status == 429) {
+            window.grecaptcha.reset();
+            this.captchaToken = null;
+            Swal.fire({
+              icon: 'error',
+              title: 'ERROR',
+              text: 'Solo podes intentar enviar dos reclamos cada 3 horas.',
+              showConfirmButton: true,
+            });
+          } else if (err.status == 400) {
+            window.grecaptcha.reset();
+            this.captchaToken = null;
+            Swal.fire({
+              icon: 'error',
+              title: 'ERROR',
+              text: err.error.message,
+              showConfirmButton: true,
+            });
+          } else {
+            window.grecaptcha.reset();
+            this.captchaToken = null;
+            Swal.fire({
+              icon: 'error',
+              title: 'ERROR',
+              text: 'Ocurrio un error al enviar el reclamo. Lo estamos solucionando.',
+              showConfirmButton: true,
+            });
+          }
+        },
+      });
     } else {
       Swal.fire({
         icon: 'error',
@@ -148,14 +146,17 @@ export class ComplaintCreateComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (window['grecaptcha']) {
-      window['grecaptcha'].render('captchaDiv', {
-        sitekey: this.siteKey,
-        callback: (token: string) => {
-          this.captchaToken = token;
-        },
-      });
-    }
+    const waitForGrecaptcha = () => {
+      if (window.grecaptcha) {
+        window.grecaptcha.render('captchaDiv', {
+          sitekey: this.siteKey,
+          callback: (token: string) => (this.captchaToken = token),
+        });
+      } else {
+        setTimeout(waitForGrecaptcha, 100);
+      }
+    };
+    waitForGrecaptcha();
   }
 
   get motivo() {

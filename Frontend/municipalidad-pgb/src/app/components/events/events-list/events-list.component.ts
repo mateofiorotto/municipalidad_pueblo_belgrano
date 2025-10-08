@@ -8,10 +8,11 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { EventsService } from '../../../services/events/events.service';
 import { EventListResponse, EventResponseDTO } from '../../../models/event.model';
+import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   selector: 'app-events-list',
-  imports: [EventCardComponent, CommonModule, MatPaginatorModule],
+  imports: [EventCardComponent, CommonModule, MatPaginatorModule, LoaderComponent],
   templateUrl: './events-list.component.html',
   styleUrl: './events-list.component.css',
 })
@@ -23,6 +24,7 @@ export class EventsListComponent {
   public error: any;
   public pageIndex: number = 0;
   public totalElements = 0;
+  public loading: boolean = true;
 
   private setEventsData(data: EventListResponse): void {
     this.eventsList = data.result.content;
@@ -39,6 +41,8 @@ export class EventsListComponent {
     this._eventsService.getEventListPaginated(page).subscribe({
       next: (data) => {
         this.setEventsData(data);
+
+        this.loading = false;
       },
       error: (err) => {
         this._router.navigate(['/']).then(() => {

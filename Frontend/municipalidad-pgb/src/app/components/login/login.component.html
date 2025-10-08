@@ -1,17 +1,32 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()">
     <div class="mb-5">
-        <label class="d-none form-label" for="username">Usuario<span class="required-input">*</span></label>
-        <input placeholder="Usuario *" class="input-form-login form-control" id="username" type="text" formControlName="username">
+        <label class="d-none form-label"
+               for="username">Usuario<span class="required-input">*</span></label>
+        <input placeholder="Usuario *"
+               class="input-form-login form-control"
+               id="username"
+               name="username"
+               type="text"
+               required
+               formControlName="username">
         @if(username?.touched && username?.errors?.['required']) {
         <p class="input-error">El usuario es requerido</p>
         }
     </div>
 
     <div>
-        <label class="d-none form-label" for="password">Contraseña<span class="required-input">*</span></label>
-        <input placeholder="Contraseña *" class="input-form-login form-control" id="password" type="password" formControlName="password">
+        <label class="d-none form-label"
+               for="password">Contraseña<span class="required-input">*</span></label>
+        <input placeholder="Contraseña *"
+               class="input-form-login form-control"
+               id="password"
+               name="password"
+               type="password"
+               required
+               formControlName="password">
         @if(password?.touched && password?.errors?.['required']) {
-            <p class="input-error">La contraseña es requerida</p>
+        <p class="input-error">La contraseña es requerida</p>
         }
 
         <div id="captchaDiv"></div>
@@ -19,6 +34,7 @@
 
     <div class="mt-5">
 
-        <button class="btn-send-form" type="submit">Ingresar</button>
+        <button [disabled]="loginForm.invalid" class="btn-send-form"
+                type="submit">Ingresar</button>
     </div>
 </form>

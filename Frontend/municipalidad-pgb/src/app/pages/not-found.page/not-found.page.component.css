@@ -1,0 +1,20 @@
+img {
+    width: 400px;
+    height: 200px;
+}
+
+p {
+    font-size: 1.2em;
+}
+
+a {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: rgb(120, 175, 36) !important;
+    transition: 0.25s ease-in-out all;
+}
+
+a:hover {
+    color: green !important;
+    cursor: pointer;
+}

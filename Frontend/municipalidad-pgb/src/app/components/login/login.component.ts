@@ -29,57 +29,59 @@ export class LoginComponent {
     const val = this.loginForm.value;
 
     if (val.username && val.password && this.captchaToken) {
-      this._authService.login(val.username, val.password, this.captchaToken).subscribe({
-        next: (response) => {
-          const token = response.jwt;
-          localStorage.setItem('auth_token', token);
+      this._authService
+        .login(val.username, val.password, this.captchaToken)
+        .subscribe({
+          next: (response) => {
+            const token = response.jwt;
+            localStorage.setItem('auth_token', token);
 
-          this.router.navigate(['admin/dashboard']).then(() => {
-            Swal.fire({
-              icon: 'success',
-              title: '¡Bienvenido!',
-              text: 'Has iniciado sesión correctamente',
-              showConfirmButton: true,
-              timer: 3500,
+            this.router.navigate(['admin/dashboard']).then(() => {
+              Swal.fire({
+                icon: 'success',
+                title: '¡Bienvenido!',
+                text: 'Has iniciado sesión correctamente',
+                showConfirmButton: true,
+                timer: 3500,
+              });
             });
-          });
-        },
-        error: (err) => {
-          window.grecaptcha.reset();
-          this.captchaToken = null;
-          if (err.status == 401) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Datos Incorrectos',
-              text: 'El usuario o la contraseña son incorrectos',
-            });
-          } else if (err.status == 400){
+          },
+          error: (err) => {
             window.grecaptcha.reset();
             this.captchaToken = null;
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: err.error.message,
-            });
-          } else if (err.status == 429) {
-            window.grecaptcha.reset();
-            this.captchaToken = null;
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'Intentaste demasiadas veces. Por favor, intenta de nuevo en unos minutos.',
-            });
-          } else {
-            window.grecaptcha.reset();
-            this.captchaToken = null;
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'Ocurrió un error. Lo estamos solucionando.',
-            });
-          }
-        },
-      });
+            if (err.status == 401) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Datos Incorrectos',
+                text: 'El usuario o la contraseña son incorrectos',
+              });
+            } else if (err.status == 400) {
+              window.grecaptcha.reset();
+              this.captchaToken = null;
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: err.error.message,
+              });
+            } else if (err.status == 429) {
+              window.grecaptcha.reset();
+              this.captchaToken = null;
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Intentaste demasiadas veces. Por favor, intenta de nuevo en unos minutos.',
+              });
+            } else {
+              window.grecaptcha.reset();
+              this.captchaToken = null;
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ocurrió un error. Lo estamos solucionando.',
+              });
+            }
+          },
+        });
     } else {
       window.grecaptcha.reset();
       this.captchaToken = null;
@@ -92,14 +94,18 @@ export class LoginComponent {
   }
 
   ngAfterViewInit() {
-    if (window['grecaptcha']) {
-      window['grecaptcha'].render('captchaDiv', {
-        sitekey: this.siteKey,
-        callback: (token: string) => {
-          this.captchaToken = token;
-        },
-      });
-    }}
+    const waitForGrecaptcha = () => {
+      if (window.grecaptcha) {
+        window.grecaptcha.render('captchaDiv', {
+          sitekey: this.siteKey,
+          callback: (token: string) => (this.captchaToken = token),
+        });
+      } else {
+        setTimeout(waitForGrecaptcha, 100);
+      }
+    };
+    waitForGrecaptcha();
+  }
 
   get username() {
     return this.loginForm.get('username');

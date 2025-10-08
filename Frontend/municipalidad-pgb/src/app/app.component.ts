@@ -10,6 +10,7 @@ import { HealthService } from './services/health/health.service';
 import { map } from 'rxjs';
 import * as AOS from 'aos';
 import 'aos/dist/aos.css';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ import 'aos/dist/aos.css';
     HeaderComponent,
     FooterComponent,
     HeaderAdminComponent,
+    LoaderComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -25,6 +27,8 @@ import 'aos/dist/aos.css';
 export class AppComponent {
   private _authService = inject(AuthService);
   private _healthService = inject(HealthService);
+
+  public loading = true;
   public apiIsUp = false;
   public router = inject(Router);
 
@@ -36,14 +40,21 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
+  this._authService.isTokenValidAndNotExpired();
+
+  setInterval(() => {
     this._authService.isTokenValidAndNotExpired();
+  }, 60000);
 
-    setInterval(() => {
-      this._authService.isTokenValidAndNotExpired();
-    }, 60000);
-
-    this._healthService.getHealthStatus().subscribe((isUp) => {
-      this.apiIsUp = isUp;
+  this._healthService.getHealthStatus()
+    .pipe(
+      map((isUp) => {
+        return new Promise<boolean>((resolve) => setTimeout(() => resolve(isUp), 1000));
+      })
+    )
+    .subscribe(async (promise) => {
+      this.apiIsUp = await promise;
+      this.loading = false;
     });
-  }
+}
 }
