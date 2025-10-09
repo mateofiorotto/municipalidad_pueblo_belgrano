@@ -44,7 +44,7 @@ public class CategoryController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Categorias retornadas correctamente."),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping("/paginado")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
@@ -73,7 +73,7 @@ public class CategoryController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Categorias retornadas correctamente."),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
@@ -98,7 +98,7 @@ public class CategoryController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Categoria retornada correctamente."),
             @ApiResponse(responseCode = "404", description = "Categoria no encontrada"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @GetMapping("/{id}")
     @PreAuthorize("permitAll()")
@@ -125,7 +125,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "201", description = "Categoria creada correctamente"),
             @ApiResponse(responseCode = "400", description = "Error de validacion en campos"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
@@ -153,7 +153,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "400", description = "Error de validacion en campos"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Categoria no encontrada"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
@@ -180,7 +180,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Categoria no encontrada"),
             @ApiResponse(responseCode = "409", description = "Error al eliminar por relacion con otra entidad"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")

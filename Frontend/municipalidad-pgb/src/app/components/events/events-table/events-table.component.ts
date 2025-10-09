@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator } from '@angular/material/paginator';
 import { PageEvent } from '@angular/material/paginator';
 import { EventsService } from '../../../services/events/events.service';
-import { EventListResponse, EventResponseDTO } from '../../../models/event.model';
+import { EventListDataResponse, EventResponseDTO } from '../../../models/event.model';
 
 @Component({
   selector: 'app-events-table',
@@ -23,7 +23,7 @@ export class EventsTableComponent {
   public pageIndex: number = 0;
   public totalElements = 0;
 
-  private setEventsData(data: EventListResponse): void {
+  private setEventsData(data: EventListDataResponse): void {
     this.eventsList = data.result.content;
     this.pageIndex = data.result.page.number;
     this.totalElements = data.result.page.totalElements;

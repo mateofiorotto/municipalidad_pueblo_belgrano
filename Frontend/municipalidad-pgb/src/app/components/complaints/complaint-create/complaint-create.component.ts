@@ -30,11 +30,13 @@ export class ComplaintCreateComponent implements AfterViewInit {
       Validators.required,
       Validators.minLength(5),
       Validators.maxLength(100),
+      Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$'),
     ]),
     descripcion: new FormControl('', [
       Validators.required,
       Validators.minLength(20),
       Validators.maxLength(1000),
+      Validators.pattern('^[^<>]*$'),
     ]),
     celular: new FormControl('', [
       Validators.required,
@@ -42,11 +44,16 @@ export class ComplaintCreateComponent implements AfterViewInit {
       Validators.maxLength(20),
       Validators.pattern('^[0-9]+$'),
     ]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email,
+      Validators.pattern('^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$'),
+    ]),
     direccion: new FormControl('', [
       Validators.required,
       Validators.minLength(5),
       Validators.maxLength(150),
+      Validators.pattern('^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ ]+$'),
     ]),
     nombre_apellido: new FormControl('', [
       Validators.required,
@@ -139,7 +146,7 @@ export class ComplaintCreateComponent implements AfterViewInit {
       Swal.fire({
         icon: 'error',
         title: 'ERROR',
-        text: 'Todos los campos y el ReCaptcha son requeridos',
+        text: 'Todos los campos y el ReCaptcha son requeridos (si el reCaptcha no te aparece, recarga la página)',
         showConfirmButton: true,
       });
     }

@@ -9,3 +9,7 @@ input[type=checkbox]
   padding: 10px;
   accent-color: rgb(27, 166, 27);
 }
+
+h3 {
+    color: rgb(27, 166, 27) !important;
+}

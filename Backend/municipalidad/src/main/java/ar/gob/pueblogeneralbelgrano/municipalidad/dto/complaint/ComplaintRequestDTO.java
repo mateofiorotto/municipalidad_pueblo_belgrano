@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Size;
 public record ComplaintRequestDTO(
         @NotBlank(message = "El motivo no puede estar vacío")
         @Size(min = 5, max = 100, message = "El motivo debe tener entre 5 y 100 caracteres")
+        @Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message = "El motivo no puede contener números ni caracteres especiales")
         String motivo,
 
         @NotBlank(message = "El nombre y apellido no pueden estar vacíos")
@@ -24,14 +25,19 @@ public record ComplaintRequestDTO(
 
         @NotBlank(message = "La dirección no puede estar vacía")
         @Size(min = 5, max = 150, message = "La dirección debe tener entre 5 y 150 caracteres")
+        @Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 ]+$",
+                message = "La dirección solo puede contener letras, números, espacios y tildes")
         String direccion,
 
         @NotBlank(message = "El email no puede estar vacío")
         @Email(message = "El email no es válido")
+        @Pattern(regexp = "^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
+                message = "El email contiene caracteres no válidos")
         String email,
 
         @NotBlank(message = "La descripción no puede estar vacía")
         @Size(min = 20, max = 1000, message = "La descripción debe tener entre 20 y 1000 caracteres")
+        @Pattern(regexp = "^[^<>]*$", message = "La descripción no puede contener < >")
         String descripcion,
 
         String captcha

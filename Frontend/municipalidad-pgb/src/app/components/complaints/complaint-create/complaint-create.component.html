@@ -1,168 +1,185 @@
 <form [formGroup]="complaintsForm"
       (ngSubmit)="onSubmit()"
       class="p-4">
-    <!--Motivo-->
-    <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
-        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
-            <label class="form-label visually-hidden"
-                   for="motivo">Motivo<span class="required-input">*</span></label>
-            <input placeholder="Motivo *"
-                   class="form-control"
-                   name="motivo"
-                   id="motivo"
-                   type="text"
-                   required
-                   formControlName="motivo">
-            @if(motivo?.touched && motivo?.errors?.['required']) {
-            <p class="input-error">El motivo es requerido</p>
-            }
+       <!--Motivo-->
+       <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
+              <div class="col-lg-6 col-12 pb-4 pb-lg-0">
+                     <label class="form-label visually-hidden"
+                            for="motivo">Motivo<span class="required-input">*</span></label>
+                     <input placeholder="Motivo *"
+                            class="form-control"
+                            name="motivo"
+                            id="motivo"
+                            type="text"
+                            required
+                            formControlName="motivo">
+                     @if(motivo?.touched && motivo?.errors?.['required']) {
+                     <p class="input-error">El motivo es requerido</p>
+                     }
 
-            @if(motivo?.touched && motivo?.errors?.['minlength']) {
-            <p class="input-error">El motivo debe tener al menos 5 caracteres</p>
-            }
+                     @if(motivo?.touched && motivo?.errors?.['minlength']) {
+                     <p class="input-error">El motivo debe tener al menos 5 caracteres</p>
+                     }
 
-            @if(motivo?.touched && motivo?.errors?.['maxlength']) {
-            <p class="input-error">El motivo debe tener menos de 100 caracteres</p>
-            }
-        </div>
+                     @if(motivo?.touched && motivo?.errors?.['maxlength']) {
+                     <p class="input-error">El motivo debe tener menos de 100 caracteres</p>
+                     }
 
-        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
+                      @if(motivo?.touched && motivo?.errors?.['pattern']) {
+                     <p class="input-error">El motivo no puede contener números ni caracteres especiales</p>
+                     }
+              </div>
 
-            <!--Nombre y Apellido-->
-            <label class="form-label visually-hidden"
-                   for="nombre_apellido">Nombre y Apellido<span class="required-input">*</span></label>
-            <input placeholder="Nombre y Apellido *"
-                   class="form-control"
-                   name="nombre_apellido"
-                   id="nombre_apellido"
-                   type="text"
-                   required
-                   formControlName="nombre_apellido">
+              <div class="col-lg-6 col-12 pb-4 pb-lg-0">
 
-            @if(nombre_apellido?.touched && nombre_apellido?.errors?.['required']) {
-            <p class="input-error">El nombre y apellido es requerido</p>
-            }
+                     <!--Nombre y Apellido-->
+                     <label class="form-label visually-hidden"
+                            for="nombre_apellido">Nombre y Apellido<span class="required-input">*</span></label>
+                     <input placeholder="Nombre y Apellido *"
+                            class="form-control"
+                            name="nombre_apellido"
+                            id="nombre_apellido"
+                            type="text"
+                            required
+                            formControlName="nombre_apellido">
 
-            @if(nombre_apellido?.touched && nombre_apellido?.errors?.['minlength']) {
-            <p class="input-error">El nombre y apellido debe tener al menos 5 caracteres</p>
-            }
+                     @if(nombre_apellido?.touched && nombre_apellido?.errors?.['required']) {
+                     <p class="input-error">El nombre y apellido es requerido</p>
+                     }
 
-            @if(nombre_apellido?.touched && nombre_apellido?.errors?.['maxlength']) {
-            <p class="input-error">El nombre y apellido debe tener menos de 100 caracteres</p>
-            }
+                     @if(nombre_apellido?.touched && nombre_apellido?.errors?.['minlength']) {
+                     <p class="input-error">El nombre y apellido debe tener al menos 5 caracteres</p>
+                     }
 
-            @if(nombre_apellido?.touched && nombre_apellido?.errors?.['pattern']) {
-            <p class="input-error">El nombre y apellido no puede contener números ni caracteres especiales</p>
-            }
-        </div>
-    </div>
+                     @if(nombre_apellido?.touched && nombre_apellido?.errors?.['maxlength']) {
+                     <p class="input-error">El nombre y apellido debe tener menos de 100 caracteres</p>
+                     }
 
-    <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
-        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
-            <!--Direccion-->
-            <label class="form-label visually-hidden"
-                   for="direccion">Dirección<span class="required-input">*</span></label>
-            <input placeholder="Dirección (domicilio/reclamo) *"
-                   class="form-control"
-                   name="direccion"
-                   id="direccion"
-                   type="text"
-                   required
-                   formControlName="direccion">
+                     @if(nombre_apellido?.touched && nombre_apellido?.errors?.['pattern']) {
+                     <p class="input-error">El nombre y apellido no puede contener números ni caracteres especiales</p>
+                     }
+              </div>
+       </div>
 
-            @if(direccion?.touched && direccion?.errors?.['required']) {
-            <p class="input-error">La dirección es requerida</p>
-            }
+       <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
+              <div class="col-lg-6 col-12 pb-4 pb-lg-0">
+                     <!--Direccion-->
+                     <label class="form-label visually-hidden"
+                            for="direccion">Dirección<span class="required-input">*</span></label>
+                     <input placeholder="Dirección (domicilio/reclamo) *"
+                            class="form-control"
+                            name="direccion"
+                            id="direccion"
+                            type="text"
+                            required
+                            formControlName="direccion">
 
-            @if(direccion?.touched && direccion?.errors?.['minlength']) {
-            <p class="input-error">La dirección debe tener al menos 5 caracteres</p>
-            }
+                     @if(direccion?.touched && direccion?.errors?.['required']) {
+                     <p class="input-error">La dirección es requerida</p>
+                     }
 
-            @if(direccion?.touched && direccion?.errors?.['maxlength']) {
-            <p class="input-error">La dirección debe tener menos de 150 caracteres</p>
-            }
+                     @if(direccion?.touched && direccion?.errors?.['minlength']) {
+                     <p class="input-error">La dirección debe tener al menos 5 caracteres</p>
+                     }
 
-        </div>
-        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
-            <!--Celular-->
-            <label class="form-label visually-hidden"
-                   for="celular">Celular<span class="required-input">*</span></label>
-            <input placeholder="Celular *"
-                   class="form-control"
-                   name="celular"
-                   id="celular"
-                   type="text"
-                   required
-                   formControlName="celular">
+                     @if(direccion?.touched && direccion?.errors?.['maxlength']) {
+                     <p class="input-error">La dirección debe tener menos de 150 caracteres</p>
+                     }
 
-            @if(celular?.touched && celular?.errors?.['required']) {
-            <p class="input-error">El celular es requerido</p>
-            }
+                     @if(direccion?.touched && direccion?.errors?.['pattern']) {
+                     <p class="input-error">La dirección no puede tener caracteres especiales</p>
+                     }
 
-            @if(celular?.touched && celular?.errors?.['minlength']) {
-            <p class="input-error">El celular debe tener al menos 6 caracteres</p>
-            }
+              </div>
+              <div class="col-lg-6 col-12 pb-4 pb-lg-0">
+                     <!--Celular-->
+                     <label class="form-label visually-hidden"
+                            for="celular">Celular<span class="required-input">*</span></label>
+                     <input placeholder="Celular *"
+                            class="form-control"
+                            name="celular"
+                            id="celular"
+                            type="text"
+                            required
+                            formControlName="celular">
 
-            @if(celular?.touched && celular?.errors?.['maxlength']) {
-            <p class="input-error">El celular debe tener menos de 20 caracteres</p>
-            }
+                     @if(celular?.touched && celular?.errors?.['required']) {
+                     <p class="input-error">El celular es requerido</p>
+                     }
 
-            @if(celular?.touched && celular?.errors?.['pattern']) {
-            <p class="input-error">El celular debe tener solo numeros</p>
-            }
+                     @if(celular?.touched && celular?.errors?.['minlength']) {
+                     <p class="input-error">El celular debe tener al menos 6 caracteres</p>
+                     }
 
-        </div>
-    </div>
-    <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
-        <div class="col-12 pb-4 pb-lg-0">
-            <!--Email-->
-            <label class="form-label visually-hidden"
-                   for="email">Email<span class="required-input">*</span></label>
-            <input placeholder="Email *"
-                   class="form-control"
-                   name="email"
-                   id="email"
-                   type="text"
-                   required
-                   formControlName="email">
+                     @if(celular?.touched && celular?.errors?.['maxlength']) {
+                     <p class="input-error">El celular debe tener menos de 20 caracteres</p>
+                     }
 
-            @if(email?.touched && email?.errors?.['required']) {
-            <p class="input-error">El email es requerido</p>
-            }
+                     @if(celular?.touched && celular?.errors?.['pattern']) {
+                     <p class="input-error">El celular debe tener solo numeros</p>
+                     }
 
-            @if(email?.touched && email?.errors?.['email']) {
-            <p class="input-error">El email debe ser valido</p>
-            }
-        </div>
-    </div>
+              </div>
+       </div>
+       <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
+              <div class="col-12 pb-4 pb-lg-0">
+                     <!--Email-->
+                     <label class="form-label visually-hidden"
+                            for="email">Email<span class="required-input">*</span></label>
+                     <input placeholder="Email *"
+                            class="form-control"
+                            name="email"
+                            id="email"
+                            type="text"
+                            required
+                            formControlName="email">
 
-    <!--Descripcion-->
-    <div class="pt-lg-3 pb-lg-2 ps-4 pe-4">
-        <label class="form-label visually-hidden"
-               for="descripcion">Descripción<span class="required-input">*</span></label>
-        <textarea placeholder="Descripción *"
-                  class="form-control"
-                  name="descripcion"
-                  id="descripcion"
-                  type="text"
-                  required
-                  formControlName="descripcion"></textarea>
-        @if(descripcion?.touched && descripcion?.errors?.['required']) {
-        <p class="input-error">La descripción es requerida</p>
-        }
-        @if(descripcion?.touched && descripcion?.errors?.['minlength']) {
-        <p class="input-error">La descripción debe tener al menos 20 caracteres</p>
-        }
+                     @if(email?.touched && email?.errors?.['required']) {
+                     <p class="input-error">El email es requerido</p>
+                     }
 
-        @if(descripcion?.touched && descripcion?.errors?.['maxlength']) {
-        <p class="input-error">La descripción debe tener menos de 1000 caracteres</p>
-        }
+                     @if(email?.touched && email?.errors?.['email']) {
+                     <p class="input-error">El email debe ser valido</p>
+                     }
 
-        <div id="captchaDiv"
-             class="pb-4"></div>
-    </div>
+                     @if(email?.touched && email?.errors?.['pattern']) {
+                     <p class="input-error">El email contiene caracteres no válidos</p>
+                     }
+              </div>
+       </div>
 
-    <button [disabled]="complaintsForm.invalid"
-            type="submit"
-            class="btn-send-form">Enviar</button>
+       <!--Descripcion-->
+       <div class="pt-lg-3 pb-lg-2 ps-4 pe-4">
+              <label class="form-label visually-hidden"
+                     for="descripcion">Descripción<span class="required-input">*</span></label>
+              <textarea placeholder="Descripción *"
+                        class="form-control"
+                        name="descripcion"
+                        id="descripcion"
+                        type="text"
+                        required
+                        formControlName="descripcion"></textarea>
+              @if(descripcion?.touched && descripcion?.errors?.['required']) {
+              <p class="input-error">La descripción es requerida</p>
+              }
+              @if(descripcion?.touched && descripcion?.errors?.['minlength']) {
+              <p class="input-error">La descripción debe tener al menos 20 caracteres</p>
+              }
+
+              @if(descripcion?.touched && descripcion?.errors?.['maxlength']) {
+              <p class="input-error">La descripción debe tener menos de 1000 caracteres</p>
+              }
+
+              @if(descripcion?.touched && descripcion?.errors?.['pattern']) {
+              <p class="input-error">La descripción no puede contener <>
+              </p>
+              }
+
+              <div id="captchaDiv"
+                   class="pb-4"></div>
+       </div>
+
+       <button [disabled]="complaintsForm.invalid"
+               type="submit"
+               class="btn-send-form">Enviar</button>
 </form>

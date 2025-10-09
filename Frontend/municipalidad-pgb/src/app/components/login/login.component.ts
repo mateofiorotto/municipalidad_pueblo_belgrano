@@ -88,7 +88,7 @@ export class LoginComponent {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'El usuario, la contraseña y el ReCaptcha son requeridos',
+        text: 'El usuario, la contraseña y el ReCaptcha son requeridos (si el reCaptcha no te aparece, recarga la página)',
       });
     }
   }

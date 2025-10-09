@@ -16,6 +16,12 @@ export interface EventIdDTO {
 export interface EventListResponse {
   status: number;
   message: string;
+  result: EventResponseDTO[];
+}
+
+export interface EventListDataResponse {
+  status: number;
+  message: string;
   result: {
       content: EventResponseDTO[];
       page: Page;

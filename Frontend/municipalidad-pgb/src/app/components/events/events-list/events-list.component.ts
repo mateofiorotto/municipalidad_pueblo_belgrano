@@ -7,7 +7,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { EventsService } from '../../../services/events/events.service';
-import { EventListResponse, EventResponseDTO } from '../../../models/event.model';
+import { EventListDataResponse, EventResponseDTO } from '../../../models/event.model';
 import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
@@ -26,7 +26,7 @@ export class EventsListComponent {
   public totalElements = 0;
   public loading: boolean = true;
 
-  private setEventsData(data: EventListResponse): void {
+  private setEventsData(data: EventListDataResponse): void {
     this.eventsList = data.result.content;
     this.pageIndex = data.result.page.number;
     this.totalElements = data.result.page.totalElements;

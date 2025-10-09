@@ -46,7 +46,6 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid AuthLoginRequestDTO userRequest, HttpServletRequest request){
 
-        String response = request.getParameter("g-recaptcha-response");
         captchaService.processResponse(userRequest.captcha(), request);
 
         return new ResponseEntity<>(this.userDetailsServiceImp.login(userRequest), HttpStatus.OK);

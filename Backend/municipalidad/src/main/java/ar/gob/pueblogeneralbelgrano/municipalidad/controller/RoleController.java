@@ -42,7 +42,7 @@ public class RoleController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Roles retornados con exito"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autorizado / No autenticado)"),
     })
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -67,7 +67,7 @@ public class RoleController {
             @ApiResponse(responseCode = "200", description = "Rol retornado con exito"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Rol no encontrado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autorizado / No autenticado)"),
     })
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -93,7 +93,7 @@ public class RoleController {
             @ApiResponse(responseCode = "201", description = "Rol creado con exito"),
             @ApiResponse(responseCode = "400", description = "Bad Request, error en validación de campos"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autorizado / No autenticado)"),
     })
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -120,7 +120,7 @@ public class RoleController {
             @ApiResponse(responseCode = "400", description = "Bad Request, error en validacion de campos"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Rol no encontrado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autorizado / No autenticado)"),
     })
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -145,7 +145,7 @@ public class RoleController {
             @ApiResponse(responseCode = "200", description = "Rol eliminado con exito"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Rol no encontrado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autorizado / No autenticado)"),
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")

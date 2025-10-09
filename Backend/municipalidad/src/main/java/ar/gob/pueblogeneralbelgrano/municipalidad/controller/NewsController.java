@@ -60,6 +60,34 @@ public class NewsController {
     }
 
     /**
+     * Endpoint que obtiene las noticias de manera paginada y categorizadas. Accedible por todos
+     *
+     * @param page
+     * @return noticias categorizadas y paginadas de a 6 registros
+     */
+    @Operation(summary = "Obtener lista de noticias de forma paginada y categorizadas",
+            description = "Devuelve la lista de noticias del sistema de a 6 registros. Accedible por todos",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Noticias retornadas correctamente."),
+    })
+    @GetMapping("/category/{category_id}")
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<ResponseDTO<PagedModel<NewsResponseDTO>>> getCategorizedAndPaginatedNews(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @PathVariable Long category_id) {
+
+        final int size = 6;
+
+        PagedModel<NewsResponseDTO> news = newsService.getNewsByCategoryAndPaginated(page, size, category_id);
+
+        ResponseDTO<PagedModel<NewsResponseDTO>> getResponseNewsCategorized = new ResponseDTO<>(news, 200, "Noticias retornadas correctamente");
+
+        return ResponseEntity.ok(getResponseNewsCategorized);
+    }
+
+    /**
      * Endpoint que obtiene las ultimas 3 noticias
      *
      * @return ultimas 3 noticias ordenadas por fecha
@@ -117,7 +145,7 @@ public class NewsController {
             @ApiResponse(responseCode = "201", description = "Noticia creada correctamente"),
             @ApiResponse(responseCode = "400", description = "Error de validacion en campos"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
@@ -145,7 +173,7 @@ public class NewsController {
             @ApiResponse(responseCode = "400", description = "Error de validacion en campos"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Noticia no encontrada"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
@@ -172,7 +200,7 @@ public class NewsController {
             @ApiResponse(responseCode = "200", description = "Noticia borrada correctamente"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Noticia no encontrada"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")

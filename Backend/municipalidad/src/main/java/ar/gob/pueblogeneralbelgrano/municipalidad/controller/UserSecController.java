@@ -41,7 +41,7 @@ public class UserSecController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Usuarios retornadas correctamente."),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -71,7 +71,7 @@ public class UserSecController {
             @ApiResponse(responseCode = "200", description = "Usuario retornado con exito"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autorizado / No autenticado)"),
     })
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -98,16 +98,14 @@ public class UserSecController {
             @ApiResponse(responseCode = "201", description = "Usuario creado con exito"),
             @ApiResponse(responseCode = "400", description = "Bad request, error en validacion de campos"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autorizado / No autenticado)"),
     })
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ResponseDTO<UserSecRequestDTO>> saveUser(@Valid @RequestBody UserSecRequestDTO user){
+    public ResponseEntity<String> saveUser(@Valid @RequestBody UserSecRequestDTO user){
         userService.saveUser(user);
 
-        ResponseDTO<UserSecRequestDTO> saveUserResponse = new ResponseDTO<>(user, 200, "Usuario guardado correctamente");
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(saveUserResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario guardado correctamente");
     }
 
     /**
@@ -126,16 +124,14 @@ public class UserSecController {
             @ApiResponse(responseCode = "400", description = "Bad Request, error en la validación de campos"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autorizado / No autenticado)"),
     })
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ResponseDTO<UserSecRequestDTO>> updateUser(@Valid @RequestBody UserSecRequestDTO user, @PathVariable Long id){
+    public ResponseEntity<String> updateUser(@Valid @RequestBody UserSecRequestDTO user, @PathVariable Long id){
         userService.updateUser(user, id);
 
-        ResponseDTO<UserSecRequestDTO> updateUserResponse = new ResponseDTO<>(user, 200, "Usuario actualizado con exito");
-
-        return ResponseEntity.status(HttpStatus.OK).body(updateUserResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario editado correctamente");
     }
 
     /**
@@ -152,7 +148,7 @@ public class UserSecController {
             @ApiResponse(responseCode = "200", description = "Usuario eliminado con exito"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autorizado / No autenticado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autorizado / No autenticado)"),
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")

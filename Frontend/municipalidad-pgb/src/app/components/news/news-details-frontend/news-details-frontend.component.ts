@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NewsResponseDTO } from '../../../models/news.models';
 import { NewsService } from '../../../services/news/news.service';
 import { inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { LoaderComponent } from '../../loader/loader.component';
 @Component({
   standalone: true,
   selector: 'app-news-details-frontend',
-  imports: [CommonModule, NgIf, LoaderComponent],
+  imports: [CommonModule, NgIf, LoaderComponent, RouterLink],
   templateUrl: './news-details-frontend.component.html',
   styleUrl: './news-details-frontend.component.css',
 })

@@ -50,4 +50,6 @@ public interface INewsService {
      * @param id
      */
     public void deleteNews(Long id);
+
+    public PagedModel<NewsResponseDTO> getNewsByCategoryAndPaginated(int page, int size, Long category_id);
 }

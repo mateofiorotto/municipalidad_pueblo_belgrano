@@ -41,7 +41,7 @@ public class PermissionController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Permisos retornados correctamente"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -67,7 +67,7 @@ public class PermissionController {
             @ApiResponse(responseCode = "200", description = "Permiso retornado correctamente"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Permiso no encontrado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -93,7 +93,7 @@ public class PermissionController {
             @ApiResponse(responseCode = "201", description = "Permiso creado correctamente"),
             @ApiResponse(responseCode = "400", description = "Error de validacion en campos"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -121,7 +121,7 @@ public class PermissionController {
             @ApiResponse(responseCode = "400", description = "Error de validacion en campos"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Permiso no encontrado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -147,7 +147,7 @@ public class PermissionController {
             @ApiResponse(responseCode = "200", description = "Permiso borrado correctamente"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Permiso no encontrado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")

@@ -61,7 +61,7 @@ public class ComplaintController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Reclamos retornados correctamente."),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
@@ -91,7 +91,7 @@ public class ComplaintController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Reclamos por arearetornados correctamente."),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping("/area")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
@@ -122,7 +122,7 @@ public class ComplaintController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Reclamo retornado correctamente"),
             @ApiResponse(responseCode = "404", description = "Reclamo no encontrado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
@@ -160,7 +160,7 @@ public class ComplaintController {
             @ApiResponse(responseCode = "201", description = "Reclamo creado correctamente"),
             @ApiResponse(responseCode = "400", description = "Error de validacion en campos"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PostMapping("/save")
     @PreAuthorize("permitAll()")
@@ -193,7 +193,7 @@ public class ComplaintController {
             @ApiResponse(responseCode = "400", description = "Error de validacion en campos"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Reclamo no encontrado o pasaron 7 dias desde el reclamo"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'RESPONSABLE_RECLAMOS')")
@@ -220,7 +220,7 @@ public class ComplaintController {
             @ApiResponse(responseCode = "200", description = "Reclamo borrado correctamente"),
             @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Reclamo no encontrado"),
-            @ApiResponse(responseCode = "500", description = "Token invalido (No autenticado / No autorizado)")
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
     })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE')")

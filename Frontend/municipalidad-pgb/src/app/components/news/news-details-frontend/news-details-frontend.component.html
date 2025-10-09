@@ -5,8 +5,10 @@
 } @else {
 @if (news) {
 <div data-aos="fade" data-aos-duration="500">
+  <div class="categoria"> 
+    <p><a routerLink="/noticias/categoria/{{ news.categoria.id }}">{{ news.categoria.nombre }}</a></p>
+  </div>
   <h2>{{ news.titular }}</h2>
-  <p>{{ news.categoria.nombre }}</p>
   <p *ngIf="news.evento">{{ news.evento.titular}}</p>
   <p>{{ news.descripcion }}</p>
   <img [src]="news.imagen" [alt]="news.titular" />

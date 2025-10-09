@@ -16,6 +16,10 @@ export class NewsService {
     return this._httpClient.get<NewsListResponse>(this._baseUrl+`?page=${page}`);
   }
 
+   public getNewsListByCategory(category_id:number, page: number): Observable<NewsListResponse> {
+    return this._httpClient.get<NewsListResponse>(this._baseUrl+`/category/${category_id}?page=${page}`);
+  }
+
   public getNewsById(id: number): Observable<NewsByIdResponse> {
     return this._httpClient.get<NewsByIdResponse>(`${this._baseUrl}/${id}`);
   }

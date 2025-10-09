@@ -1,0 +1,30 @@
+@if (loading === true) {
+<div>
+    <app-loader></app-loader>
+</div>
+} @else {
+@if (newsList && newsList.length > 0) {
+<div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6 col-12 mb-3 mt-3 p-4"
+         *ngFor="let news of newsList">
+        <app-news-card [news]="news"></app-news-card>
+    </div>
+</div>
+<mat-paginator class="mb-3"
+               [length]="totalElements"
+               [pageSize]=6
+               [pageIndex]="pageIndex"
+               [pageSizeOptions]="[6]"
+               (page)="onPageChange($event)"
+               [showFirstLastButtons]="true">
+</mat-paginator>
+} @else if (newsList.length === 0) {
+<div>
+    <p class="text-center">No hay noticias para esta categoria.</p>
+</div>
+} @else {
+<div>
+    <p class="text-center">Ocurrio un error al cargar las noticias. Lo estamos solucionado.</p>
+</div>
+}
+}

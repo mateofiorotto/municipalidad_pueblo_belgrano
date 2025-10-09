@@ -84,8 +84,6 @@ public class NewsService implements INewsService {
                     .orElseThrow(() -> new NotFoundException("Evento no encontrado, ID: " + news.evento().id()));
         }
 
-        //metodo img..
-
         newsRepository.save(newsToSave);
 
         return news;
@@ -130,5 +128,29 @@ public class NewsService implements INewsService {
         News newToDelete = newsRepository.findById(id).orElseThrow(() -> new NotFoundException("Noticia no encontrada, ID: " + id));
 
         newsRepository.delete(newToDelete);
+    }
+
+    @Override
+    public PagedModel<NewsResponseDTO> getNewsByCategoryAndPaginated(int page, int size, Long category_id) {
+
+        categoryRepository.findById(category_id).orElseThrow(() -> new NotFoundException("La categoría con esa ID no existe"));
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<News> categorizedAndPaginatedNews = newsRepository.findAllByCategoriaIdOrderByFechaDesc(category_id, pageable);
+
+        List<NewsResponseDTO> newsDTOList = categorizedAndPaginatedNews
+                .stream()
+                .map(INewsMapper.mapper::newsToNewsResponseDTO)
+                .collect(Collectors.toList());
+
+        //crear un nuevo objeto page y le pasamos la lista de categorias transformadas y la info de paginas
+        Page<NewsResponseDTO> categorizedAndPaginatedNewsList = new PageImpl<>(
+                newsDTOList,
+                pageable,
+                categorizedAndPaginatedNews.getTotalElements()
+        );
+
+        return new PagedModel<>(categorizedAndPaginatedNewsList);
     }
 }

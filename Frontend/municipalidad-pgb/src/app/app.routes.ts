@@ -28,6 +28,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'noticias/categoria/:id',
+    canActivate: [maintenanceGuard],
+    loadComponent: () =>
+      import(
+        './pages/news-by-category.page/news-by-category.page.component'
+      ).then((m) => m.NewsByCategoryPageComponent),
+  },
+  {
     path: 'login',
     canActivate: [maintenanceGuard],
     loadComponent: () =>

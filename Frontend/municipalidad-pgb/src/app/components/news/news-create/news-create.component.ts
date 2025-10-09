@@ -158,7 +158,7 @@ export class NewsCreateComponent {
   public loadEvents(): EventResponseDTO[] {
     this._eventsService.getEventsList().subscribe({
       next: (data) => {
-        this.eventsList = data.result.content;
+        this.eventsList = data.result;
       },
       error: (err) => {
         this._router.navigate(['/']).then(() => {

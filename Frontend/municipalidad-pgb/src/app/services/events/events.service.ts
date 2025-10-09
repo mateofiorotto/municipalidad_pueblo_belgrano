@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { inject } from '@angular/core';
-import { EventListResponse, EventByIdResponse, EventRequestDTO } from '../../models/event.model';
+import { EventListResponse, EventListDataResponse, EventByIdResponse, EventRequestDTO } from '../../models/event.model';
 
 
 @Injectable({
@@ -18,8 +18,8 @@ export class EventsService {
     return this._httpClient.get<EventListResponse>(this._baseUrl);
   }
 
-   public getEventListPaginated(page: number): Observable<EventListResponse> {
-      return this._httpClient.get<EventListResponse>(this._baseUrl+`/paginado?page=${page}`);
+   public getEventListPaginated(page: number): Observable<EventListDataResponse> {
+      return this._httpClient.get<EventListDataResponse>(this._baseUrl+`/paginado?page=${page}`);
     }
   
     public getEventById(id: number): Observable<EventByIdResponse> {
