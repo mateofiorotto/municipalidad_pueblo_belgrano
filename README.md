@@ -3,7 +3,7 @@
 ## Technologies / Tecnologias
 <p class="technologies">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=java,spring,hibernate,maven,postman,idea,mysql,git,js,ts,angular,html,css,bootstrap" />
+    <img src="https://skillicons.dev/icons?i=java,spring,hibernate,maven,postman,idea,mysql,git,js,ts,angular,html,css,tailwind" />
   </a>
 </p>
 
@@ -26,7 +26,7 @@
 - HTML5
 - CSS3
 - Javascript
-- Bootstrap 5
+- Tailwind 4
 - Angular 19
 - TypeScript
 - Postman (Test API)

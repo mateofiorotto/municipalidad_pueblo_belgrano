@@ -1,24 +1,53 @@
-<footer class="footer p-5 container">
-        <div class="row justify-content-center">
-            <div class="col-lg-4 col-12">
-                <a id="logo-footer" class="d-block m-auto footer-brand" routerLink="/" (click)="scrollToTop()"><span class="visually-hidden">Logo</span></a>
-                <p class="text-center mt-3">¡Veni a visitarnos!</p>
-            </div>
-             <div class="col-lg-4 col-12 text-center">
-                <h3>Menú</h3>
-                <ul class="list-unstyled menu-footer">
-                    <li><a routerLink="/">Inicio</a></li>
-                    <li><a routerLink="/noticias">Noticias</a></li>
-                    <li><a routerLink="/reclamos">Reclamos</a></li>
-                    <li><a routerLink="/eventos">Eventos</a></li>
-                </ul>
-            </div>
-             <div class="col-lg-4 col-12 text-center">
-                <h3>Redes</h3>
-                <ul class="list-unstyled d-flex justify-content-center redes-footer gap-4">
-                    <li class="icono-ig"><a href="https://www.facebook.com/Comunidadpgb/" target="_blank" noopener noreferrer><i class="bi bi-facebook"><span class="visually-hidden">Facebook</span></i></a></li>
-                    <li class="icono-fb"><a href="https://www.instagram.com/comunidadpgb/?hl=es" target="_blank" noopener noreferrer><i class="bi bi-instagram"><span class="visually-hidden">Instagram</span></i></a></li>
-                </ul>
-            </div>
+<footer class="bg-primary text-white py-8 border-t border-white bg-green-600">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-8 items-center justify-between">
+
+        <!-- Logo -->
+        <div class="flex flex-col items-center lg:items-start">
+            <a routerLink="/"
+               class="block w-[200px] h-[80px] bg-no-repeat bg-center bg-contain mb-3 block  h-[120px] w-[200px] bg-no-repeat bg-center bg-contain bg-[url('/logo.svg')] my-5 mb-10 lg:mb-0"
+               (click)="scrollToTop()">
+                <span class="sr-only">Logo Municipalidad de Pueblo General Belgrano</span>
+            </a>
+            <p class="text-center lg:text-left">¡Vení a visitarnos!</p>
         </div>
+
+        <!-- Menú -->
+        <div class="text-center">
+            <h3 class="mb-2 text-lg font-semibold">Menú</h3>
+            <ul class="flex flex-col gap-2">
+                <li><a routerLink="/"
+                       class="hover:text-light">Inicio</a></li>
+                <li><a routerLink="/noticias"
+                       class="hover:text-light">Noticias</a></li>
+                <li><a routerLink="/reclamos"
+                       class="hover:text-light">Reclamos</a></li>
+                <li><a routerLink="/eventos"
+                       class="hover:text-light">Eventos</a></li>
+            </ul>
+        </div>
+
+        <!-- Redes -->
+        <div class="text-center">
+            <h3 class="mb-2 text-lg font-semibold">Redes</h3>
+            <ul class="flex justify-center gap-4 text-2xl">
+                <li>
+                    <a href="https://www.facebook.com/Comunidadpgb/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="hover:text-light">
+                        <i class="bi bi-facebook"><span class="sr-only">Facebook</span></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/comunidadpgb/?hl=es"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="hover:text-light">
+                        <i class="bi bi-instagram"><span class="sr-only">Instagram</span></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
 </footer>
