@@ -32,13 +32,13 @@ public class EventController {
     }
 
     /**
-     * Endpoint que obtiene los eventos de manera paginada. Accedible por todos
+     * Endpoint que obtiene los eventos de manera paginada. Accedible por admins, intendente y comunicacion
      *
      * @param page
      * @return eventos paginados de a 6 registros
      */
     @Operation(summary = "Obtener lista de eventos de forma paginada",
-            description = "Devuelve la lista de eventos del sistema de a 6 registros. Accedible por todos",
+            description = "Devuelve la lista de eventos del sistema de a 6 registros. Accedible por admins, intendente y comunicacion",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -46,13 +46,41 @@ public class EventController {
             @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping("paginado")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'COMUNICACION')")
     public ResponseEntity<ResponseDTO<PagedModel<EventResponseDTO>>> getPaginatedEvents(
             @RequestParam(value = "page", defaultValue = "0") int page) {
 
         final int size = 6;
 
         PagedModel<EventResponseDTO> events = eventService.getPaginatedEvents(page, size);
+
+        ResponseDTO<PagedModel<EventResponseDTO>> getResponseEvents = new ResponseDTO<>(events, 200, "Eventos retornadas correctamente");
+
+        return ResponseEntity.ok(getResponseEvents);
+    }
+
+    /**
+     * Endpoint que obtiene los eventos PROXIMOS de manera paginada. Accedible por todos
+     *
+     * @param page
+     * @return eventos paginados de a 6 registros
+     */
+    @Operation(summary = "Obtener lista de eventos proximos de forma paginada",
+            description = "Devuelve la lista de eventos proximos del sistema de a 6 registros. Accedible por todos",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Eventos retornadas correctamente."),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)"),
+    })
+    @GetMapping("proximos/paginado")
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<ResponseDTO<PagedModel<EventResponseDTO>>> getNextPaginatedEvents(
+            @RequestParam(value = "page", defaultValue = "0") int page) {
+
+        final int size = 6;
+
+        PagedModel<EventResponseDTO> events = eventService.getPaginatedNextEvents(page, size);
 
         ResponseDTO<PagedModel<EventResponseDTO>> getResponseEvents = new ResponseDTO<>(events, 200, "Eventos retornadas correctamente");
 

@@ -38,7 +38,7 @@ export class EventsListComponent {
   }
 
   public loadEvents(page: number): void {
-    this._eventsService.getEventListPaginated(page).subscribe({
+    this._eventsService.getNextEventListPaginated(page).subscribe({
       next: (data) => {
         this.setEventsData(data);
 

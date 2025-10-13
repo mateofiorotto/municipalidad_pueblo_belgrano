@@ -15,7 +15,16 @@ public interface IEventService {
      * @return eventos paginados
      */
     public PagedModel<EventResponseDTO> getPaginatedEvents(int page, int size);
-    
+
+    /**
+     * Devolver solo eventos proximos paginados
+     *
+     * @param page
+     * @param size
+     * @return
+     */
+    public PagedModel<EventResponseDTO> getPaginatedNextEvents(int page, int size);
+
     /**
      * Retornar una lista de todos los eventos
      *

@@ -21,6 +21,10 @@ export class EventsService {
    public getEventListPaginated(page: number): Observable<EventListDataResponse> {
       return this._httpClient.get<EventListDataResponse>(this._baseUrl+`/paginado?page=${page}`);
     }
+
+     public getNextEventListPaginated(page: number): Observable<EventListDataResponse> {
+      return this._httpClient.get<EventListDataResponse>(this._baseUrl+`/proximos/paginado?page=${page}`);
+    }
   
     public getEventById(id: number): Observable<EventByIdResponse> {
       return this._httpClient.get<EventByIdResponse>(`${this._baseUrl}/${id}`);

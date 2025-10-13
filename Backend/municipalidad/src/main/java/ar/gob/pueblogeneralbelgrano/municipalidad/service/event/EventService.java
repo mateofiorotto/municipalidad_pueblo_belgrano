@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +50,29 @@ public class EventService implements IEventService {
 
         return new PagedModel<>(paginatedEventsList);
     }
-    
+
+    @Override
+    public PagedModel<EventResponseDTO> getPaginatedNextEvents(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        LocalDate fecha = LocalDate.now().minusDays(1);
+
+        Page<Event> paginatedNextEvents = eventRepository.findAllByFechaAfterOrderByFechaAsc(fecha, pageable);
+
+        List<EventResponseDTO> eventDTOList = paginatedNextEvents
+                .stream()
+                .map(IEventMapper.mapper::eventToEventResponseDTO)
+                .collect(Collectors.toList());
+
+        Page<EventResponseDTO> paginatedNextEventsList = new PageImpl<>(
+                eventDTOList,
+                pageable,
+                paginatedNextEvents.getTotalElements()
+        );
+
+        return new PagedModel<>(paginatedNextEventsList);
+    }
+
     @Override
     public List<EventResponseDTO> getEvents() {
         List<Event> listEvents = eventRepository.findAll();
