@@ -1,65 +1,23 @@
 @import "tailwindcss";
 
-:root {
-  /* Colores */
-  --color-primary: #5257ae;      /* Morado */
-  --color-secondary: #c2d81e;        /* Verde-limón */ 
-  --color-accent: #f7891b;         /* Naranja */
-  --color-text-primary: #4b4b4b;   /* Gris oscuro para texto */
-  --color-text-secondary: #6e6e6e; /* Gris más claro */
-  --color-bg: #ffffff;             /* Fondo principal */
-  --color-bg-inverted: #6568b9;    /* Fondo invertido / header, footer */
-}
-
-/* Fondos */
-.bg-secondary {
-  background-color: #a3b519;
-}
-.bg-primary {
-  background-color: #19168a;
-}
-.bg-accent {
-  background-color: #f7891b
-}
-
-/* Texto */
-.text-primary {
-  color: #19168a; 
-}
-.text-secondary {
-  color: #a3b519;
-}
-
-.text-paragraph {
-  color: #4b4b4b;
-}
-
-/* Botones */
-.btn-secondary {
-  background-color: #a3b519;
-  color: white;
-}
-
-.btn-secondary:hover {
-  background-color: #b0c81b;
-}
-
-.btn-primary {
-  background-color: #19168a;
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: #5858b9;
-}
-
-.btn-accent {
-  background-color: #f7891b;
-  color: white;
+@theme {
+  --color-identity-blue: #6568ab;
+  --color-identity-green: #b9ce39;
+  --color-identity-orange: #f07e23;
+  --color-identity-light-blue: #59c0cb;
+  --color-paragraphs: #4b4b4b;
+  --color-hover-green: #1ba61b;
 }
 
 * {
   box-sizing: border-box;
+}
+
+.mat-mdc-paginator-outer-container {
+  font-size: 1.3em !important;
+  border: 2px solid #b9ce39 !important;
+  border-radius: 10px !important;
+  font-weight: 500 !important;
 }
 
 html {
@@ -67,14 +25,14 @@ html {
 }
 
 body {
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Lato", sans-serif;
 }
 
 .input-error,
 .error-msg {
   color: red;
-  margin-top: 1em;
-  font-size: 1.1em;
+  margin-top: 0.5em;
+  font-size: 1em;
   margin-bottom: 0;
 }
 
@@ -174,13 +132,6 @@ body {
 
 .actions-td a:hover {
   color: rgb(27, 166, 27) !important;
-}
-
-table,
-tr,
-.mat-mdc-paginator-outer-container {
-  border: 1px solid black !important;
-  border-color: black !important;
 }
 
 #captchaDiv {
