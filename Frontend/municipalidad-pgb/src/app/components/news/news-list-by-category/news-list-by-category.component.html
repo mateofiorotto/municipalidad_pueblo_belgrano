@@ -1,30 +1,37 @@
 @if (loading === true) {
 <div>
-    <app-loader></app-loader>
+  <app-loader></app-loader>
 </div>
 } @else {
-@if (newsList && newsList.length > 0) {
-<div class="row justify-content-center">
-    <div class="col-lg-4 col-md-6 col-12 mb-3 mt-3 p-4"
-         *ngFor="let news of newsList">
-        <app-news-card [news]="news"></app-news-card>
+<div class="px-20 py-10">
+  <div
+       class="h-[40vh] relative flex items-center justify-center align-center text-center mb-4 flex-col text-white break-all">
+    <img src="/banners/login-banner.jpg"
+         class="absolute inset-0 w-full h-full object-cover" />
+    <div class="absolute inset-0 backdrop-brightness-50 backdrop-blur-[3px]"></div>
+    <div class="relative z-10">
+      <h3 class="text-3xl font-bold">Noticias: {{category.nombre}}</h3>
+      <p class="text-xl py-5">¡Enterate lo último que pasa en el pueblo!</p>
     </div>
-</div>
-<mat-paginator class="mb-3"
-               [length]="totalElements"
-               [pageSize]=6
-               [pageIndex]="pageIndex"
-               [pageSizeOptions]="[6]"
-               (page)="onPageChange($event)"
-               [showFirstLastButtons]="true">
-</mat-paginator>
-} @else if (newsList.length === 0) {
-<div>
-    <p class="text-center">No hay noticias para esta categoria.</p>
-</div>
+  </div>
+  @if (newsList && newsList.length > 0) {
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-4 break-all pt-5 pb-5">
+    @for (news of newsList; track news.id) {
+    <app-news-card [news]="news"></app-news-card>
+    }
+  </div>
+  <mat-paginator [length]="totalElements"
+                 [pageSize]=6
+                 [pageIndex]="pageIndex"
+                 [pageSizeOptions]="[6]"
+                 (page)="onPageChange($event)"
+                 [showFirstLastButtons]="true">
+  </mat-paginator>
 } @else {
-<div>
-    <p class="text-center">Ocurrio un error al cargar las noticias. Lo estamos solucionado.</p>
-</div>
+  <div class="h-[90vh]">
+    <p class="text-center text-red-500">Ocurrio un error al cargar las noticias. Lo estamos solucionado.</p>
+  </div>
 }
+</div>
 }

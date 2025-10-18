@@ -2,12 +2,12 @@
       (ngSubmit)="onSubmit()"
       class="p-4">
        <!--Motivo-->
-       <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
-              <div class="col-lg-6 col-12 pb-4 pb-lg-0">
-                     <label class="form-label visually-hidden"
+       <div class="flex flex-col md:flex-row gap-6 mx-auto ">
+              <div class="w-full md:w-1/2">
+                     <label class="sr-only"
                             for="motivo">Motivo<span class="required-input">*</span></label>
                      <input placeholder="Motivo *"
-                            class="form-control"
+                            class="form-control w-full p-4 rounded-xl"
                             name="motivo"
                             id="motivo"
                             type="text"
@@ -25,18 +25,17 @@
                      <p class="input-error">El motivo debe tener menos de 100 caracteres</p>
                      }
 
-                      @if(motivo?.touched && motivo?.errors?.['pattern']) {
+                     @if(motivo?.touched && motivo?.errors?.['pattern']) {
                      <p class="input-error">El motivo no puede contener números ni caracteres especiales</p>
                      }
               </div>
 
-              <div class="col-lg-6 col-12 pb-4 pb-lg-0">
-
+              <div class="w-full md:w-1/2 ">
                      <!--Nombre y Apellido-->
-                     <label class="form-label visually-hidden"
+                     <label class="sr-only"
                             for="nombre_apellido">Nombre y Apellido<span class="required-input">*</span></label>
                      <input placeholder="Nombre y Apellido *"
-                            class="form-control"
+                            class="form-control w-full p-4 rounded-xl"
                             name="nombre_apellido"
                             id="nombre_apellido"
                             type="text"
@@ -61,13 +60,13 @@
               </div>
        </div>
 
-       <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
-              <div class="col-lg-6 col-12 pb-4 pb-lg-0">
+       <div class="flex md:flex-row flex-col gap-6 mt-6 md:mt-4 mx-auto">
+              <div class="w-full w-1/2">
                      <!--Direccion-->
-                     <label class="form-label visually-hidden"
+                     <label class="sr-only"
                             for="direccion">Dirección<span class="required-input">*</span></label>
                      <input placeholder="Dirección (domicilio/reclamo) *"
-                            class="form-control"
+                            class="form-control w-full p-4 rounded-xl"
                             name="direccion"
                             id="direccion"
                             type="text"
@@ -91,12 +90,12 @@
                      }
 
               </div>
-              <div class="col-lg-6 col-12 pb-4 pb-lg-0">
+              <div class="w-full w-1/2">
                      <!--Celular-->
-                     <label class="form-label visually-hidden"
+                     <label class="sr-only"
                             for="celular">Celular<span class="required-input">*</span></label>
                      <input placeholder="Celular *"
-                            class="form-control"
+                            class="form-control w-full p-4 rounded-xl"
                             name="celular"
                             id="celular"
                             type="text"
@@ -118,42 +117,40 @@
                      @if(celular?.touched && celular?.errors?.['pattern']) {
                      <p class="input-error">El celular debe tener solo numeros</p>
                      }
-
               </div>
        </div>
-       <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
-              <div class="col-12 pb-4 pb-lg-0">
-                     <!--Email-->
-                     <label class="form-label visually-hidden"
-                            for="email">Email<span class="required-input">*</span></label>
-                     <input placeholder="Email *"
-                            class="form-control"
-                            name="email"
-                            id="email"
-                            type="text"
-                            required
-                            formControlName="email">
 
-                     @if(email?.touched && email?.errors?.['required']) {
-                     <p class="input-error">El email es requerido</p>
-                     }
+       <div class="w-full md:mt-4 mt-6 mx-auto">
+              <!--Email-->
+              <label class="sr-only"
+                     for="email">Email<span class="required-input">*</span></label>
+              <input placeholder="Email *"
+                     class="form-control w-full p-4 rounded-xl"
+                     name="email"
+                     id="email"
+                     type="text"
+                     required
+                     formControlName="email">
 
-                     @if(email?.touched && email?.errors?.['email']) {
-                     <p class="input-error">El email debe ser valido</p>
-                     }
+              @if(email?.touched && email?.errors?.['required']) {
+              <p class="input-error">El email es requerido</p>
+              }
 
-                     @if(email?.touched && email?.errors?.['pattern']) {
-                     <p class="input-error">El email contiene caracteres no válidos</p>
-                     }
-              </div>
+              @if(email?.touched && email?.errors?.['email']) {
+              <p class="input-error">El email debe ser valido</p>
+              }
+
+              @if(email?.touched && email?.errors?.['pattern']) {
+              <p class="input-error">El email contiene caracteres no válidos</p>
+              }
        </div>
 
        <!--Descripcion-->
-       <div class="pt-lg-3 pb-lg-2 ps-4 pe-4">
-              <label class="form-label visually-hidden"
+       <div class="w-full md:mt-4 mt-6 mx-auto">
+              <label class="sr-only"
                      for="descripcion">Descripción<span class="required-input">*</span></label>
               <textarea placeholder="Descripción *"
-                        class="form-control"
+                        class="form-control w-full p-4 rounded-xl"
                         name="descripcion"
                         id="descripcion"
                         type="text"
@@ -176,10 +173,12 @@
               }
 
               <div id="captchaDiv"
-                   class="pb-4"></div>
+                   class="w-full"></div>
        </div>
 
-       <button [disabled]="complaintsForm.invalid"
-               type="submit"
-               class="btn-send-form">Enviar</button>
+       <div class="w-[50%] md:w-[25%] mx-auto pt-4">
+              <button [disabled]="complaintsForm.invalid"
+                      type="submit"
+                      class="disabled:bg-[rgba(15,139,34,0.5)] disabled:cursor-not-allowed disabled:text-gray-500 mt-5 tracking-wide font-semibold bg-primary text-black w-full py-6 md:py-4 rounded-lg bg-identity-green transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none cursor-pointer hover:bg-hover-green">Enviar</button>
+       </div>
 </form>

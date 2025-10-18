@@ -36,87 +36,19 @@ body {
   margin-bottom: 0;
 }
 
-.required-input {
-  color: rgb(229, 156, 20);
-  font-size: 1.2em;
-  vertical-align: middle;
-  margin-left: 0.35em;
-}
-
 textarea {
   resize: none;
 }
 
-input,
-textarea,
-select {
-  border: 1px solid black !important;
+input, textarea, select {
+    border-color: #b9ce39 !important;
+    border: 2px solid #b9ce39 !important;
 }
 
-label {
-  font-weight: bold;
-}
-
-.btn-send-form,
-.btn-actualizar-form,
-.btn-crear-crud {
-  background-color: green;
-  color: white;
-  border-radius: 10px;
-  border-color: transparent;
-  font-size: 1.2em;
-  padding: 0.5em 5em;
-  margin: 1em auto;
-  display: block;
-  text-transform: uppercase;
-  font-weight: bold;
-  transition: 0.25s ease-in-out all;
-  text-decoration: none;
-}
-
-.btn-send-form:hover,
-.btn-actualizar-form:hover,
-.btn-crear-crud:hover {
-  background-color: rgb(6, 93, 6);
-}
-
-.btn-borrar,
-.btn-cancelar {
-  background-color: rgb(26, 100, 197);
-  color: white;
-  border-radius: 5px;
-  border-color: transparent;
-  font-size: 1.2em;
-  padding: 0.5em 5em;
-  margin: 1.5em 1em;
-  text-transform: uppercase;
-  font-weight: bold;
-  transition: 0.25s ease-in-out all;
-}
-
-.btn-borrar {
-  background-color: rgba(255, 0, 0, 0.8);
-}
-
-.btn-borrar:hover {
-  background-color: rgba(169, 32, 32, 1);
-}
-
-.btn-cancelar:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-/*disabled send*/
-.btn-send-form:disabled,
-.btn-actualizar-form:disabled,
-.btn-crear-crud:disabled {
-  background-color: rgba(15, 139, 34, 0.5);
-}
-
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-size: 1.15em;
+input:focus, textarea:focus, select:focus {
+    border-color: #b9ce39 !important;
+    box-shadow: 0 0 5px #b9ce39 !important;
+    outline: none !important;
 }
 
 .actions-td a {
@@ -139,7 +71,7 @@ body {
 }
 
 #captchaDiv iframe {
-  border: 2px solid rgb(151, 218, 52) !important;
+  border: 2px solid #b9ce39 !important;
 }
 
 #captchaDiv div:first-child {
@@ -155,20 +87,6 @@ body {
   font-size: 1.05em;
 }
 
-/*FORMS*/
-.form-control {
-  border: 1px solid rgba(15, 139, 34, 0.9) !important;
-  background-color: rgb(219, 221, 226);
-  font-size: 1em;
-  border-radius: 10px;
-}
-
-.form-control:focus {
-  border: 1px solid green !important;
-  background-color: rgb(219, 221, 226);
-  border-radius: 10px;
-  box-shadow: none !important;
-}
 
 @media screen and (max-width: 992px) {
   .btn-send-form,

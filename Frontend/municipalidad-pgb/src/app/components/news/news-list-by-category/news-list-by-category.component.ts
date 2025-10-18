@@ -11,6 +11,8 @@ import Swal from 'sweetalert2';
 import { NewsListResponse } from '../../../models/news.models';
 import { LoaderComponent } from '../../loader/loader.component';
 import { ActivatedRoute } from '@angular/router';
+import { CategoryResponseDTO } from '../../../models/category.model';
+import { CategoriesService } from '../../../services/categories/categories.service';
 
 @Component({
   selector: 'app-news-list-by-category',
@@ -25,6 +27,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class NewsListByCategoryComponent {
   private _newsService = inject(NewsService);
+  private _categoriesService = inject(CategoriesService);
   private _router = inject(Router);
   private _route = inject(ActivatedRoute);
 
@@ -33,6 +36,7 @@ export class NewsListByCategoryComponent {
   public error: any;
   public pageIndex: number = 0;
   public totalElements = 0;
+  public category!: CategoryResponseDTO;
 
   private setNewsData(data: NewsListResponse): void {
     this.newsList = data.result.content;
@@ -43,6 +47,32 @@ export class NewsListByCategoryComponent {
 
   ngOnInit(): void {
     this.loadNews(this.pageIndex);
+
+    const id = this._route.snapshot.paramMap.get('id');
+    
+        if (id) {
+          this._categoriesService.getCategoryById(+id).subscribe({
+            next: (data) => {
+              this.category = data.result;
+    
+              this.loading = false;
+            },
+            error: (err) => {
+              if (err.status === 404) {
+                this._router.navigate(['/no-encontrado']);
+              } else {
+                this._router.navigate(['/']).then(() => {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'ERROR',
+                    text: 'Error al cargar categoria',
+                    showConfirmButton: true,
+                  });
+                });
+              }
+            },
+          });
+        }
   }
 
   public loadNews(page: number): void {
