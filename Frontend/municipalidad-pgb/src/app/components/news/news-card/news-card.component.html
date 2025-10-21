@@ -1,11 +1,21 @@
-<div class="card-noticias bg-identity-green text-black">
-    <a class="text-break" [routerLink]="['/noticias', news.id]">
+<div class="card-noticias bg-identity-green text-black rounded-2xl overflow-hidden hover:shadow-green-700 hover:shadow-lg transition-shadow duration-300 hover:cursor-pointer">
+    <a class="text-break"
+       [routerLink]="['/noticias', news.id]">
         <!--<img [src]="news.imagen" [alt]="news.titular">-->
-        <img class="img-fluid" src="/banners/banner.jpg" [alt]="news.titular">
+        <img src="/banners/banner.jpg"
+             [alt]="news.titular">
         <div class="info-noticia p-4">
             <h3 class="text-2xl font-bold">{{news.titular}}</h3>
             <p class="text-xl my-3">{{news.subtitulo}}</p>
-            <time>{{news.fecha}}</time>
+            <time class="border-t-2 pt-3 flex flex-row gap-2 text-lg items-center justify-c"><svg xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 24 24"
+                     fill="currentColor"
+                     class="size-6">
+                    <path fill-rule="evenodd"
+                          d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
+                          clip-rule="evenodd" />
+                </svg>
+                {{news.fecha}}</time>
         </div>
     </a>
 </div>

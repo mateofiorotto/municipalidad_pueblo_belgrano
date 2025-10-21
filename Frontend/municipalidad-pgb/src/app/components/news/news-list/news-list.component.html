@@ -3,7 +3,7 @@
   <app-loader></app-loader>
 </div>
 } @else {
-<div class="px-20 py-10">
+<div class="">
   <div
        class="h-[40vh] relative flex items-center justify-center align-center text-center mb-4 flex-col text-white break-all">
     <img src="/banners/login-banner.jpg"
@@ -11,12 +11,12 @@
     <div class="absolute inset-0 backdrop-brightness-50 backdrop-blur-[3px]"></div>
     <div class="relative z-10">
       <h3 class="text-3xl font-bold">Noticias</h3>
-      <p class="text-xl py-5">¡Enterate lo último que pasa en el pueblo!</p>
+      <p class="text-xl py-5 px-5">¡Enterate de lo último que pasa en el pueblo!</p>
     </div>
   </div>
   @if (newsList && newsList.length > 0) {
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-4 break-all pt-5 pb-5">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-4 break-all px-10 lg:px-20 py-10">
     @for (news of newsList; track news.id) {
     <app-news-card [news]="news"></app-news-card>
     }

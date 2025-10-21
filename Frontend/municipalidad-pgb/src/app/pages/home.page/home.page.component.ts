@@ -5,11 +5,12 @@ import { NewsResponseDTO } from '../../models/news.models';
 import { NewsCardComponent } from '../../components/news/news-card/news-card.component';
 import { NgFor } from '@angular/common';
 import { LoaderComponent } from '../../components/loader/loader.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-home.page',
-  imports: [NewsCardComponent, NgFor, LoaderComponent],
+  imports: [NewsCardComponent, NgFor, LoaderComponent, RouterLink],
   templateUrl: './home.page.component.html',
   styleUrl: './home.page.component.css'
 })
