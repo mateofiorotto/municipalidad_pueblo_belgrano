@@ -4,6 +4,7 @@ import { ComplaintService } from '../../../services/complaints/complaints.servic
 import { ComplaintResponseDTO } from '../../../models/complaint.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   standalone: true,
@@ -16,6 +17,7 @@ export class ComplaintDetailsComponent {
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
   private _complaintsService = inject(ComplaintService);
+  public _authService = inject(AuthService);
 
   public complaint!: ComplaintResponseDTO;
 

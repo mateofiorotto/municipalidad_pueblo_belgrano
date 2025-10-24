@@ -21,14 +21,18 @@ public class Transparency {
     private LocalDate fecha;
     @Column(nullable = false)
     private String pdf; //referencia a un archivo pdf
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TransparencyType tipo;
     private boolean deleted = Boolean.FALSE;
 
     public Transparency(){}
 
-    public Transparency(Long id, LocalDate fecha, String pdf) {
+    public Transparency(Long id, LocalDate fecha, String pdf, TransparencyType tipo) {
         this.id = id;
         this.fecha = fecha;
         this.pdf = pdf;
+        this.tipo = tipo;
     }
 
     public Long getId() {
@@ -53,6 +57,14 @@ public class Transparency {
 
     public void setPdf(String pdf) {
         this.pdf = pdf;
+    }
+
+    public TransparencyType getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TransparencyType tipo) {
+        this.tipo = tipo;
     }
 
     public boolean isDeleted() {

@@ -30,6 +30,7 @@ export class TransparencyEditComponent {
   transparencyForm = new FormGroup({
     pdf: new FormControl('', [Validators.required]),
     fecha: new FormControl('', [Validators.required]),
+    tipo: new FormControl('', [Validators.required])
   });
 
   ngOnInit(): void {
@@ -116,6 +117,7 @@ export class TransparencyEditComponent {
         this.transparencyForm.patchValue({
           pdf: this.transparency.pdf,
           fecha: this.transparency.fecha,
+          tipo: this.transparency.tipo
         });
       },
       error: (err) => {
@@ -141,5 +143,9 @@ export class TransparencyEditComponent {
 
   get fecha() {
     return this.transparencyForm.get('fecha');
+  }
+  
+  get tipo() {
+    return this.transparencyForm.get('tipo');
   }
 }

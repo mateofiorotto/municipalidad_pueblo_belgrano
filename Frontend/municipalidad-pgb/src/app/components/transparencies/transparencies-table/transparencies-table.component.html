@@ -9,6 +9,7 @@
             <th class="p-4">N°</th>
             <th class="p-4">Fecha</th>
             <th class="p-4">PDF</th>
+            <th class="p-4">Tipo</th>
             <th>Acciones</th>
         </tr>
         @for (transparency of transparenciesList; track transparency.id) {
@@ -16,6 +17,7 @@
             <td class="fw-bold p-3 text-center">{{ transparency.id }}</td>
             <td class="p-2">{{transparency.fecha | date:'MMMM, yyyy' | titlecase}}</td>
             <td class="p-2">{{ transparency.pdf.substr(0, 20) }}...</td>
+            <td class="p-2">{{ transparency.tipo }}</td>
 
             <td class="actions-td p-2 text-center">
                 <div class="d-flex justify-content-center gap-2">

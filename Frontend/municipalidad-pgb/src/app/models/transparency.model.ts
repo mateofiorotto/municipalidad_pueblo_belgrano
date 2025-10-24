@@ -4,6 +4,7 @@ export interface TransparencyResponseDTO {
   id: number;
   fecha: string;
   pdf: string;
+  tipo: string;
 }
 
 export interface TransparencyListResponse {
@@ -24,4 +25,5 @@ export interface TransparencyByIdResponse {
 export interface TransparencyRequestDTO {
   fecha: string;
   pdf: string;
+  tipo: string;
 }

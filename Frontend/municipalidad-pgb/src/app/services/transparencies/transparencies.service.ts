@@ -31,4 +31,8 @@ export class TransparenciesService {
   public deleteTransparency(id: number): Observable<String> {
     return this._httpClient.delete<String>(`${this._baseUrl}/${id}`);
   }
+
+  public getTransparencyTypes(): Observable<string[]> {
+    return this._httpClient.get<string[]>(`${this._baseUrl}/types`);
+  }
 }

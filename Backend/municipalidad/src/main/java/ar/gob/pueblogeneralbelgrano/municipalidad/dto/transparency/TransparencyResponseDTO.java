@@ -5,5 +5,6 @@ import java.time.LocalDate;
 public record TransparencyResponseDTO(
         Long id,
         LocalDate fecha,
-        String pdf) {
+        String pdf,
+        String tipo) {
 }

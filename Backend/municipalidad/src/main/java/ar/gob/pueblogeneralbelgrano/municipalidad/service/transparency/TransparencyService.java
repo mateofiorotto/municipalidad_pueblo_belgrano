@@ -5,6 +5,7 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.dto.transparency.TransparencyR
 import ar.gob.pueblogeneralbelgrano.municipalidad.exception.NotFoundException;
 import ar.gob.pueblogeneralbelgrano.municipalidad.mapper.ITransparencyMapper;
 import ar.gob.pueblogeneralbelgrano.municipalidad.model.Transparency;
+import ar.gob.pueblogeneralbelgrano.municipalidad.model.TransparencyType;
 import ar.gob.pueblogeneralbelgrano.municipalidad.repository.ITransparencyRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -14,6 +15,7 @@ import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +37,7 @@ public class TransparencyService implements ITransparencyService {
                 .stream()
                 .map(ITransparencyMapper.mapper::transparencyToTransparencyResponseDTO)
                 .collect(Collectors.toList());
-        
+
         Page<TransparencyResponseDTO> paginatedTransparencyList = new PageImpl<>(
                 transparencyDTOList,
                 pageable,
@@ -43,6 +45,11 @@ public class TransparencyService implements ITransparencyService {
         );
 
         return new PagedModel<>(paginatedTransparencyList);
+    }
+
+    @Override
+    public List<TransparencyType> transparencyTypesList() {
+        return transparencyRepository.findDistinctTypes();
     }
 
     @Override
@@ -65,12 +72,11 @@ public class TransparencyService implements ITransparencyService {
 
     @Override
     public TransparencyRequestDTO updateTransparency(TransparencyRequestDTO transparency, Long id) {
-        Transparency transparencyFinded = transparencyRepository.findById(id).orElseThrow(() -> new NotFoundException("No se encontro la transparencia, ID: " + id ));
+        Transparency transparencyFinded = transparencyRepository.findById(id).orElseThrow(() -> new NotFoundException("No se encontro la transparencia, ID: " + id));
 
         transparencyFinded.setFecha(transparency.fecha());
         transparencyFinded.setPdf(transparency.pdf());
-        
-        //logica pdf
+        transparencyFinded.setTipo(transparency.tipo());
 
         transparencyRepository.save(transparencyFinded);
 

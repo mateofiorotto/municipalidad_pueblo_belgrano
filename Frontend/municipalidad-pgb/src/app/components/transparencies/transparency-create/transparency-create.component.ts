@@ -20,6 +20,7 @@ export class TransparencyCreateComponent {
   transparencyForm = new FormGroup({
     pdf: new FormControl('', [Validators.required]),
     fecha: new FormControl('', [Validators.required]),
+    tipo: new FormControl('', [Validators.required])
   });
 
   onSubmit(): void {
@@ -93,5 +94,9 @@ export class TransparencyCreateComponent {
 
   get fecha() {
     return this.transparencyForm.get('fecha');
+  }
+
+  get tipo() {
+    return this.transparencyForm.get('tipo');
   }
 }

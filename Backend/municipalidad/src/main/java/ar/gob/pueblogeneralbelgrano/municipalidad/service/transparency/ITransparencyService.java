@@ -3,6 +3,7 @@ package ar.gob.pueblogeneralbelgrano.municipalidad.service.transparency;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.news.NewsResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.transparency.TransparencyRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.transparency.TransparencyResponseDTO;
+import ar.gob.pueblogeneralbelgrano.municipalidad.model.TransparencyType;
 import org.springframework.data.web.PagedModel;
 
 import java.util.List;
@@ -16,6 +17,16 @@ public interface ITransparencyService {
      * @return transparencias paginadas
      */
     public PagedModel<TransparencyResponseDTO> getPaginatedTransparencies(int page, int size);
+
+    /**
+     * Devolver las transparencias por tipo
+     */
+    //public PagedModel<TransparencyResponseDTO> getTransparenciesByType(int page, int size, String type);
+
+    /**
+     * Devolver lista de tipos
+     */
+    public List<TransparencyType> transparencyTypesList();
 
     /**
      * Devolver una transparencia por su ID

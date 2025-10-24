@@ -4,6 +4,7 @@ import ar.gob.pueblogeneralbelgrano.municipalidad.dto.transparency.TransparencyR
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.transparency.TransparencyRequestDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.transparency.TransparencyResponseDTO;
 import ar.gob.pueblogeneralbelgrano.municipalidad.dto.response.ResponseDTO;
+import ar.gob.pueblogeneralbelgrano.municipalidad.model.TransparencyType;
 import ar.gob.pueblogeneralbelgrano.municipalidad.service.transparency.ITransparencyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -58,6 +59,25 @@ public class TransparencyController {
         ResponseDTO<PagedModel<TransparencyResponseDTO>> getResponseTransparencies = new ResponseDTO<>(transparencies, 200, "Transparencias retornadas correctamente");
 
         return ResponseEntity.ok(getResponseTransparencies);
+    }
+
+    /**
+     * Endpoint que devuelve los tipos de transparencias
+     * @return lista de transparencias
+     */
+    @Operation(summary = "Obtener lista de tipos de transparencias",
+            description = "Obtener la lista de todos los tipos de transparencias. Accedible por admins, intendentes o secretaria",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de Transparencias retornada correctamente"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)")
+    })
+    @GetMapping("/types")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'SECRETARIA')")
+    public ResponseEntity<List<TransparencyType>> getTransparencyTypesList(){
+        return ResponseEntity.ok(transparencyService.transparencyTypesList());
     }
 
     /**
