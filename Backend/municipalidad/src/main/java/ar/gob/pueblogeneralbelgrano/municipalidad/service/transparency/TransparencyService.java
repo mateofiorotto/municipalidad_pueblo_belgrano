@@ -74,6 +74,7 @@ public class TransparencyService implements ITransparencyService {
     public TransparencyRequestDTO updateTransparency(TransparencyRequestDTO transparency, Long id) {
         Transparency transparencyFinded = transparencyRepository.findById(id).orElseThrow(() -> new NotFoundException("No se encontro la transparencia, ID: " + id));
 
+        transparencyFinded.setTitulo(transparency.titulo());
         transparencyFinded.setFecha(transparency.fecha());
         transparencyFinded.setPdf(transparency.pdf());
         transparencyFinded.setTipo(transparency.tipo());

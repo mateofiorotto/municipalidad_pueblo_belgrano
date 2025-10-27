@@ -28,6 +28,7 @@ export class TransparencyEditComponent {
   public transparency!: TransparencyResponseDTO;
 
   transparencyForm = new FormGroup({
+    titulo: new FormControl('', [Validators.required]),
     pdf: new FormControl('', [Validators.required]),
     fecha: new FormControl('', [Validators.required]),
     tipo: new FormControl('', [Validators.required])
@@ -115,6 +116,7 @@ export class TransparencyEditComponent {
         this.transparency = data.result;
 
         this.transparencyForm.patchValue({
+          titulo: this.transparency.titulo,
           pdf: this.transparency.pdf,
           fecha: this.transparency.fecha,
           tipo: this.transparency.tipo
@@ -135,6 +137,10 @@ export class TransparencyEditComponent {
         }
       },
     });
+  }
+
+  get titulo() {
+    return this.transparencyForm.get('titulo');
   }
 
   get pdf() {

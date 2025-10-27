@@ -18,6 +18,7 @@ export class TransparencyCreateComponent {
   private _router = inject(Router);
 
   transparencyForm = new FormGroup({
+    titulo: new FormControl('', [Validators.required]),
     pdf: new FormControl('', [Validators.required]),
     fecha: new FormControl('', [Validators.required]),
     tipo: new FormControl('', [Validators.required])
@@ -86,6 +87,10 @@ export class TransparencyCreateComponent {
         showConfirmButton: true,
       });
     }
+  }
+
+  get titulo() {
+    return this.transparencyForm.get('titulo');
   }
 
   get pdf() {

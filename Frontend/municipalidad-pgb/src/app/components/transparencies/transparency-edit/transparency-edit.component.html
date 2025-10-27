@@ -1,6 +1,16 @@
 <form [formGroup]="transparencyForm"
       (ngSubmit)="onSubmit()"
       class="p-4">
+    <div>
+        <label class="form-label d-none"
+               for="titulo">Título<span class="required-input">*</span></label>
+        <input placeholder="Título *"
+               class="form-control"
+               id="titulo"
+               type="text"
+               formControlName="titulo"
+               required>
+    </div>
     <!--PDF (URL)-->
     <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
         <div class="col-lg-6 col-12 pb-4 pb-lg-0">
@@ -38,8 +48,7 @@
             <select class="form-select"
                     id="tipo"
                     formControlName="tipo"
-                    required
-                    >
+                    required>
                 <option value=""
                         disabled
                         selected>Seleccione un tipo de transparencia *</option>

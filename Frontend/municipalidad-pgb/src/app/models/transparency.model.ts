@@ -2,6 +2,7 @@ import { Page } from "./page.model";
 
 export interface TransparencyResponseDTO {
   id: number;
+  titulo: string;
   fecha: string;
   pdf: string;
   tipo: string;
@@ -23,6 +24,7 @@ export interface TransparencyByIdResponse {
 }
 
 export interface TransparencyRequestDTO {
+  titulo: string;
   fecha: string;
   pdf: string;
   tipo: string;

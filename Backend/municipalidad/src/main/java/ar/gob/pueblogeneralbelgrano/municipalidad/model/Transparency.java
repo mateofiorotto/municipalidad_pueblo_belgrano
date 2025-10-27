@@ -18,6 +18,8 @@ public class Transparency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
+    private String titulo;
+    @Column(nullable = false)
     private LocalDate fecha;
     @Column(nullable = false)
     private String pdf; //referencia a un archivo pdf
@@ -28,8 +30,9 @@ public class Transparency {
 
     public Transparency(){}
 
-    public Transparency(Long id, LocalDate fecha, String pdf, TransparencyType tipo) {
+    public Transparency(Long id, String titulo, LocalDate fecha, String pdf, TransparencyType tipo) {
         this.id = id;
+        this.titulo = titulo;
         this.fecha = fecha;
         this.pdf = pdf;
         this.tipo = tipo;
@@ -41,6 +44,14 @@ public class Transparency {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public LocalDate getFecha() {
