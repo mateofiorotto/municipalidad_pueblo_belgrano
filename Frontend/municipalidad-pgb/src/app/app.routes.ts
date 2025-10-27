@@ -12,6 +12,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'gobierno',
+    canActivate: [maintenanceGuard],
+    loadComponent: () =>
+      import('./pages/government.page/government.page.component').then(
+        (m) => m.GovernmentPageComponent
+      ),
+  },
+  {
     path: 'noticias',
     canActivate: [maintenanceGuard],
     loadComponent: () =>
