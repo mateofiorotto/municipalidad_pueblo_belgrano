@@ -4,7 +4,7 @@ import { EventCardComponent } from '../event-card/event-card.component';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { PageEvent } from '@angular/material/paginator';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { EventsService } from '../../../services/events/events.service';
 import { EventListDataResponse, EventResponseDTO } from '../../../models/event.model';
@@ -12,7 +12,7 @@ import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   selector: 'app-events-list',
-  imports: [EventCardComponent, CommonModule, MatPaginatorModule, LoaderComponent],
+  imports: [EventCardComponent, CommonModule, MatPaginatorModule, LoaderComponent, RouterLink],
   templateUrl: './events-list.component.html',
   styleUrl: './events-list.component.css',
 })

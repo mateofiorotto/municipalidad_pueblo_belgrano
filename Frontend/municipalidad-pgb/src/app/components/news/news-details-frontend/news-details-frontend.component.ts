@@ -3,7 +3,7 @@ import { NewsResponseDTO } from '../../../models/news.models';
 import { NewsService } from '../../../services/news/news.service';
 import { inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -12,7 +12,7 @@ import { LoaderComponent } from '../../loader/loader.component';
 @Component({
   standalone: true,
   selector: 'app-news-details-frontend',
-  imports: [CommonModule, NgIf, LoaderComponent, RouterLink],
+  imports: [CommonModule, NgIf, LoaderComponent, RouterLink, DatePipe],
   templateUrl: './news-details-frontend.component.html',
   styleUrl: './news-details-frontend.component.css',
 })

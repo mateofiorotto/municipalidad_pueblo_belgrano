@@ -1,20 +1,57 @@
 @if (loading === true) {
-  <div>
-    <app-loader></app-loader>
-  </div>
+<div>
+  <app-loader></app-loader>
+</div>
 } @else {
 @if (eventsList && eventsList.length > 0) {
-<div class="row justify-content-center">
-  <div class="col-lg-4 col-md-6 col-12 mb-3 mt-3 p-4" *ngFor="let event of eventsList">
-    <app-event-card [event]="event"></app-event-card>
+@for (event of eventsList; track event.id) {
+<div class="break-all mx-10 lg:mx-20 hover:cursor-pointer">
+  <div class="relative mb-4 flex-col text-white break-all
+                overflow-hidden rounded-2xl group">
+    <a routerLink="/eventos/{{ event.id }}"
+      onclick="window.scrollTo({top: 175, behavior: 'smooth'})">
+      <img src="/banners/login-banner.jpg"
+           class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+
+      <div
+           class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.75),rgba(0,0,0,0.9),rgba(0,0,0,1))] opacity-80 transition-opacity duration-500 group-hover:opacity-60">
+      </div>
+
+      <div class="relative z-10 px-5 py-20">
+        <h3
+            class="text-3xl font-bold tracking-wide group-hover:text-green-400 transition-colors duration-500">
+          {{ event.titular }}
+        </h3>
+        <time class="group-hover:text-green-400 transition-colors duration-500 text-xl pt-3 flex flex-row gap-2 text-lg items-center"><svg xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 24 24"
+                     fill="currentColor"
+                     class="size-6">
+                    <path fill-rule="evenodd"
+                          d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
+                          clip-rule="evenodd" />
+                </svg>
+                {{event.fecha}}</time>
+      </div>
+
+      <div
+           class="absolute -top-10 -left-10 w-64 h-64 bg-green-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-700">
+      </div>
+    </a>
   </div>
+
 </div>
-    <mat-paginator class="mb-3" [length]="totalElements" [pageSize]=6 [pageIndex]="pageIndex" [pageSizeOptions]="[6]"
-        (page)="onPageChange($event)" [showFirstLastButtons]="true">
-    </mat-paginator>
+}
+<mat-paginator class="mt-15"
+               [length]="totalElements"
+               [pageSize]=6
+               [pageIndex]="pageIndex"
+               [pageSizeOptions]="[6]"
+               (page)="onPageChange($event)"
+               [showFirstLastButtons]="true">
+</mat-paginator>
 } @else {
 <div>
-    <p class="text-center">Ocurrio un error al cargar los eventos. Lo estamos solucionado.</p>
+  <p class="text-center">Ocurrio un error al cargar los eventos. Lo estamos solucionado.</p>
 </div>
 }
 }

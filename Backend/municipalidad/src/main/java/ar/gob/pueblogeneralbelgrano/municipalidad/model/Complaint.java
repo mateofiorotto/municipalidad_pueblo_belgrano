@@ -26,7 +26,7 @@ public class Complaint {
     private String direccion;
     @Column(nullable = false)
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String descripcion;
     private String imagen; //opcional
     private LocalDate fecha_reclamo; //solo back

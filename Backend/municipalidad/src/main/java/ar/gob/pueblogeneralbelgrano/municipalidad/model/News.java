@@ -23,8 +23,9 @@ public class News {
     private LocalDate fecha;
     @Column(nullable = false)
     private String imagen;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String descripcion;
+    @Column(columnDefinition = "TEXT")
     private String descripcion_adicional; //opcional
     //relacion con categoria
     //manytoone

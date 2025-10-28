@@ -24,9 +24,35 @@
                           d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
                           clip-rule="evenodd" />
                 </svg>
-                ¿Como envio un reclamo?</p>
+                <a (click)="scrollToComplaintsInfo()">¿Como envío un reclamo?</a></p>
         </div>
     </div>
     <app-complaint-create data-aos="fade-in"
                           data-aos-duration="1000"></app-complaint-create>
+
+    <div id="info-reclamos"
+         class="px-20 pb-15"
+         data-aos="fade-up"
+         data-aos-duration="1000">
+        <h3 class="underline decoration-orange-500 underline-offset-8 text-identity-blue font-bold text-3xl pt-5 pb-5">¿Cómo envío un reclamo?</h3>
+        <p class="text-lg font-bold pb-3">Para enviar un reclamo, sigue estos pasos:</p>
+        <ol class="text-lg list-decimal pl-5 text-left">
+          <li>Rellena los campos obligatorios.</li>
+          <li>Presiona el ReCaptcha y completa la prueba de seguridad en caso de que se te pida (si no te aparece el reCAPTCHA, recarga la página).</li>
+          <li>Revisa la información proporcionada para asegurarte de que sea correcta.</li>
+          <li>Haz clic en "Enviar" para enviar tu reclamo.</li>
+        </ol>
+
+        <h3 class="underline decoration-orange-500 underline-offset-8 text-identity-blue font-bold text-3xl pt-10 pb-5">Información requerida</h3>
+        <p class="text-lg font-bold pb-3">Para crear un reclamo asegurate de lo siguiente:</p>
+        <ol class="text-lg list-decimal pl-5 text-left">
+          <li><span class="font-bold">Motivo:</span> debe tener entre 5 y 100 caracteres, solo puede contener letras y espacios (sin números ni caracteres especiales).</li>
+  <li><span class="font-bold">Nombre y apellido:</span> debe tener entre 5 y 100 caracteres, solo puede contener letras y espacios (sin números ni caracteres especiales).</li>
+  <li><span class="font-bold">Celular:</span> debe tener entre 6 y 20 caracteres y contener únicamente números.</li>
+  <li><span class="font-bold">Dirección:</span> debe tener entre 5 y 150 caracteres y puede incluir letras, números, espacios y tildes.</li>
+  <li><span class="font-bold">Email:</span> debe ser válido y contener solo letras, números, puntos, guiones o guiones bajos (por ejemplo: ejemplo&#64;mail.com).</li>
+  <li><span class="font-bold">Descripción:</span> debe tener entre 20 y 1000 caracteres y no puede incluir los símbolos <code>&lt;</code> ni <code>&gt;</code>.</li>
+  <li><span class="font-bold">Captcha:</span> debe completarse correctamente para verificar que no sos un robot.</li>
+        </ol>
+     </div>
 </section>

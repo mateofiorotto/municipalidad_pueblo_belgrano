@@ -7,7 +7,7 @@
                      <label class="sr-only"
                             for="motivo">Motivo<span class="required-input">*</span></label>
                      <input placeholder="Motivo *"
-                            class="form-control w-full p-4 rounded-xl"
+                            class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                             name="motivo"
                             id="motivo"
                             type="text"
@@ -35,7 +35,7 @@
                      <label class="sr-only"
                             for="nombre_apellido">Nombre y Apellido<span class="required-input">*</span></label>
                      <input placeholder="Nombre y Apellido *"
-                            class="form-control w-full p-4 rounded-xl"
+                            class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                             name="nombre_apellido"
                             id="nombre_apellido"
                             type="text"
@@ -66,7 +66,7 @@
                      <label class="sr-only"
                             for="direccion">Dirección<span class="required-input">*</span></label>
                      <input placeholder="Dirección (domicilio/reclamo) *"
-                            class="form-control w-full p-4 rounded-xl"
+                            class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                             name="direccion"
                             id="direccion"
                             type="text"
@@ -95,7 +95,7 @@
                      <label class="sr-only"
                             for="celular">Celular<span class="required-input">*</span></label>
                      <input placeholder="Celular *"
-                            class="form-control w-full p-4 rounded-xl"
+                            class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                             name="celular"
                             id="celular"
                             type="text"
@@ -125,7 +125,7 @@
               <label class="sr-only"
                      for="email">Email<span class="required-input">*</span></label>
               <input placeholder="Email *"
-                     class="form-control w-full p-4 rounded-xl"
+                     class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                      name="email"
                      id="email"
                      type="text"
@@ -150,7 +150,7 @@
               <label class="sr-only"
                      for="descripcion">Descripción<span class="required-input">*</span></label>
               <textarea placeholder="Descripción *"
-                        class="form-control w-full p-4 rounded-xl"
+                        class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                         name="descripcion"
                         id="descripcion"
                         type="text"
@@ -168,7 +168,7 @@
               }
 
               @if(descripcion?.touched && descripcion?.errors?.['pattern']) {
-              <p class="input-error">La descripción no puede contener <>
+              <p class="input-error">La descripción no puede contener < >
               </p>
               }
 
