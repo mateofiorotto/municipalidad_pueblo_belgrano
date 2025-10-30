@@ -220,27 +220,6 @@ public class ComplaintService implements IComplaintService {
             document.add(createLabelValueParagraph("Fecha de Reclamo: ",
                     complaint.getFecha_reclamo() != null ? complaint.getFecha_reclamo().toString() : "-", subHeaderFont, paragraphFont));
 
-            document.add(Chunk.NEWLINE);
-
-            // Header estado
-            Paragraph estadoHeader = new Paragraph("ESTADO DEL RECLAMO", headerFont);
-            estadoHeader.setSpacingBefore(20);
-            estadoHeader.setSpacingAfter(20);
-            document.add(estadoHeader);
-
-            // Estado del reclamo
-            document.add(createLabelValueParagraph("Cerrado: ",
-                    complaint.getCerrado() != null ? (complaint.getCerrado() ? "Sí" : "No") : "-", subHeaderFont, paragraphFont));
-
-            document.add(createLabelValueParagraph("Fecha de Cierre: ",
-                    complaint.getFecha_cerrado() != null ? complaint.getFecha_cerrado().toString() : "-", subHeaderFont, paragraphFont));
-
-            document.add(createLabelValueParagraph("Área: ",
-                    complaint.getArea() != null ? complaint.getArea().getNombre() : "-", subHeaderFont, paragraphFont));
-
-            document.add(createLabelValueParagraph("Comentarios: ",
-                    complaint.getComentario() != null && !complaint.getComentario().isBlank() ? complaint.getComentario() : "-", subHeaderFont, paragraphFont));
-
             document.close();
 
             return baos.toByteArray();

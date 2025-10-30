@@ -1,130 +1,218 @@
 @if (news) {
-<h2 class="mt-5">Editar Noticia #{{ news.id }}</h2>
-<form [formGroup]="newsForm" (ngSubmit)="onSubmit()" class="p-4">
-    <!--Titular-->
-    <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
-        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
-            <label class="form-label d-none" for="titular">Titular<span class="required-input">*</span></label>
-            <input placeholder="Titular *" class="form-control" id="titular" type="text" formControlName="titular">
+<form [formGroup]="newsForm"
+      (ngSubmit)="onSubmit()"
+      class="max-w-6xl mx-auto p-6 space-y-6 py-10">
+    <!-- Header -->
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-800">Editar Noticia #{{ news.id }}</h2>
+        <p class="text-sm text-gray-500 mt-1">Completa todos los campos requeridos para editar</p>
+    </div>
+
+    <!-- Titular y Subtítulo -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="space-y-2">
+            <label for="titular"
+                   class="sr-only">
+                Titular <span class="text-red-500">*</span>
+            </label>
+            <input id="titular"
+                   type="text"
+                   formControlName="titular"
+                   placeholder="Ingrese el titular de la noticia *"
+                   class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                   [class.border-red-500]="titular?.touched && titular?.invalid">
             @if(titular?.touched && titular?.errors?.['required']) {
-            <p class="input-error">El titular es requerido</p>
+            <p class="input-error">
+                <span>⚠</span> El titular es requerido
+            </p>
             }
-
             @if(titular?.touched && titular?.errors?.['minlength']) {
-            <p class="input-error">El titular debe tener al menos 15 caracteres</p>
+            <p class="input-error">
+                <span>⚠</span> El titular debe tener al menos 15 caracteres
+            </p>
             }
-
             @if(titular?.touched && titular?.errors?.['maxlength']) {
-            <p class="input-error">El titular debe tener menos de 100 caracteres</p>
+            <p class="input-error">
+                <span>⚠</span> El titular debe tener menos de 100 caracteres
+            </p>
             }
         </div>
 
-        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
-
-            <!--Subtitulo-->
-            <label class="form-label d-none" for="subtitulo">Subtitulo<span class="required-input">*</span></label>
-            <input placeholder="Subtitulo *" class="form-control" id="subtitulo" type="text"
-                formControlName="subtitulo">
-
+        <div class="space-y-2">
+            <label for="subtitulo"
+                   class="sr-only">
+                Subtítulo <span class="text-red-500">*</span>
+            </label>
+            <input id="subtitulo"
+                   type="text"
+                   formControlName="subtitulo"
+                   placeholder="Ingrese el subtítulo de la noticia *"
+                   class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                   [class.border-red-500]="subtitulo?.touched && subtitulo?.invalid">
             @if(subtitulo?.touched && subtitulo?.errors?.['required']) {
-            <p class="input-error">El subtitulo es requerido</p>
+            <p class="input-error">
+                <span>⚠</span> El subtítulo es requerido
+            </p>
             }
-
             @if(subtitulo?.touched && subtitulo?.errors?.['minlength']) {
-            <p class="input-error">El subtitulo debe tener al menos 20 caracteres</p>
+            <p class="input-error">
+                <span>⚠</span> El subtítulo debe tener al menos 20 caracteres
+            </p>
             }
-
             @if(subtitulo?.touched && subtitulo?.errors?.['maxlength']) {
-            <p class="input-error">El subtitulo debe tener menos de 100 caracteres</p>
+            <p class="input-error">
+                <span>⚠</span> El subtítulo debe tener menos de 255 caracteres
+            </p>
             }
         </div>
     </div>
 
-    <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
-        <div class="col-12 pb-4 pb-lg-0">
-            <!--Fecha-->
-            <label class="form-label d-none" for="fecha">Fecha<span class="required-input">*</span></label>
-            <input placeholder="Fecha *" class="form-control" id="fecha" type="date" formControlName="fecha">
-
+    <!-- Fecha e Imagen -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="space-y-2">
+            <label for="fecha"
+                   class="sr-only">
+                Fecha <span class="text-red-500">*</span>
+            </label>
+            <input id="fecha"
+                   type="date"
+                   formControlName="fecha"
+                   class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                   [class.border-red-500]="fecha?.touched && fecha?.invalid">
             @if(fecha?.touched && fecha?.errors?.['required']) {
-            <p class="input-error">La fecha es requerida
-                }
-
-        </div>
-
-    </div>
-    <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
-        <div class="col-12 pb-4">
-            <!--Descripcion-->
-            <label class="form-label d-none" for="descripcion">Descripción<span class="required-input">*</span></label>
-            <textarea placeholder="Descripción *" class="form-control" id="descripcion" type="text"
-                formControlName="descripcion"></textarea>
-
-            @if(descripcion?.touched && descripcion?.errors?.['required']) {
-            <p class="input-error">La descripción es requerida</p>
-            }
-
-            @if(descripcion?.touched && descripcion?.errors?.['minlength']) {
-            <p class="input-error">La descripción debe tener al menos 20 caracteres</p>
-            }
-
-            @if(descripcion?.touched && descripcion?.errors?.['maxlength']) {
-            <p class="input-error">La descripción debe tener menos de 1500 caracteres</p>
+            <p class="input-error">
+                <span>⚠</span> La fecha es requerida
+            </p>
             }
         </div>
 
-        <div class="col-12">
-            <!--Descripcion Adicional-->
-            <label class="form-label d-none" for="descripcion_adicional">Descripción<span
-                    class="required-input">*</span></label>
-            <textarea placeholder="Descripción Adicional" class="form-control" id="descripcion_adicional" type="text"
-                formControlName="descripcion_adicional"></textarea>
-
-            @if(descripcion_adicional?.touched && descripcion_adicional?.errors?.['maxlength']) {
-            <p class="input-error">La descripción adicional debe tener menos de 1500 caracteres</p>
+        <div class="space-y-2">
+            <label for="imagen"
+                   class="sr-only">
+                Imagen (URL) <span class="text-red-500">*</span>
+            </label>
+            <input id="imagen"
+                   type="text"
+                   formControlName="imagen"
+                   placeholder="https://ejemplo.com/imagen.jpg *"
+                   class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                   [class.border-red-500]="imagen?.touched && imagen?.invalid">
+            @if(imagen?.touched && imagen?.errors?.['required']) {
+            <p class="input-error">
+                <span>⚠</span> El enlace de la imagen es requerido
+            </p>
             }
         </div>
     </div>
 
-    <div class="row ps-4 pe-4 pb-4">
-        <div class="col-lg-6 col-12">
-            <label class="form-label mt-3 d-none">Categoria</label>
-            <select class="w-100 mt-3 d-block m-auto form-control" formControlName="categoria">
-                <option disabled value="">Categoria (seleccionar) *</option>
+     <div class="space-y-2">
+        <label class="block text-sm font-medium text-gray-700">
+            Imagen Actual
+        </label>
+        <div class="border border-gray-300 rounded-lg overflow-hidden bg-gray-50 p-4">
+            <img 
+                [src]="news.imagen" 
+                [alt]="news.titular"
+                class="w-full h-auto max-h-96 object-contain rounded-lg"
+            >
+        </div>
+    </div>
+
+    <!-- Descripción -->
+    <div class="space-y-2">
+        <label for="descripcion"
+               class="sr-only">
+            Descripción <span class="text-red-500">*</span>
+        </label>
+        <textarea id="descripcion"
+                  formControlName="descripcion"
+                  placeholder="Ingrese la descripción principal de la noticia *"
+                  rows="4"
+                  class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white resize-none"
+                  [class.border-red-500]="descripcion?.touched && descripcion?.invalid"></textarea>
+        @if(descripcion?.touched && descripcion?.errors?.['required']) {
+        <p class="input-error">
+            <span>⚠</span> La descripción es requerida
+        </p>
+        }
+        @if(descripcion?.touched && descripcion?.errors?.['minlength']) {
+        <p class="input-error">
+            <span>⚠</span> La descripción debe tener al menos 20 caracteres
+        </p>
+        }
+        @if(descripcion?.touched && descripcion?.errors?.['maxlength']) {
+        <p class="input-error">
+            <span>⚠</span> La descripción debe tener menos de 1500 caracteres
+        </p>
+        }
+    </div>
+
+    <!-- Descripción Adicional -->
+    <div class="space-y-2">
+        <label for="descripcion_adicional"
+               class="sr-only">
+            Descripción Adicional
+        </label>
+        <textarea id="descripcion_adicional"
+                  formControlName="descripcion_adicional"
+                  placeholder="Ingrese información adicional (opcional)"
+                  rows="4"
+                  class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white resize-none"
+                  [class.border-red-500]="descripcion_adicional?.touched && descripcion_adicional?.invalid"></textarea>
+        @if(descripcion_adicional?.touched && descripcion_adicional?.errors?.['maxlength']) {
+        <p class="input-error">
+            <span>⚠</span> La descripción adicional debe tener menos de 1500 caracteres
+        </p>
+        }
+    </div>
+
+    <!-- Categoría y Evento -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="space-y-2">
+            <label for="categoria"
+                   class="sr-only">
+                Categoría <span class="text-red-500">*</span>
+            </label>
+            <select id="categoria"
+                    formControlName="categoria"
+                    class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white resize-none"
+                    [class.border-red-500]="categoria?.touched && categoria?.invalid">
+                <option disabled
+                        value="">Seleccione una categoría *</option>
                 @for(category of categoriesList; track category.id){
-                <option value="{{ category.id }}">{{ category.nombre }}</option>
+                <option [value]="category.id">{{ category.nombre }}</option>
                 }
             </select>
             @if(categoria?.touched && categoria?.errors?.['required']) {
-            <p class="input-error">La categoria es requerida</p>
+            <p class="input-error">
+                <span>⚠</span> La categoría es requerida
+            </p>
             }
         </div>
 
-        <div class="col-lg-6 col-12">
-            <label class="form-label mt-3 d-none">Evento</label>
-            <select class="w-100 mt-3 d-block m-auto form-control" formControlName="evento">
-                <option value="">Evento (seleccionar)</option>
+        <div class="space-y-2">
+            <label for="evento"
+                   class="sr-only">
+                Evento
+            </label>
+            <select id="evento"
+                    formControlName="evento"
+                                class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white resize-none">
+                <option value="">Seleccione un evento relacionado (opcional)</option>
                 @for(event of eventsList; track event.id){
-                <option value="{{ event.id }}">{{ event.titular }}</option>
+                <option [value]="event.id">{{ event.titular }}</option>
                 }
             </select>
         </div>
     </div>
 
-    <div class="col-12 ps-4 pe-4 pb-4 pb-lg-0">
-        <!--Imagen-->
-        <label class="form-label d-none" for="imagen">Imagen<span class="required-input">*</span></label>
-        <input placeholder="Imagen (Link / URL) *" class="form-control" id="imagen" type="text"
-            formControlName="imagen">
-
-        @if(imagen?.touched && imagen?.errors?.['required']) {
-        <p class="input-error">El enlace de la imagen es requerido</p>
-        }
-
-        <p class="mt-3 mb-3">Imagen vieja:</p>
-        <img class="img-fluid" src="{{ news.imagen }}" alt="Imagen de la noticia">
+    <!-- Botón Submit -->
+    <div class="flex justify-center pt-4">
+        <button type="submit"
+                [disabled]="newsForm.invalid"
+                class="disabled:bg-[rgba(15,139,34,0.5)] disabled:cursor-not-allowed disabled:text-gray-500 inline-block py-3 px-6 mb-10 font-semibold bg-primary text-black py-6 md:py-4 rounded-lg bg-identity-green transition-all duration-300 ease-in-out focus:shadow-outline focus:outline-none cursor-pointer hover:bg-hover-green">
+            Editar Noticia
+        </button>
     </div>
-
-    <button [disabled]="newsForm.invalid" type="submit" class="btn-send-form">Editar</button>
 </form>
 }

@@ -56,7 +56,7 @@
         }
     </table>
 
-    <mat-paginator class="mb-3" [length]="totalElements" [pageSize]=6 [pageIndex]="pageIndex" [pageSizeOptions]="[6]"
+    <mat-paginator [length]="totalElements" [pageSize]=6 [pageIndex]="pageIndex" [pageSizeOptions]="[6]"
         (page)="onPageChange($event)" [showFirstLastButtons]="true">
     </mat-paginator>
 </div>

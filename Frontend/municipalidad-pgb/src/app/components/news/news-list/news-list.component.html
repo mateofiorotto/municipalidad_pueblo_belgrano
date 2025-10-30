@@ -21,7 +21,9 @@
     <app-news-card [news]="news"></app-news-card>
     }
   </div>
-  <mat-paginator [length]="totalElements"
+  <mat-paginator 
+  class="lg:px-20 pb-10"
+  [length]="totalElements"
                  [pageSize]=6
                  [pageIndex]="pageIndex"
                  [pageSizeOptions]="[6]"
