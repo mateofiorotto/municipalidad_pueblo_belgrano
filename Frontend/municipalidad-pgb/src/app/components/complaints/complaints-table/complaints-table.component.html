@@ -1,65 +1,99 @@
-<div class="select-area d-flex">
-    <div class="mt-¿ mb-4">
-        <label for="area">Área:</label>
-        <select id="area" class="ms-3" (change)="onAreaChange($any($event.target).value)" [(ngModel)]="selectedAreaId">
-            <option value="0">Todas las Áreas</option>
-            @for(area of areasList; track area.id){
-            <option value="{{ area.id }}">
-                {{ area.nombre }}
-            </option>
-            }
-        </select>
+<div class="px-4 sm:px-6 lg:px-8">
+    <div class="select-area mb-6">
+        <div class="flex flex-wrap gap-4 items-center px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-2">
+                <label for="area" class="font-medium text-gray-700">Área:</label>
+                <select id="area" 
+                        class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-identity-blue focus:border-transparent"
+                        (change)="onAreaChange($any($event.target).value)" 
+                        [(ngModel)]="selectedAreaId">
+                    <option value="0">Todas las Áreas</option>
+                    @for(area of areasList; track area.id){
+                    <option value="{{ area.id }}">
+                        {{ area.nombre }}
+                    </option>
+                    }
+                </select>
+            </div>
 
-        <label class="ms-4" for="status">Estado:</label>
-        <select id="status" class="ms-3" (change)="onStatusChange($any($event.target).value)"
-            [(ngModel)]="selectedStatus">
-            <option value="">Todos los reclamos</option>
-            <option value="abiertos">Abiertos</option>
-            <option value="cerrados">Cerrados</option>
-        </select>
+            <div class="flex items-center gap-2">
+                <label for="status" class="font-medium text-gray-700">Estado:</label>
+                <select id="status" 
+                        class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-identity-blue focus:border-transparent"
+                        (change)="onStatusChange($any($event.target).value)"
+                        [(ngModel)]="selectedStatus">
+                    <option value="">Todos los reclamos</option>
+                    <option value="abiertos">Abiertos</option>
+                    <option value="cerrados">Cerrados</option>
+                </select>
+            </div>
+        </div>
     </div>
-</div>
 
-@if (complaintsList && complaintsList.length > 0) {
-<div class="overflow-auto">
+    @if (complaintsList && complaintsList.length > 0) {
+    <div class="overflow-x-auto -mx-4 rounded-xl border-identity-blue border-2 mx-5">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr class="bg-identity-blue">
+                    <th class="p-3 sm:p-4 text-left font-semibold text-white whitespace-nowrap">N°</th>
+                    <th class="p-3 sm:p-4 text-left font-semibold text-white whitespace-nowrap">Motivo</th>
+                    <th class="p-3 sm:p-4 text-left font-semibold text-white whitespace-nowrap">Dirección</th>
+                    <th class="p-3 sm:p-4 text-left font-semibold text-white whitespace-nowrap">Descripción</th>
+                    <th class="p-3 sm:p-4 text-left font-semibold text-white whitespace-nowrap">Fecha</th>
+                    <th class="p-3 sm:p-4 text-left font-semibold text-white whitespace-nowrap">Área</th>
+                    <th class="p-3 sm:p-4 text-left font-semibold text-white whitespace-nowrap">Estado</th>
+                    <th class="p-3 sm:p-4 text-left font-semibold text-white whitespace-nowrap">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (complaint of complaintsList; track complaint.id) {
+                <tr class="border-b border-gray-200 hover:bg-blue-100 transition-colors">
+                    <td class="p-2 sm:p-3 font-bold text-gray-900 whitespace-nowrap">{{ complaint.id }}</td>
+                    <td class="p-2 sm:p-3 text-gray-700">{{ complaint.motivo.substr(0, 20) }}...</td>
+                    <td class="p-2 sm:p-3 text-gray-700">{{ complaint.direccion }}</td>
+                    <td class="p-2 sm:p-3 text-gray-700">{{ complaint.descripcion.substr(0, 20) }}...</td>
+                    <td class="p-2 sm:p-3 text-gray-700 whitespace-nowrap">{{ complaint.fecha_reclamo }}</td>
+                    <td class="p-2 sm:p-3 text-gray-700">{{ complaint.area?.nombre || 'Sin área' }}</td>
+                    <td class="p-2 sm:p-3 text-gray-700">
+                        <span class="px-2 py-1 rounded-full text-xs font-medium"
+                              [class.bg-green-100]="!complaint.cerrado"
+                              [class.text-green-800]="!complaint.cerrado"
+                              [class.bg-gray-100]="complaint.cerrado"
+                              [class.text-gray-800]="complaint.cerrado">
+                            {{ complaint.cerrado ? 'Cerrado' : 'Abierto' }}
+                        </span>
+                    </td>
+                    <td class="p-2 sm:p-3">
+                        <div class="flex gap-2 items-center justify-start">
+                            <a routerLink="/admin/reclamos/{{complaint.id}}/detalle"
+                               class="text-gray-600 hover:text-[#0066cc] transition-colors cursor-pointer">
+                                <mat-icon class="!text-xl">visibility</mat-icon>
+                            </a>
+                            <a routerLink="/admin/reclamos/{{complaint.id}}/editar"
+                               class="text-gray-600 hover:text-[#0066cc] transition-colors cursor-pointer">
+                                <mat-icon class="!text-xl">edit</mat-icon>
+                            </a>
+                            <a routerLink="/admin/reclamos/{{complaint.id}}/borrar"
+                               class="text-gray-600 hover:text-red-600 transition-colors cursor-pointer">
+                                <mat-icon class="!text-xl">delete</mat-icon>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
-    <table class="table table-striped table-hover table-bordered text-center">
-        <tr>
-            <th class="p-4">N°</th>
-            <th class="p-4">Motivo</th>
-            <th class="p-4">Direccion</th>
-            <th class="p-4">Descripcion</th>
-            <th class="p-4">Fecha</th>
-            <th class="p-4">Area</th>
-            <th class="p-4">Estado</th>
-            <th>Acciones</th>
-        </tr>
-        @for (complaint of complaintsList; track complaint.id) {
-        <tr class="text-break">
-            <td class="fw-bold p-3 text-center">{{ complaint.id }}</td>
-            <td class="p-2">{{ complaint.motivo.substr(0,20...) }}...</td>
-            <td class="p-2">{{ complaint.direccion }}</td>
-            <td class="p-2">{{ complaint.descripcion.substr(0,20...) }}...</td>
-            <td class="p-2">{{ complaint.fecha_reclamo }}</td>
-            <td class="p-2">{{ complaint.area?.nombre || 'Sin área' }}</td>
-            <td class="p-2">{{ complaint.cerrado ? 'Cerrado' : 'Abierto' }}</td>
-
-            <td class="actions-td p-2 text-center">
-                <div class="d-flex justify-content-center gap-2">
-                    <a routerLink="/admin/reclamos/{{complaint.id}}/detalle"><mat-icon>visibility</mat-icon></a>
-                    <a routerLink="/admin/reclamos/{{complaint.id}}/editar"><mat-icon>edit</mat-icon></a>
-                    <a routerLink="/admin/reclamos/{{complaint.id}}/borrar"><mat-icon>delete</mat-icon></a>
-                </div>
-            </td>
-
-        </tr>
-        }
-    </table>
-
-    <mat-paginator [length]="totalElements" [pageSize]=6 [pageIndex]="pageIndex" [pageSizeOptions]="[6]"
-        (page)="onPageChange($event)" [showFirstLastButtons]="true">
+    <mat-paginator class="pt-10"
+                   [length]="totalElements"
+                   [pageSize]=6
+                   [pageIndex]="pageIndex"
+                   [pageSizeOptions]="[6]"
+                   (page)="onPageChange($event)"
+                   [showFirstLastButtons]="true">
     </mat-paginator>
+    } @else {
+    <p class="text-center mt-5 text-xl pt-30">No se encontraron reclamos</p>
+    }
 </div>
-} @else {
-<p class="text-center mt-5">No se encontraron reclamos</p>
-}

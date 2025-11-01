@@ -1,73 +1,103 @@
+@if (transparency) {
 <form [formGroup]="transparencyForm"
       (ngSubmit)="onSubmit()"
-      class="p-4">
-    <div>
-        <label class="form-label d-none"
-               for="titulo">Título<span class="required-input">*</span></label>
-        <input placeholder="Título *"
-               class="form-control"
-               id="titulo"
-               type="text"
-               formControlName="titulo"
-               required>
-    </div>
-    <!--PDF (URL)-->
-    <div class="row pt-lg-3 pb-lg-2 ps-4 pe-4">
-        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
-            <label class="form-label d-none"
-                   for="pdf">PDF (URL)<span class="required-input">*</span></label>
-            <input placeholder="PDF (URL) *"
-                   class="form-control"
-                   id="pdf"
-                   type="text"
-                   formControlName="pdf">
-            @if(pdf?.touched && pdf?.errors?.['required']) {
-            <p class="input-error">La URL de PDF es requerida</p>
-            }
-        </div>
-
-        <div class="col-lg-6 col-12 pb-4 pb-lg-0">
-
-            <!--Fecha-->
-            <label class="form-label d-none"
-                   for="fecha">Fecha<span class="required-input">*</span></label>
-            <input placeholder="Fecha *"
-                   class="form-control"
-                   id="fecha"
-                   type="date"
-                   formControlName="fecha">
-
-            @if(fecha?.touched && fecha?.errors?.['required']) {
-            <p class="input-error">La fecha es requerida</p>
-            }
-
-        </div>
-
-        <div>
-            <label for="tipo">Tipo de transparencia<span class="required-input">*</span></label>
-            <select class="form-select"
-                    id="tipo"
-                    formControlName="tipo"
-                    required>
-                <option value=""
-                        disabled
-                        selected>Seleccione un tipo de transparencia *</option>
-                <option value="BOLETIN_OFICIAL">Boletín Oficial</option>
-                <option value="LICITACIONES">Licitaciones Públicas</option>
-                <option value="ORDENANZAS">Ordenanzas y Decretos</option>
-                <option value="PRESUPUESTO">Presupuesto Municipal</option>
-                <option value="CONTRATOS">Contratos y Convenios</option>
-            </select>
-        </div>
-
-        <div>
-            @if(tipo?.touched && tipo?.errors?.['required']) {
-            <p class="input-error">El tipo de transparencia es requerido</p>
-            }
-        </div>
+      class="max-w-4xl mx-auto p-6 space-y-6 py-10">
+    
+    <!-- Header -->
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-800">Editar Transparencia #{{ transparency.id }}</h2>
+        <p class="text-sm text-gray-500 mt-1">Completa todos los campos requeridos para editar</p>
     </div>
 
-    <button [disabled]="transparencyForm.invalid"
-            type="submit"
-            class="btn-send-form mt-5">EDITAR</button>
+    <!-- Card del formulario -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="p-6 space-y-6">
+            <!-- Título -->
+            <div class="space-y-2">
+                <label for="titulo" class="block text-sm font-medium text-gray-700">
+                    Título <span class="text-red-500">*</span>
+                </label>
+                <input id="titulo"
+                       type="text"
+                       formControlName="titulo"
+                       placeholder="Ingrese el título de la transparencia"
+                       class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                       [class.border-red-500]="titulo?.touched && titulo?.invalid">
+                @if(titulo?.touched && titulo?.errors?.['required']) {
+                <p class="text-red-500 text-sm mt-1 flex items-center gap-1">
+                    <span>⚠</span> El título es requerido
+                </p>
+                }
+            </div>
+
+            <!-- PDF y Fecha -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <label for="pdf" class="block text-sm font-medium text-gray-700">
+                        PDF (URL) <span class="text-red-500">*</span>
+                    </label>
+                    <input id="pdf"
+                           type="text"
+                           formControlName="pdf"
+                           placeholder="https://ejemplo.com/documento.pdf"
+                           class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                           [class.border-red-500]="pdf?.touched && pdf?.invalid">
+                    @if(pdf?.touched && pdf?.errors?.['required']) {
+                    <p class="text-red-500 text-sm mt-1 flex items-center gap-1">
+                        <span>⚠</span> La URL del PDF es requerida
+                    </p>
+                    }
+                </div>
+
+                <div class="space-y-2">
+                    <label for="fecha" class="block text-sm font-medium text-gray-700">
+                        Fecha <span class="text-red-500">*</span>
+                    </label>
+                    <input id="fecha"
+                           type="date"
+                           formControlName="fecha"
+                           class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                           [class.border-red-500]="fecha?.touched && fecha?.invalid">
+                    @if(fecha?.touched && fecha?.errors?.['required']) {
+                    <p class="text-red-500 text-sm mt-1 flex items-center gap-1">
+                        <span>⚠</span> La fecha es requerida
+                    </p>
+                    }
+                </div>
+            </div>
+
+            <!-- Tipo de Transparencia -->
+            <div class="space-y-2">
+                <label for="tipo" class="block text-sm font-medium text-gray-700">
+                    Tipo de Transparencia <span class="text-red-500">*</span>
+                </label>
+                <select id="tipo"
+                        formControlName="tipo"
+                        class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                        [class.border-red-500]="tipo?.touched && tipo?.invalid">
+                    <option value="" disabled>Seleccione un tipo de transparencia *</option>
+                    <option value="BOLETIN_OFICIAL">Boletín Oficial</option>
+                    <option value="LICITACIONES">Licitaciones Públicas</option>
+                    <option value="ORDENANZAS">Ordenanzas y Decretos</option>
+                    <option value="PRESUPUESTO">Presupuesto Municipal</option>
+                    <option value="CONTRATOS">Contratos y Convenios</option>
+                </select>
+                @if(tipo?.touched && tipo?.errors?.['required']) {
+                <p class="text-red-500 text-sm mt-1 flex items-center gap-1">
+                    <span>⚠</span> El tipo de transparencia es requerido
+                </p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón Submit -->
+    <div class="flex justify-center pt-4">
+        <button type="submit"
+                [disabled]="transparencyForm.invalid"
+                class="disabled:bg-[rgba(15,139,34,0.5)] disabled:cursor-not-allowed disabled:text-gray-500 inline-block py-3 px-6 mb-10 font-semibold bg-primary text-black py-6 md:py-4 rounded-lg bg-identity-green transition-all duration-300 ease-in-out focus:shadow-outline focus:outline-none cursor-pointer hover:bg-hover-green">
+            Editar Transparencia
+        </button>
+    </div>
 </form>
+}

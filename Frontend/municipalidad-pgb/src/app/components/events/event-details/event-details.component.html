@@ -1,20 +1,73 @@
 @if (event) {
-<div>
-  <div class="row p-3 mt-5 text-break align-items-center justify-content-center">
-    <h2 class="mb-3">Evento #{{ event.id }}</h2>
-    <div class="col-lg-5 col-md-6 col-12 p-4">
-      <p><span class="fw-bold">Titular:</span> {{ event.titular }}</p>
-      <p><span class="fw-bold">Fecha:</span> {{ event.fecha }}</p>
+<div class="max-w-5xl mx-auto p-6 py-10 break-all">
+  <!-- Header -->
+  <div class="mb-6 sm:mb-8 p-4 sm:p-6 bg-blue-100 border-l-4 border-identity-blue rounded-r-lg">
+    <h2 class="text-xl font-bold text-identity-blue">Evento #{{ event.id }}</h2>
+  </div>
+
+  <!-- Card principal -->
+  <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+    <!-- Imagen destacada -->
+    <div class="relative h-64 bg-gray-200 overflow-hidden">
+      <img 
+        class="w-full h-full object-cover" 
+        [src]="event.imagen" 
+        [alt]="event.titular"
+        onerror="this.src='https://via.placeholder.com/800x400?text=Imagen+no+disponible'"
+      >
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+        <h3 class="text-2xl font-bold">{{ event.titular }}</h3>
+      </div>
     </div>
-    <div class="col-lg-5 col-md-6 col-12 p-4">
-      <p><span class="fw-bold">Imagen:</span></p>
-      <img class="img-fluid" src="{{ event.imagen }}" alt="Imagen del evento">
-    </div>
-    <div class="col-11 p-4 text-center ">
-      <p class="pb-lg-3 pt-lg-3 pb-0 pt-0"><span class="fw-bold">Descripción:</span> {{ event.descripcion }}</p>
-      @if(event.descripcion_adicional){
-        <p><span class="fw-bold">Descripción Adicional:</span> {{ event.descripcion_adicional }}</p>
-      }
+
+    <!-- Contenido -->
+    <div class="p-6">
+      <!-- Metadata -->
+      <div class="mb-6">
+        <!-- Fecha -->
+        <div class="flex items-start gap-3">
+          <div class="bg-blue-100 p-2 rounded-lg">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <p class="text-sm text-gray-500 font-medium">Fecha</p>
+            <p class="text-gray-900 font-semibold">{{ event.fecha }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Descripción -->
+      <div class="border-t border-gray-200 pt-6 mb-6">
+        <div class="flex items-start gap-3 mb-4">
+          <div class="bg-gray-100 p-2 rounded-lg">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <p class="text-sm text-gray-500 font-medium mb-2">Descripción</p>
+            <p class="text-gray-700 leading-relaxed">{{ event.descripcion }}</p>
+          </div>
+        </div>
+
+        <!-- Descripción Adicional (opcional) -->
+        @if(event.descripcion_adicional){
+        <div class="flex items-start gap-3 mt-4 bg-gray-50 p-4 rounded-lg">
+          <div class="bg-gray-200 p-2 rounded-lg">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <p class="text-sm text-gray-500 font-medium mb-2">Descripción Adicional</p>
+            <p class="text-gray-700 leading-relaxed">{{ event.descripcion_adicional }}</p>
+          </div>
+        </div>
+        }
+      </div>
     </div>
   </div>
 </div>

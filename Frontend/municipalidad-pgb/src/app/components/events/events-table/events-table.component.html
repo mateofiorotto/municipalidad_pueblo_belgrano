@@ -1,42 +1,61 @@
-<div class="text-center">
-    <a class="mb-5 mt-0 btn-crear-crud d-inline-block" routerLink="/admin/eventos/crear"><span class="me-2">+</span>Crear evento</a>
-</div>
-@if (eventsList && eventsList.length > 0) {
-<div class="overflow-auto">
+<div class="px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+        <a class="inline-block py-3 px-6 mb-10 font-semibold bg-primary text-black py-6 md:py-4 rounded-lg bg-identity-green transition-all duration-300 ease-in-out focus:shadow-outline focus:outline-none cursor-pointer hover:bg-hover-green"
+           routerLink="/admin/eventos/crear">
+            <span class="me-2">+</span>Crear evento
+        </a>
+    </div>
 
-    <table class="table table-striped table-hover table-bordered text-center">
-        <tr>
-            <th class="p-4">N°</th>
-            <th class="p-4">Titular</th>
-            <th class="p-4">Descripcion</th>
-            <th class="p-4">Imagen</th>
-            <th class="p-4">Fecha</th>
-            <th>Acciones</th>
-        </tr>
-        @for (event of eventsList; track event.id) {
-        <tr class="text-break">
-            <td class="fw-bold p-3 text-center">{{ event.id }}</td>
-            <td class="p-2">{{ event.titular }}</td>
-            <td class="p-2">{{ event.descripcion.substr(0, 20) }}...</td>
-            <td class="p-2">{{ event.imagen.substr(0, 20) }}...</td>
-            <td class="p-2">{{ event.fecha }}</td>
+    @if (eventsList && eventsList.length > 0) {
+    <div class="overflow-x-auto -mx-4 rounded-xl border-identity-blue border-2 mx-5">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr class="bg-identity-blue">
+                    <th class="p-3 sm:p-4 text-left font-semibold text-white whitespace-nowrap">N°</th>
+                    <th class="p-3 sm:p-4 text-left font-semibold text-white whitespace-nowrap">Titular</th>
+                    <th class="p-3 sm:p-4 text-left font-semibold text-white whitespace-nowrap">Descripción</th>
+                    <th class="p-3 sm:p-4 text-left font-semibold text-white whitespace-nowrap">Fecha</th>
+                    <th class="p-3 sm:p-4 text-left font-semibold text-white whitespace-nowrap">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (event of eventsList; track event.id) {
+                <tr class="border-b border-gray-200 hover:bg-blue-100 transition-colors">
+                    <td class="p-2 sm:p-3 font-bold text-gray-900 whitespace-nowrap">{{ event.id }}</td>
+                    <td class="p-2 sm:p-3 text-gray-700">{{ event.titular }}</td>
+                    <td class="p-2 sm:p-3 text-gray-700">{{ event.descripcion.substr(0, 20) }}...</td>
+                    <td class="p-2 sm:p-3 text-gray-700 whitespace-nowrap">{{ event.fecha }}</td>
+                    <td class="p-2 sm:p-3">
+                        <div class="flex gap-2 items-center justify-start">
+                            <a routerLink="/admin/eventos/{{event.id}}/detalle"
+                               class="text-gray-600 hover:text-[#0066cc] transition-colors cursor-pointer">
+                                <mat-icon class="!text-xl">visibility</mat-icon>
+                            </a>
+                            <a routerLink="/admin/eventos/{{event.id}}/editar"
+                               class="text-gray-600 hover:text-[#0066cc] transition-colors cursor-pointer">
+                                <mat-icon class="!text-xl">edit</mat-icon>
+                            </a>
+                            <a routerLink="/admin/eventos/{{event.id}}/borrar"
+                               class="text-gray-600 hover:text-red-600 transition-colors cursor-pointer">
+                                <mat-icon class="!text-xl">delete</mat-icon>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
-            <td class="actions-td p-2 text-center">
-                <div class="d-flex justify-content-center gap-2">
-                    <a routerLink="/admin/eventos/{{event.id}}/detalle"><mat-icon>visibility</mat-icon></a>
-                    <a routerLink="/admin/eventos/{{event.id}}/editar"><mat-icon>edit</mat-icon></a>
-                    <a routerLink="/admin/eventos/{{event.id}}/borrar"><mat-icon>delete</mat-icon></a>
-                </div>
-            </td>
-
-        </tr>
-        }
-    </table>
-
-    <mat-paginator class="mb-3" [length]="totalElements" [pageSize]=6 [pageIndex]="pageIndex" [pageSizeOptions]="[6]"
-        (page)="onPageChange($event)" [showFirstLastButtons]="true">
+    <mat-paginator class="pt-10"
+                   [length]="totalElements"
+                   [pageSize]=6
+                   [pageIndex]="pageIndex"
+                   [pageSizeOptions]="[6]"
+                   (page)="onPageChange($event)"
+                   [showFirstLastButtons]="true">
     </mat-paginator>
+    } @else {
+    <p class="text-center mt-5 text-xl pt-30">No se encontraron eventos</p>
+    }
 </div>
-} @else {
-<p class="text-center mt-5">No se encontraron noticias</p>
-}
