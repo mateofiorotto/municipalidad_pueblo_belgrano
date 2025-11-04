@@ -1,51 +1,71 @@
-<footer class="bg-primary text-black py-8 bg-identity-green">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-8 items-center justify-between">
+<footer class="bg-primary text-black py-12 bg-identity-green border-t-2 border-t-identity-blue">
+    <div class="max-w-7xl mx-auto px-20 flex flex-col lg:flex-row gap-8 items-center justify-between">
 
         <!-- Logo -->
-        <div class="flex flex-col items-center lg:items-start">
+        <div class="flex flex-col items-center">
             <a routerLink="/"
-               class="block w-[200px] h-[80px] bg-no-repeat bg-center bg-contain mb-3 block  h-[120px] w-[200px] bg-no-repeat bg-center bg-contain bg-[url('/logo_blanco.png')] my-5 mb-10 lg:mb-0"
+               class="block w-[180px] h-[150px] bg-no-repeat bg-center bg-contain mb-3 block h-[120px] w-[200px] bg-no-repeat bg-center bg-contain bg-[url('/logo_negro.svg')] my-5 mb-5 lg:mb-0"
                (click)="scrollToTop()">
                 <span class="sr-only">Logo Municipalidad de Pueblo General Belgrano</span>
             </a>
-            <p class="text-center lg:text-left">¡Vení a visitarnos!</p>
+            <p class="text-center mt-0 lg:mt-5">¡Vení a visitarnos!</p>
         </div>
 
         <!-- Menú -->
         <div class="text-center">
-            <h3 class="mb-2 text-lg font-semibold">Menú</h3>
+            <h3 class="mb-2 text-xl font-semibold">Menú</h3>
             <ul class="flex flex-col gap-2">
                 <li><a routerLink="/"
-                       class="hover:text-light">Inicio</a></li>
+                       class="hover:text-gray-700 transition-all duration-300 ease-in-out">Inicio</a></li>
                 <li><a routerLink="/gobierno"
-                       class="hover:text-light">Gobierno</a></li>
+                       class="hover:text-gray-700 transition-all duration-300 ease-in-out">Gobierno</a></li>
                 <li><a routerLink="/noticias"
-                       class="hover:text-light">Noticias</a></li>
+                       class="hover:text-gray-700 transition-all duration-300 ease-in-out">Noticias</a></li>
                 <li><a routerLink="/reclamos"
-                       class="hover:text-light">Reclamos</a></li>
+                       class="hover:text-gray-700 transition-all duration-300 ease-in-out">Reclamos</a></li>
                 <li><a routerLink="/eventos"
-                       class="hover:text-light">Eventos</a></li>
+                       class="hover:text-gray-700 transition-all duration-300 ease-in-out">Eventos</a></li>
+                <li><a routerLink="/transparencias"
+                       class="hover:text-gray-700 transition-all duration-300 ease-in-out">Transparencias</a></li>
             </ul>
         </div>
 
         <!-- Redes -->
         <div class="text-center">
-            <h3 class="mb-2 text-lg font-semibold">Redes</h3>
-            <ul class="flex justify-center gap-4 text-2xl">
+            <h3 class="mb-2 text-xl font-semibold">Redes</h3>
+            <ul class="flex justify-center gap-6">
+                <!-- Facebook -->
                 <li>
                     <a href="https://www.facebook.com/Comunidadpgb/"
                        target="_blank"
                        rel="noopener noreferrer"
-                       class="hover:text-light">
-                        <i class="bi bi-facebook"><span class="sr-only">Facebook</span></i>
+                       aria-label="Facebook"
+                       class="text-black hover:text-gray-700 transition-all duration-300 ease-in-out">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             fill="currentColor"
+                             viewBox="0 0 24 24"
+                             class="w-10 h-10 mt-5">
+                            <path fill-rule="evenodd"
+                                  d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987H7.898v-2.89h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.772-1.63 1.562v1.875h2.773l-.443 2.89h-2.33v6.987C18.343 21.128 22 16.991 22 12Z"
+                                  clip-rule="evenodd" />
+                        </svg>
                     </a>
                 </li>
+
+                <!-- Instagram -->
                 <li>
                     <a href="https://www.instagram.com/comunidadpgb/?hl=es"
                        target="_blank"
                        rel="noopener noreferrer"
-                       class="hover:text-light">
-                        <i class="bi bi-instagram"><span class="sr-only">Instagram</span></i>
+                       aria-label="Instagram"
+                       class="text-black hover:text-gray-700 transition-all duration-300 ease-in-out">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             fill="currentColor"
+                             viewBox="0 0 24 24"
+                             class="w-10 h-10 mt-5">
+                            <path
+                                  d="M7.5 2A5.5 5.5 0 0 0 2 7.5v9A5.5 5.5 0 0 0 7.5 22h9a5.5 5.5 0 0 0 5.5-5.5v-9A5.5 5.5 0 0 0 16.5 2h-9Zm0 1.5h9A4 4 0 0 1 20.5 7.5v9a4 4 0 0 1-4 4h-9a4 4 0 0 1-4-4v-9A4 4 0 0 1 7.5 3.5ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 1.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7ZM17.25 6a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z" />
+                        </svg>
                     </a>
                 </li>
             </ul>

@@ -4,6 +4,7 @@
 </div>
 } @else {
 @if (eventsList && eventsList.length > 0) {
+  <div class="px-10 lg:px-20 py-10">
 @for (event of eventsList; track event.id) {
 <div class="break-all mx-10 lg:mx-20 hover:cursor-pointer">
   <div class="relative mb-4 flex-col text-white break-all
@@ -41,14 +42,16 @@
 
 </div>
 }
-<mat-paginator class="mt-15"
-               [length]="totalElements"
-               [pageSize]=6
-               [pageIndex]="pageIndex"
-               [pageSizeOptions]="[6]"
-               (page)="onPageChange($event)"
-               [showFirstLastButtons]="true">
-</mat-paginator>
+</div>
+ <mat-paginator 
+  class="lg:px-20 pb-10"
+  [length]="totalElements"
+                 [pageSize]=6
+                 [pageIndex]="pageIndex"
+                 [pageSizeOptions]="[6]"
+                 (page)="onPageChange($event)"
+                 [showFirstLastButtons]="true">
+  </mat-paginator>
 } @else {
 <div>
     <p class="text-center text-xl pt-25 pb-30">No hay eventos disponibles</p>

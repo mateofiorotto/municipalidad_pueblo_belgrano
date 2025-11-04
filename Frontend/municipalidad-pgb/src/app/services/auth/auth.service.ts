@@ -38,6 +38,19 @@ export class AuthService {
     });
   }
 
+  public getUsername(){
+    if(localStorage.getItem('auth_token') !== null) {
+      let jwtToken: string | any = localStorage.getItem('auth_token');
+
+      //decodificar
+      jwtDecode(jwtToken);
+
+      return jwtDecode(jwtToken).sub;
+    };
+
+    return false;
+  }
+
   public isLogged(): boolean {
     return localStorage.getItem('auth_token') !== null;
   }
