@@ -17,5 +17,6 @@ public interface ITransparencyRepository extends JpaRepository<Transparency, Lon
     @Query("SELECT DISTINCT t.tipo FROM Transparency t WHERE t.tipo IS NOT NULL")
     List<TransparencyType> findDistinctTypes();
 
-    //Page<Transparency> findAllByTipo(String tipo);
+    Page<Transparency> findAllByTipoOrderByFechaDesc(TransparencyType type, Pageable pageable);
+
 }

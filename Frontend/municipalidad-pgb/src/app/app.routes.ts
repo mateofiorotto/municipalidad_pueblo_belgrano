@@ -20,6 +20,22 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'transparencias/ordenanzas',
+    canActivate: [maintenanceGuard],
+    loadComponent: () =>
+      import('./pages/transparencies-ordinances.page/transparencies-ordinances.page.component').then(
+        (m) => m.TransparenciesOrdinancesPageComponent
+      ),
+  },
+  {
+    path: 'transparencias/decretos',
+    canActivate: [maintenanceGuard],
+    loadComponent: () =>
+      import('./pages/transparencies-decrees.page/transparencies-decrees.page.component').then(
+        (m) => m.TransparenciesDecreesPageComponent
+      ),
+  },
+  {
     path: 'noticias',
     canActivate: [maintenanceGuard],
     loadComponent: () =>

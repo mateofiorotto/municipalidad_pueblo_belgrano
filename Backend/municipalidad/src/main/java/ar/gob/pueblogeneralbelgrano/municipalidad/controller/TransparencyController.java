@@ -34,13 +34,13 @@ public class TransparencyController {
     }
 
     /**
-     * Endpoint que obtiene las transparencias de manera paginada. Accedible por todos
+     * Endpoint que obtiene las transparencias de manera paginada. Accedible por intendente, secretaria y admins
      *
      * @param page
      * @return transparencias paginadas de a 6 registros
      */
     @Operation(summary = "Obtener lista de transparencias de forma paginada",
-            description = "Devuelve la lista de transparencias del sistema de a 6 registros. Accedible por todos",
+            description = "Devuelve la lista de transparencias del sistema de a 6 registros. Accedible por intendente, secretaria y admins",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
@@ -48,7 +48,7 @@ public class TransparencyController {
             @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)"),
     })
     @GetMapping
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'SECRETARIA')")
     public ResponseEntity<ResponseDTO<PagedModel<TransparencyResponseDTO>>> getPaginatedTransparencies(
             @RequestParam(value = "page", defaultValue = "0") int page) {
 
@@ -78,6 +78,41 @@ public class TransparencyController {
     @PreAuthorize("hasAnyRole('ADMIN', 'INTENDENTE', 'SECRETARIA')")
     public ResponseEntity<List<TransparencyType>> getTransparencyTypesList(){
         return ResponseEntity.ok(transparencyService.transparencyTypesList());
+    }
+
+    /**
+     * Endpoint que obtiene las transparencias filtradas por tipo de manera paginada. Accedible por todos
+     *
+     * @param type tipo de transparencia (ORDENANZAS o DECRETOS)
+     * @param page número de página
+     * @return transparencias paginadas filtradas por tipo
+     */
+    @Operation(summary = "Obtener lista de transparencias filtradas por tipo",
+            description = "Devuelve la lista de transparencias filtradas por tipo de a 12 registros. Accedible por todos",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Transparencias retornadas correctamente."),
+            @ApiResponse(responseCode = "400", description = "Tipo de transparencia inválido"),
+            @ApiResponse(responseCode = "401", description = "Token invalido (No autenticado / No autorizado)"),
+    })
+    @GetMapping("/type/{type}")
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<ResponseDTO<PagedModel<TransparencyResponseDTO>>> getTransparenciesByType(
+            @PathVariable String type,
+            @RequestParam(value = "page", defaultValue = "0") int page) {
+
+        final int size = 12;
+
+        PagedModel<TransparencyResponseDTO> transparencies = transparencyService.getTransparenciesByType(page, size, type);
+
+        ResponseDTO<PagedModel<TransparencyResponseDTO>> getResponseTransparencies = new ResponseDTO<>(
+                transparencies,
+                200,
+                "Transparencias de tipo " + type + " retornadas correctamente"
+        );
+
+        return ResponseEntity.ok(getResponseTransparencies);
     }
 
     /**

@@ -53,6 +53,33 @@ public class TransparencyService implements ITransparencyService {
     }
 
     @Override
+    public PagedModel<TransparencyResponseDTO> getTransparenciesByType(int page, int size, String type) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        TransparencyType transparencyType;
+        try {
+            transparencyType = TransparencyType.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Tipo de transparencia inválido: " + type);
+        }
+
+        Page<Transparency> paginatedTransparency = transparencyRepository.findAllByTipoOrderByFechaDesc(transparencyType, pageable);
+
+        List<TransparencyResponseDTO> transparencyDTOList = paginatedTransparency
+                .stream()
+                .map(ITransparencyMapper.mapper::transparencyToTransparencyResponseDTO)
+                .collect(Collectors.toList());
+
+        Page<TransparencyResponseDTO> paginatedTransparencyList = new PageImpl<>(
+                transparencyDTOList,
+                pageable,
+                paginatedTransparency.getTotalElements()
+        );
+
+        return new PagedModel<>(paginatedTransparencyList);
+    }
+
+    @Override
     public TransparencyResponseDTO getTransparencyById(Long id) {
         Transparency transparency = transparencyRepository.findById(id).orElseThrow(() -> new NotFoundException("Transparencia no encontrada,  ID" + id));
 
@@ -62,8 +89,6 @@ public class TransparencyService implements ITransparencyService {
     @Override
     public TransparencyRequestDTO saveTransparency(TransparencyRequestDTO transparency) {
         Transparency transparencyToSave = ITransparencyMapper.mapper.transparencyRequestDTOToTransparency(transparency);
-
-        //metodo pdf
 
         transparencyRepository.save(transparencyToSave);
 

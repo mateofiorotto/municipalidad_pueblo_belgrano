@@ -36,6 +36,15 @@ public interface ITransparencyService {
     public TransparencyResponseDTO getTransparencyById(Long id);
 
     /**
+     * Devolver las transparencias por tipo
+     * @param page
+     * @param size
+     * @param type
+     * @return transparencias paginadas filtradas por tipo
+     */
+    public PagedModel<TransparencyResponseDTO> getTransparenciesByType(int page, int size, String type);
+
+    /**
      * Guardar transparencia en la base de datos
      * @param transparency
      * @return la transparencia guardada

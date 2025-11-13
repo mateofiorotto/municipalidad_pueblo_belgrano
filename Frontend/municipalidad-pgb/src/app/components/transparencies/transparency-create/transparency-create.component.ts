@@ -73,7 +73,7 @@ export class TransparencyCreateComponent {
             Swal.fire({
               icon: 'error',
               title: 'ERROR',
-              text: 'Ocurrio un error al crear la noticia. Lo estamos solucionando.',
+              text: 'Ocurrio un error al crear la transparencia. Lo estamos solucionando.',
               showConfirmButton: true,
             });
           }

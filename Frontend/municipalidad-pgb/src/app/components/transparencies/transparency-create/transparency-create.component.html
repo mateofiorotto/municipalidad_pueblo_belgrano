@@ -76,11 +76,8 @@
                         class="form-control w-full p-4 rounded-xl bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                         [class.border-red-500]="tipo?.touched && tipo?.invalid">
                     <option value="" disabled>Seleccione un tipo de transparencia *</option>
-                    <option value="BOLETIN_OFICIAL">Boletín Oficial</option>
-                    <option value="LICITACIONES">Licitaciones Públicas</option>
-                    <option value="ORDENANZAS">Ordenanzas y Decretos</option>
-                    <option value="PRESUPUESTO">Presupuesto Municipal</option>
-                    <option value="CONTRATOS">Contratos y Convenios</option>
+                    <option value="DECRETOS">Decretos</option>
+                    <option value="ORDENANZAS">Ordenanzas</option>
                 </select>
                 @if(tipo?.touched && tipo?.errors?.['required']) {
                 <p class="text-red-500 text-sm mt-1 flex items-center gap-1">
