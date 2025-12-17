@@ -47,8 +47,6 @@ export class ComplaintDetailsComponent {
     }
   }
 
-  downloadPDF() {}
-
   seePDF() {
   this._complaintsService.generateComplaintPDF(this.complaint.id)
     .subscribe((pdfBlob: Blob) => {
