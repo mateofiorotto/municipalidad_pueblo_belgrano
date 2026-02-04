@@ -34,7 +34,9 @@
 - IntelliJ Idea (IDE)
 - Git + GitHub
 - Google ReCaptcha
-- Amazon S3 (Files, Images) or other
+- Docker
+- Nginx
+- Linux Ubuntu (VPS)
 
 
 ---
@@ -46,7 +48,53 @@
 ---
 
 ## ENGLISH
-To do..
+
+This project is an institutional website for the Municipality of Pueblo General Belgrano.  
+Its main goal is to provide an online system for residents to submit complaints or claims, replacing the current in-person, paper-based process used by the municipality.
+
+Additionally, the platform includes features such as news, events, and useful public information for citizens.
+
+### Database Entities
+- **Roles**: define what users can or cannot access
+- **Users**: system users, mainly used to restrict access to the admin dashboard and protected API resources
+- **Permissions**: define specific permissions assigned to roles; while not heavily used in this project due to its size, they are implemented with scalability in mind
+- **News**: published and displayed on the frontend
+- **Categories**: used to filter news content
+- **Events**: upcoming local events displayed on the website; they can also appear within news
+- **Transparencies**: PDF files uploaded for public transparency
+- **Complaints**: complaints submitted by citizens, which can be marked as resolved once handled
+- **Areas**: municipal areas to which complaints can be assigned if needed
+
+### Backend
+- **Entities**: Roles, Users, Permissions, News, Categories, Events, Transparencies, Complaints, Areas
+- JWT-based authentication
+- Role-based authorization (Spring Security)
+- Soft deletes (for selected entities)
+- Validations (Spring Validation and custom validations in service layer and SQL queries)
+- Custom exception handling
+- DTO pattern and mappers (MapStruct)
+- Custom SQL queries and Spring Data JPA repositories
+- Swagger documentation:  
+  http://localhost:8080/swagger-ui/index.html#/
+- Rate limiting and Google reCAPTCHA for complaint creation and login
+- CRUD operations and custom methods for all entities
+- Pagination (Pageable, Page, PagedModel)
+- CORS and Spring Security configuration
+- Filtering capabilities
+
+### Frontend
+- Public and private views
+- Admin dashboard
+- JWT token handling (login, logout, automatic logout)
+- Reusable components (notifications, navigation bars, news components, etc.)
+- Animations (AOS)
+- Fully responsive design
+- UI permission management (showing or hiding resources based on user roles)
+- Filtering features
+
+### Running the Project Locally
+
+Local setup and deployment instructions are not provided, as this project was developed for a private client.
 
 ---
 
@@ -55,19 +103,19 @@ To do..
 Este proyecto se trata acerca de un sitio web institucional para la municipalidad de Pueblo General Belgrano. El principal problema que busca solucionar es poder tomar los reclamos de los vecinos del pueblo de forma online (actualmente la municipalidad lo hace de forma presencial con lapiz y papel). A su vez, agrega cosas como noticias, eventos e información útil para los vecinos.
 
 ### Entidades DB
-- Roles (N:N con usuarios y N:N con permisos): definen a que podran o no acceder los usuarios
-- Usuarios (N:N con roles): son los usuarios del sistema, en este caso se usaran para restringir acceso al dashboard en el front o a determinados recursos al hacer consultas a la API
-- Permisos (N:N con roles): definen permisos que tiene cada rol, en esta aplicacion web no tienen mucho uso ya que no es tan grande pero se implementan en caso de escalar
-- Noticias (1:N con categorias y eventos): serán publicadas y reflejadas en el frontend
-- Categorias (1:N con noticias): serviran como filtro de noticias en la web
-- Eventos (1:N con noticias): se mostraran los proximos eventos en el pueblo en la web. Pueden aparecer en noticias
+- Roles: definen a que podran o no acceder los usuarios
+- Usuarios: son los usuarios del sistema, en este caso se usaran para restringir acceso al dashboard en el front o a determinados recursos al hacer consultas a la API
+- Permisos: definen permisos que tiene cada rol, en esta aplicacion web no tienen mucho uso ya que no es tan grande pero se implementan en caso de escalar
+- Noticias: serán publicadas y reflejadas en el frontend
+- Categorias: serviran como filtro de noticias en la web
+- Eventos: se mostraran los proximos eventos en el pueblo en la web. Pueden aparecer en noticias
 - Transparencias: se subiran archivos pdf con las transparencias
-- Reclamos (1:N con areas): podran efectuarse reclamos en la web, los cuales pueden ser cerrados una vez atendidos
-- Areas (1:N con reclamos): podran delegarse a cierto reclamo de ser necesario 
+- Reclamos: podran efectuarse reclamos en la web, los cuales pueden ser cerrados una vez atendidos
+- Areas: podran delegarse a cierto reclamo de ser necesario 
 
 ### BACKEND
 - ENTIDADES: Roles, usuarios, permisos, noticias, categorias, eventos, transparencias, reclamos, areas
-- Autenticacion mediante login con Tokens JWT.
+- Autenticacion mediante login con Tokens JWT
 - Autorizacion a determinados recursos mediante roles (Spring Security)
  - Soft Deletes (en algunas entidades)
  - Validaciones (libreria Validation de spring y personalizadas en capa de service y consultas SQL)
@@ -81,101 +129,16 @@ Este proyecto se trata acerca de un sitio web institucional para la municipalida
 - Configuracion de CORS y Spring Security
 - Filtrados
 
-### Estructuras de carpetas backend
-<img src="/imgs-readme/carpetas-backend.jpg" alt="carpetas-backend">
-(actualizar)
-
 ### Frontend
 - Vistas
-    - Home con banner, areas de uso comun, ultimas noticias, autoridades municipales y numeros de emergencia
-    - Login (para entrar al dashboard)
-    - Listado de noticias y noticias por individual
-    - Reclamos
-    - Gobierno (info de cada area municipal con datos de contacto y horarios)
-    - El pueblo (mapa con lugares de interes, info de como llegar)
-    - Listado de eventos (img de fondo, titulo, fecha). Eventos por individual
-    - Honorable concejo deliberante
-    - Transparencias
-    - Dashboard (manejar CRUDs)
+- Dashboard para admins
 - Manejo de token jwt (login, logout, logout automatico)
 - Componentes (Para notificaciones de error o exito, barras de navegacion, noticias, etc...)
-- Hooks
 - Animaciones (AOS)
 - Responsive
 - Gestion de permisos en la UI (mostrar o no recursos segun el rol del usuario)
 - Filtrados
 
-### Estructuras de carpetas frontend
-Por hacer..
-
 ### Levantar Proyecto de forma local
 
-**a. LEVANTAR BACKEND**
-
-1. Clonar repositorio
-
-```
-git clone https://github.com/mateofiorotto/municipalidad_pueblo_belgrano
-```
-
-2. Chequear dependencias
-- JDK 21
-- Maven (necesario si queres ejecutar comandos con la CLI de maven, caso contrario, no)
-- IDE con compilador que mas te guste (En mi caso IntelliJ)
-
-3. Configurar base de datos
-- Abri XAMPP e inicia Apache y MySQL
-- Crea una base de datos con el nombre que vayas a poner en las variables de entorno
-
-4. application.properties
-
-En tu IDE, configura las variables de entorno locales y asignales el valor correspondiente:
-
-```
-# Configuraciones varias
-spring.application.name=municipalidad
-
-# Configuraciones de base de datos
-spring.jpa.hibernate.ddl-auto=update
-spring.datasource.url=${DB_URL}
-spring.datasource.username=${DB_USER}
-spring.datasource.password=${DB_PASSWORD}
-
-# Configuraciones de seguridad
-spring.security.user.name=${SS_USER}
-spring.security.user.password=${SS_PASSWORD}
-
-# Configuraciones de JWT
-security.jwt.private.key=${PRIVATE_KEY}
-security.jwt.user.generator=${USER_GENERATOR}
-```
-
-Ejemplo:
-<img src="/imgs-readme/image.png" alt="ejemplo app.properties">
-
-PD: En la foto falta el user generator
-
-- ${DB_URL} = Direccion a tu base de datos
-- ${DB_USER} = Usuario de la base de datos
-- ${DB_PASSWORD} = Contraseña de la base de datos
-- ${SS_USER} = Usuario de SPRING SECURITY
-- ${SS_PASSWORD} = Contraseña de SPRING SECURITY
-- ${PRIVATE_KEY} = Clave privada para generar el token JWT
-- ${USER_GENERATOR} = Usuario que se encarga de la generacion de token JWT. EJ: MATEO-SEC
-
-**NOTA**: SS_USER y SS_PASSWORD son para usar con HTTP BASIC en Spring security. Esta app no la usa pero dejo estas opciones en el codigo por si clonas el repo y queres experimentar con ello. (Si no los vas a usar, comentalo o borralo de application.properties)
-
-**NOTA 2**: La clave privada debe ir hasheada en el algoritmo SHA256, yo use: https://tools.keycdn.com/sha256-online-generator
-
-5. Ejecutar la app
-
-Ejecuta ```./mvnw spring-boot:run``` o presiona el boton de iniciar en tu IDE mientras estas dentro de la clase "MunicipalidadApplication". (Clase principal con la anotación @SpringBootApplication)
-
-6. Crear usuarios, roles y permisos a mano, o desactivando la autorizacion un momento
-
-Podes poner permitAll() en los endpoints de guardado de usuarios, roles y permisos y crear por lo menos un usuario admin o podes hacerlo a mano (creando roles, usuarios, permisos y relacionandolos en phpmyadmin u otro gestor). Tene en cuenta que si creas un usuario debes hashear su contraseña con BCrypt para que te tome el login. Podes usar esta página: https://bcrypt-generator.com/
-
-También recorda que los roles y permisos van en MAYUSCULAS.
-
-**b. LEVANTAR FRONTEND**
-Por hacer..
+No brindo una forma de levantar este proyecto ya que es un trabajo para un cliente privado.
