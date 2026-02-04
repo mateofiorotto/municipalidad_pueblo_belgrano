@@ -42,7 +42,9 @@
 ---
 
 - [Go to English documentation](#ENGLISH)
+
 <br>
+
 - [Ir a la documentación en Español](#ESPAÑOL)
 
 ---
